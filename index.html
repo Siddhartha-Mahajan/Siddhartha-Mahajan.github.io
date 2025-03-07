@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siddhartha Mahajan - Personal Portfolio</title>
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="./assets/images/avatar-1.png" type="image/x-icon" />
+
+  <!-- custom css link -->
+  <link rel="stylesheet" href="./assets/css/style.css" />
+
+  <!-- google font link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+</head>
+
+<body>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <!-- Replace with your image if you wish -->
+          <img src="./assets/images/my-avatar.png" alt="Siddhartha Mahajan" width="90" />
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Siddhartha Mahajan">Siddhartha Mahajan</h3>
+              <p class="title">Researcher | Data Engineer</p>
+              
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Contacts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <!-- Email -->
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:siddharthamahajan03@gmail.com" class="contact-link">siddharthamahajan03@gmail.com</a>
+            </div>
+          </li>
+
+          <!-- Phone -->
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="phone-portrait-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Phone</p>
+              <a href="tel:+917599063750" class="contact-link">7599063750</a>
+            </div>
+          </li>
+
+          <!-- Location -->
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Location</p>
+              <address>Delhi, India</address>
+            </div>
+          </li>
+
+          <!-- LinkedIn -->
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">LinkedIn</p>
+              <a
+                href="https://www.linkedin.com/in/siddharthamahajan03"
+                class="contact-link"
+              >
+                siddharthamahajan03
+              </a>
+            </div>
+          </li>
+
+          <!-- GitHub -->
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="logo-github"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">GitHub</p>
+              <a
+                href="https://github.com/Siddhartha-Mahajan"
+                class="contact-link"
+              >
+                Siddhartha-Mahajan
+              </a>
+            </div>
+          </li>
+        </ul>
+
+        <div class="separator"></div>
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://x.com/ItSiddharthaa" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+          <li class="social-item">
+            <a href="https://www.instagram.com/siddhartha.mahajan?igsh=bmZuNjlwMTJ1emxw" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+      <!-- NAVBAR -->
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <button class="navbar-link active" data-nav-link>About</button>
+          </li>
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Resume</button>
+          </li>
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Portfolio</button>
+          </li>
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Contact</button>
+          </li>
+        </ul>
+      </nav>
+
+
+      <!-- ABOUT -->
+      <article class="about active" data-page="about">
+        <header>
+          <h2 class="h2 article-title">About me</h2>
+        </header>
+
+        <section class="about-text">
+          <p>
+            Hi, I'm <strong>Siddhartha Mahajan</strong>, a student researcher in IT, Math, and
+            Computational Biology at the Cluster Innovation Centre, University of Delhi. I'm passionate
+            about data-driven research and healthcare advancements.
+          </p>
+          <p>
+            My work spans developing predictive models for antiseizure medication outcomes,
+            investigating antibody-antigen binding affinities, and analyzing disease networks using SNP
+            data. I also have hands-on experience as a Machine Learning Intern, where I built models to
+            classify YouTube videos using a self-scraped dataset.
+          </p>
+        </section>
+
+        <section class="service">
+          <h3 class="h3 service-title">What I'm Doing</h3>
+          <ul class="service-list">
+            <li class="service-item">
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-design.svg" alt="Research icon" width="40" />
+              </div>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Interdisciplinary Research</h4>
+                <p class="service-item-text">
+                  Integrating IT, mathematics, and computational biology to drive innovations in healthcare.
+                </p>
+              </div>
+            </li>
+
+            <li class="service-item">
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-dev.svg" alt="Machine Learning icon" width="40" />
+              </div>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Machine Learning & Data Analysis</h4>
+                <p class="service-item-text">
+                  Creating predictive models and data analytics pipelines using advanced ML techniques.
+                </p>
+              </div>
+            </li>
+
+            <li class="service-item">
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-design.svg" alt="Software Development icon" width="40" />
+              </div>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Software Development</h4>
+                <p class="service-item-text">
+                  Building robust software solutions to support research and practical applications.
+                </p>
+              </div>
+            </li>
+
+            <li class="service-item">
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-design.svg" alt="Mentoring icon" width="40" />
+              </div>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Mentoring & Outreach</h4>
+                <p class="service-item-text">
+                  Sharing knowledge and guiding future researchers through mentoring and public speaking.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <!-- CURRENT AND PAST ASSOCIATIONS -->
+        <section class="clients">
+          <h3 class="h3 clients-title">Current and Past Associations</h3>
+          <ul class="clients-list has-scrollbar">
+            <li class="clients-item">
+              <a href="https://mbzuai.ac.ae/" target="_blank">
+                <img src="./assets/images/mbzuai_logo.webp" alt="MBZUAI" />
+              </a>
+            </li>
+            <li class="clients-item">
+              <a href="https://www.soluperts.ca/" target="_blank">
+                <img src="./assets/images/Soluperts.jpg" alt="Soluperts" />
+              </a>
+            </li>
+            <li class="clients-item">
+              <a href="https://beyondexams.org/" target="_blank">
+                <img src="./assets/images/beyond-exams.webp" alt="Beyond Exams" />
+              </a>
+            </li>
+            <li class="clients-item">
+              <a href="https://cic.du.ac.in/" target="_blank">
+                <img src="./assets/images/cic_logo.jpeg" alt="Cluster Innovation Centre" />
+              </a>
+            </li>
+            <li class="clients-item">
+              <a href="https://www.du.ac.in/" target="_blank">
+                <img src="./assets/images/DU.png" alt="University of Delhi" />
+              </a>
+            </li>
+          </ul>
+        </section>
+
+      </article>
+
+
+      <!-- RESUME -->
+      <article class="resume" data-page="resume">
+        <header>
+          <h2 class="h2 article-title">Resume</h2>
+        </header>
+
+        <!-- Education -->
+        <section class="timeline">
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="book-outline"></ion-icon>
+            </div>
+            <h3 class="h3">Education</h3>
+          </div>
+
+          <ol class="timeline-list">
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Cluster Innovation Centre, University of Delhi</h4>
+              <span>2021 - 2025 (Ongoing)</span>
+              <p class="timeline-text">
+                Bachelor of Technology (B.Tech.) in Information Technology, Mathematical Innovations & Computational Biology<br />
+                Current CGPA: 8.7<br />
+                Relevant Courses: Calculus, DSA/DAA, ODEs/PDEs, Probability, AI-ML, DBMS (SQL), Statistics, Graph Theory,
+                Linear Algebra, In-Silico Biology, Systems Biology, Complex Analysis, Group Theory, Numerical Methods.
+              </p>
+            </li>
+          </ol>
+        </section>
+
+        <!-- Research Experience -->
+        <section class="timeline">
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="book-outline"></ion-icon>
+            </div>
+            <h3 class="h3">Research Experience</h3>
+          </div>
+
+          <ol class="timeline-list">
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Predicting Efficacy of Antiseizure Medication Treatment</h4>
+              <span>Epilepsy Research, Sep 2024</span>
+              <p class="timeline-text">
+                Developed predictive models using six ML algorithms (Python, scikit-learn, Pandas) on patient data from North India,
+                achieving over 70% accuracy. 
+                DOI: <a href="https://doi.org/10.1016/j.eplepsyres.2024.107404" target="_blank" rel="noopener">10.1016/j.eplepsyres.2024.107404</a>
+              </p>
+            </li>
+
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Predicting Binding Affinities in Antibody-Antigen Binding</h4>
+              <span>Under Prof. Prabal Maiti, IISC</span>
+              <p class="timeline-text">
+                Employed computational tools such as ChimeraX, Modeller, and GROMACS to simulate molecular interactions and analyze
+                antibody-antigen binding affinities.
+              </p>
+            </li>
+
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Disease-Disease SNP Network Analysis & Community Detection</h4>
+              <span>Research Project</span>
+              <p class="timeline-text">
+                Analyzed disease networks using SNP data, built graphs with NetworkX, applied community detection algorithms
+                (Louvain, SLPA), and visualized results with Matplotlib & PyVis.
+              </p>
+            </li>
+          </ol>
+        </section>
+
+        <!-- Work Experience -->
+        <section class="timeline">
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="briefcase-outline"></ion-icon>
+            </div>
+            <h3 class="h3">Work Experience</h3>
+          </div>
+
+          <ol class="timeline-list">
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Machine Learning Intern - Beyond Exams</h4>
+              <span>May 2022 - November 2022</span>
+              <p class="timeline-text">
+                Built ML models to classify YouTube videos into educational vs. non-educational categories using a self-scraped dataset.
+                Handled data scraping (YouTube V3 API, BeautifulSoup, Selenium), cleaning, and implemented algorithms in ML.NET (C#).
+              </p>
+            </li>
+          </ol>
+        </section>
+
+        <!-- Projects -->
+        <section class="timeline">
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="code-slash-outline"></ion-icon>
+            </div>
+            <h3 class="h3">Projects</h3>
+          </div>
+
+          <ol class="timeline-list">
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Semantic Search Engine</h4>
+              <span>Streamlit, SentenceTransformers, Huggingface</span>
+              <p class="timeline-text">
+                Developed a semantic search engine integrating cosine similarity, a Streamlit interface, and SerpApi’s Google Search API for top results.
+              </p>
+            </li>
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Chronicles of Alexandria</h4>
+              <span>Flask, Pinecone, Web Scraping</span>
+              <p class="timeline-text">
+                Created a documentary library with semantic search capabilities using Pinecone and SentenceTransformers for efficient content retrieval.
+              </p>
+            </li>
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">AI Adversarial Agent</h4>
+              <span>PyTorch, TensorFlow</span>
+              <p class="timeline-text">
+                Developed a web extension employing an adversarial model to cloak images and protect user identity from facial recognition systems.
+              </p>
+            </li>
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Data Analyzer with AI</h4>
+              <span>Flask, Streamlit, Pandas, Matplotlib</span>
+              <p class="timeline-text">
+                Designed an AI-powered data analyzer that intelligently selects and displays appropriate visualizations for a given dataset.
+              </p>
+            </li>
+          </ol>
+        </section>
+
+        <!-- Volunteering & Mentoring -->
+        <section class="timeline">
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="people-outline"></ion-icon>
+            </div>
+            <h3 class="h3">Volunteering & Mentoring</h3>
+          </div>
+
+          <ol class="timeline-list">
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Mentor/Speaker - DYOD Induction Program</h4>
+              <span>Jammu University, 20th - 23rd September 2023</span>
+              <p class="timeline-text">
+                Mentored 40+ students on project development, presentation skills, and innovative thinking at the Design Your Own Degree program.
+              </p>
+            </li>
+          </ol>
+        </section>
+
+        <!-- Skills -->
+        <section class="skill">
+          <h3 class="h3 skills-title">My Skills</h3>
+          <ul class="skills-list content-card">
+            <li class="skills-item">
+              <div class="title-wrapper">
+                <h5 class="h5">Programming Languages</h5>
+                <data value="90">90%</data>
+              </div>
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 90%;"></div>
+              </div>
+            </li>
+            <li class="skills-item">
+              <div class="title-wrapper">
+                <h5 class="h5">Data Analysis & ML</h5>
+                <data value="90">90%</data>
+              </div>
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 90%;"></div>
+              </div>
+            </li>
+            <li class="skills-item">
+              <div class="title-wrapper">
+                <h5 class="h5">Software & Tools</h5>
+                <data value="85">85%</data>
+              </div>
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 85%;"></div>
+              </div>
+            </li>
+            <li class="skills-item">
+              <div class="title-wrapper">
+                <h5 class="h5">Research & Analytical Skills</h5>
+                <data value="90">90%</data>
+              </div>
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 90%;"></div>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </article>
+
+
+      <!-- PORTFOLIO -->
+      <article class="portfolio" data-page="portfolio">
+        <header>
+          <h2 class="h2 article-title">Portfolio</h2>
+        </header>
+
+        <section class="projects">
+          <ul class="filter-list">
+            <li class="filter-item">
+              <button class="active" data-filter-btn>All</button>
+            </li>
+            <li class="filter-item">
+              <button data-filter-btn>Research</button>
+            </li>
+            <li class="filter-item">
+              <button data-filter-btn>Web Development</button>
+            </li>
+            <li class="filter-item">
+              <button data-filter-btn>Programming</button>
+            </li>
+          </ul>
+
+          <div class="filter-select-box">
+            <button class="filter-select" data-select>
+              <div class="select-value" data-selecct-value>Select category</div>
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+            </button>
+            <ul class="select-list">
+              <li class="select-item">
+                <button data-select-item>All</button>
+              </li>
+              <li class="select-item">
+                <button data-select-item>Research</button>
+              </li>
+              <li class="select-item">
+                <button data-select-item>Web Development</button>
+              </li>
+              <li class="select-item">
+                <button data-select-item>Programming</button>
+              </li>
+            </ul>
+          </div>
+
+          <ul class="project-list">
+            <!-- Example Project: Semantic Search Engine -->
+            <li class="project-item active" data-filter-item data-category="research">
+              <a href="https://github.com/Siddhartha-Mahajan/Semantic-Search-Engine" target="_blank">
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+                  <img src="./assets/images/project-1.jpg" alt="Semantic Search Engine" loading="lazy" />
+                </figure>
+                <h3 class="project-title">Semantic Search Engine</h3>
+                <p class="project-category">Research</p>
+              </a>
+            </li>
+
+            <!-- Chronicles of Alexandria -->
+            <li class="project-item active" data-filter-item data-category="research">
+              <a href="https://devpost.com/software/chronicles-of-alexandria" target="_blank">
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+                  <img src="./assets/images/project-2.png" alt="Chronicles of Alexandria" loading="lazy" />
+                </figure>
+                <h3 class="project-title">Chronicles of Alexandria</h3>
+                <p class="project-category">Research</p>
+              </a>
+            </li>
+
+            <!-- LLM-DetectAIve -->
+            <li class="project-item active" data-filter-item data-category="web development">
+              <a href="https://github.com/Siddhartha-Mahajan/LLM-DetectAIve" target="_blank">
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+                  <img src="./assets/images/project-3.png" alt="LLM-DetectAIve" loading="lazy" />
+                </figure>
+                <h3 class="project-title">LLM-DetectAIve</h3>
+                <p class="project-category">Web Development</p>
+              </a>
+            </li>
+
+            <!-- Data Analyzer with AI -->
+            <li class="project-item active" data-filter-item data-category="programming">
+              <a href="https://github.com/Siddhartha-Mahajan/Data-Analyser" target="_blank">
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+                  <img src="./assets/images/project-4.png" alt="Data Analyzer with AI" loading="lazy" />
+                </figure>
+                <h3 class="project-title">Data Analyzer with AI</h3>
+                <p class="project-category">Programming</p>
+              </a>
+            </li>
+          </ul>
+        </section>
+      </article>
+
+
+      <!-- CONTACT -->
+      <article class="contact" data-page="contact">
+        <header>
+          <h2 class="h2 article-title">Contact</h2>
+        </header>
+
+        <section class="contact-form">
+          <h3 class="h3 form-title">Contact</h3>
+          <section class="about-text">
+            <p>
+              If you prefer, you can reach me via email at
+              <a href="mailto:siddharthamahajan03@gmail.com">siddharthamahajan03@gmail.com</a> or call me at
+              <a href="tel:+917599063750">+91-7599-063750</a>.
+            </p>
+          </section>
+          <!-- Optionally, you can restore your contact form here if needed -->
+        </section>
+      </article>
+
+    </div><!-- End .main-content -->
+
+  </main><!-- End main -->
+
+  <!-- custom js link (make sure this path and file exist) -->
+  <script src="./assets/js/script.js"></script>
+
+  <!-- ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>
