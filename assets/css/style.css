@@ -1879,5 +1879,60 @@ textarea.form-input::-webkit-resizer { display: none; }
 	 */
 
   .timeline-text { max-width: 700px; }
+/* Association Section */
+.assoc-section {
+  margin: 20px 0;
+  padding: 0 15px;
+}
+
+.assoc-title {
+  font-size: 24px;
+  color: #fff;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.assoc-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  padding-bottom: 10px;
+  scrollbar-width: thin;          /* For Firefox */
+  scrollbar-color: #ffc107 #222;   /* For Firefox */
+}
+
+.assoc-scroll::-webkit-scrollbar {
+  height: 6px; /* Horizontal scrollbar height */
+}
+
+.assoc-scroll::-webkit-scrollbar-thumb {
+  background-color: #ffc107; /* Yellow */
+  border-radius: 3px;
+}
+
+.assoc-scroll::-webkit-scrollbar-track {
+  background-color: #222; /* Dark track */
+}
+
+.assoc-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;         /* Space between logos */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.assoc-item {
+  flex-shrink: 0;
+}
+
+.assoc-img {
+  height: 80px;       /* Fixed height for all logos */
+  width: auto;        /* Maintain aspect ratio */
+  object-fit: contain;
+  display: block;
+}
+
 
 }
