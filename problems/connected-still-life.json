@@ -1,0 +1,49 @@
+{
+  "id": "connected-still-life",
+  "title": "Connected Still Life",
+  "domain": "Math — Discrete Math / Cellular Automata",
+  "statusLabel": "Open for n >= 10",
+  "tagline": "Maximize live cells in a stable, connected Game of Life pattern inside an n x n box.",
+
+  "description": "Find a connected still life in an n x n bounding box with more live cells than the current record. A still life is a Game of Life configuration where no cell is born or dies. Connected means all live cells form one 8-adjacent component.",
+
+  "context": "The maximum density of an unconstrained still life approaches 1/2. Requiring connectivity drops this — you cannot freely tile isolated stable pieces. For small n the optima are known. For n >= 16, the best-known patterns are from ad hoc searches and are likely suboptimal. The density gap between connected and unconstrained still lifes widens as n grows, making larger boxes the more interesting targets.",
+
+  "leaderboard": {
+    "note": "Records for connected still lifes. Sources: LifeWiki, Eppstein. Some values need verification.",
+    "columns": ["Box Size", "Live Cells", "Density", "Note"],
+    "rows": [
+      { "n": 8,  "best": 20,  "pct": 31.3, "note": "Likely optimal" },
+      { "n": 10, "best": 34,  "pct": 34.0, "note": "Verify against LifeWiki" },
+      { "n": 16, "best": 92,  "pct": 35.9, "note": "Open" },
+      { "n": 20, "best": 148, "pct": 37.0, "note": "Open" },
+      { "n": 32, "best": 390, "pct": 38.1, "note": "Open — likely improvable" }
+    ]
+  },
+
+  "submissionExample": "{\n  \"n\": 20,\n  \"grid\": [\n    [0, 1, 1, 0, ...],\n    [1, 0, 0, 1, ...],\n    ...\n  ]\n}",
+
+  "verification": "Checks Game of Life stability (every live cell has 2-3 neighbors, no dead cell has exactly 3) and 8-connectivity via BFS. O(n^2), milliseconds.",
+
+  "howToStart": [
+    { "title": "Start from known still lifes", "body": "Beehives, blocks, boats, loaves. Combine them into connected patterns. The hard part is making valid joins — most naive connections violate stability." },
+    { "title": "Simulated annealing", "body": "Score = live cells minus penalty for stability violations. Flip cells to improve. When penalty reaches zero, check if it beats the record." },
+    { "title": "SAT / MaxSAT", "body": "Encode stability and connectivity as boolean constraints. Maximize live cell count. Works well for n <= 20." },
+    { "title": "Target large n", "body": "n=32 has density 38.1% against a theoretical ceiling near 50%. Largest gap, most room for improvement." }
+  ],
+
+  "bounds": [
+    { "mod": "Stability", "name": "Live cells: 2 or 3 neighbors", "formula": "Each live cell must have exactly 2 or 3 live neighbors to survive" },
+    { "mod": "Stability", "name": "Dead cells: not exactly 3", "formula": "No dead cell adjacent to the pattern may have exactly 3 live neighbors" },
+    { "mod": "Connectivity", "name": "8-connected", "formula": "All live cells reachable from each other via edge or corner adjacency" },
+    { "mod": "Density", "name": "Upper bound ~1/2", "formula": "Elkies (1998). Connected constraint reduces this to roughly 40-45% in practice." }
+  ],
+
+  "references": [
+    "LifeWiki — Still life: conwaylife.com/wiki/Still_life",
+    "LifeWiki — Maximum density still life: conwaylife.com/wiki/Maximum-density_still_life",
+    "Catagolue (crowdsourced Life census): catagolue.hatsya.com",
+    "Elkies, N. (1998). The still-life density problem. Voronoi's Impact on Modern Science, Book 2.",
+    "Eppstein, D. Blog posts on still life density: 11011110.github.io"
+  ]
+}
