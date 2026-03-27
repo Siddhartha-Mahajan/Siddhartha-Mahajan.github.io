@@ -1,17 +1,17 @@
 {
   "id": "conways-99-graph",
   "title": "Conway's 99-Graph",
-  "domain": "Math — Graph Theory",
-  "statusLabel": "Open since 1971",
+  "domain": "Math - Graph Theory",
+  "statusLabel": "Open",
   "tagline": "$1,000 prize. 55 years. No one knows if this graph exists.",
 
-  "description": "Find a strongly regular graph srg(99, 14, 1, 2): 99 vertices, each with 14 neighbors, where adjacent pairs share exactly 1 common neighbor and non-adjacent pairs share exactly 2. Or prove it cannot exist.",
+  "description": "Build a graph on 99 vertices where every vertex has exactly 14 neighbors, every pair of adjacent vertices shares exactly 1 common neighbor, and every pair of non-adjacent vertices shares exactly 2. This is called srg(99, 14, 1, 2). No one has built one or proved it impossible. Conway offered $1,000 for either.",
 
-  "context": "Conway offered $1,000 for a construction or impossibility proof. The parameters pass every known necessary condition — integrality, Krein, absolute bound — yet no one has built the graph or ruled it out. The graph cannot be vertex-transitive, which kills all standard algebraic constructions. If it exists, it has to be found by search. The prize was never claimed before Conway's death in 2020.",
+  "context": "The parameters pass every known necessary condition (integrality, Krein, absolute bound), yet no one has built the graph or ruled it out. The graph cannot be vertex-transitive, which eliminates all standard algebraic constructions. If it exists, it has to be found by search. Conway offered the prize before his death in 2020; it was never claimed. A smaller cousin exists: the Paley graph on 9 vertices satisfies srg(9, 4, 1, 2).",
 
   "warmup": {
     "title": "Warm-up: srg(9, 4, 1, 2)",
-    "body": "The Paley graph of order 9 satisfies the same constraints at smaller scale: 9 vertices, degree 4, lambda=1, mu=2. It is unique up to isomorphism. The adjacency matrix below is one representation.",
+    "body": "The Paley graph of order 9 is the small sibling of the 99-graph. 9 vertices, degree 4, every adjacent pair shares 1 common neighbor, every non-adjacent pair shares 2. It is unique. Try verifying it satisfies all the constraints.",
     "matrix": [
       [0,1,1,1,1,0,0,0,0],
       [1,0,1,0,0,1,1,0,0],
@@ -26,7 +26,7 @@
   },
 
   "leaderboard": {
-    "note": "The (1,2)-SRG family: all parameter sets with lambda=1, mu=2",
+    "note": "The (lambda=1, mu=2) SRG family",
     "columns": ["Vertices", "Parameters", "Status"],
     "rows": [
       { "n": 9,    "params": "srg(9, 4, 1, 2)",       "status": "Exists (unique)", "note": "Paley graph of order 9" },
@@ -39,14 +39,16 @@
 
   "submissionExample": "{\n  \"matrix\": [\n    [0, 1, 0, 1, ...],\n    [1, 0, 1, 0, ...],\n    ...\n  ]\n}",
 
-  "verification": "Checks: symmetric, zero diagonal, every row sums to 14, A^2 matches lambda/mu conditions for all pairs. Milliseconds.",
+  "verification": "Checks: 99 x 99 symmetric matrix, zero diagonal, all entries 0/1, every row sums to 14. Then computes A^2 and checks that A^2[i][j] = 1 whenever A[i][j] = 1 (lambda) and A^2[i][j] = 2 whenever A[i][j] = 0 and i != j (mu). Milliseconds.",
 
-  "howToStart": [
-    { "title": "Study the 9-vertex case", "body": "Verify the warm-up matrix satisfies srg(9,4,1,2). This builds intuition for the constraint structure." },
+  "suggestedApproach": [
+    { "title": "Study the 9-vertex case", "body": "Verify the warm-up matrix satisfies srg(9, 4, 1, 2). This builds intuition for the constraint structure." },
     { "title": "Constraint propagation", "body": "Assign edges incrementally. After each, propagate degree-14 and common-neighbor constraints. Most partial assignments contradict quickly." },
     { "title": "SAT / CSP encoding", "body": "4851 binary variables (upper triangle). Constraints: row sums = 14, A^2 values forced. Modern SAT solvers handle millions of clauses." },
-    { "title": "Simulated annealing", "body": "Start with a random 14-regular graph. Score = number of pairs violating lambda/mu. Flip edges to reduce violations." }
+    { "title": "Simulated annealing", "body": "Start with a random 14-regular graph on 99 vertices. Score = number of pairs violating lambda/mu. Flip edges to reduce violations." }
   ],
+
+  "agentPrompt": "I want you to search for a strongly regular graph srg(99, 14, 1, 2): a graph on 99 vertices where every vertex has degree 14, every pair of adjacent vertices shares exactly 1 common neighbor, and every non-adjacent pair shares exactly 2. Represent the graph as a 99x99 symmetric adjacency matrix of 0s and 1s with zero diagonal. Try a combination of constraint propagation (build partial graphs, reject early when constraints are violated) and simulated annealing (start from random 14-regular graphs, swap edges to minimize constraint violations). If you find a valid graph, output the adjacency matrix as a JSON array of arrays.",
 
   "bounds": [
     { "mod": "Eigenvalues", "name": "Forced spectrum", "formula": "14 (mult 1), 2 (mult 77), -7 (mult 21)" },
@@ -55,10 +57,10 @@
   ],
 
   "references": [
-    "Conway's 99-graph problem — Wikipedia: en.wikipedia.org/wiki/Conway%27s_99-graph_problem",
-    "Brouwer's SRG table: www.win.tue.nl/~aeb/graphs/srg/srgtab.html",
-    "Brouwer, Cohen, Neumaier (1989). Distance-Regular Graphs.",
-    "Biggs, N.L. (1971). Finite Groups of Automorphisms.",
-    "Handbook of Combinatorial Designs, 2nd ed. CRC Press."
+    { "text": "Wikipedia: Conway's 99-graph problem.", "url": "https://en.wikipedia.org/wiki/Conway%27s_99-graph_problem" },
+    { "text": "Brouwer's table of strongly regular graphs.", "url": "https://www.win.tue.nl/~aeb/graphs/srg/srgtab.html" },
+    { "text": "Brouwer, Cohen, Neumaier (1989). Distance-Regular Graphs. Springer.", "url": "https://doi.org/10.1007/978-3-642-74341-2" },
+    { "text": "Biggs, N.L. (1971). Finite Groups of Automorphisms. Cambridge University Press.", "url": null },
+    { "text": "Handbook of Combinatorial Designs, 2nd ed. CRC Press.", "url": null }
   ]
 }

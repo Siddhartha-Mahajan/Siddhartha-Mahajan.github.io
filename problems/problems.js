@@ -275,20 +275,51 @@ function renderSubmissionBlock(data) {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right:5px">
                     <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
                 </svg>
-                Submit — Opens April 15
+                Submit (opens April 15)
             </span>
         </div>`;
     return div;
 }
 
-function renderHowToStart(steps) {
+function renderSuggestedApproach(steps) {
     const items = steps.map(s =>
-        `<li><p><strong>${esc(s.title)}</strong> — ${esc(s.body)}</p></li>`
+        `<li><p><strong>${esc(s.title)}</strong> - ${esc(s.body)}</p></li>`
     ).join('');
 
     const div = document.createElement('div');
     div.className = 'section-block';
-    div.innerHTML = `<h3>How to Start</h3><ol class="steps">${items}</ol>`;
+    div.innerHTML = `<h3>Suggested Approach</h3><ol class="steps">${items}</ol>`;
+    return div;
+}
+
+function renderAgentPrompt(prompt) {
+    const div = document.createElement('div');
+    div.className = 'section-block';
+    div.innerHTML = `
+        <h3>AI Agent Instructions</h3>
+        <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:var(--space-3);line-height:1.5">
+            Copy-paste this prompt into your AI agent to get started:
+        </p>
+        <div class="code-block agent-prompt-block" style="white-space:pre-wrap;cursor:pointer;position:relative" title="Click to copy">
+            ${esc(prompt)}
+        </div>
+        <button class="copy-btn" style="margin-top:var(--space-2);padding:5px 12px;font-size:var(--text-sm);border:1px solid var(--border);border-radius:6px;background:var(--bg-secondary);color:var(--text-secondary);cursor:pointer">
+            Copy to clipboard
+        </button>`;
+
+    // Wire up copy button after insertion
+    setTimeout(() => {
+        const btn = div.querySelector('.copy-btn');
+        if (btn) {
+            btn.addEventListener('click', () => {
+                navigator.clipboard.writeText(prompt).then(() => {
+                    btn.textContent = 'Copied!';
+                    setTimeout(() => { btn.textContent = 'Copy to clipboard'; }, 2000);
+                });
+            });
+        }
+    }, 0);
+
     return div;
 }
 
@@ -297,7 +328,7 @@ function renderBoundsAccordion(bounds) {
         <li>
             <span class="mod-key">${esc(b.mod)}</span>
             <span class="bound-detail">
-                <span class="bound-name">${esc(b.name)}</span> — ${esc(b.formula)}
+                <span class="bound-name">${esc(b.name)}:</span> ${esc(b.formula)}
             </span>
         </li>`).join('');
 
@@ -313,7 +344,15 @@ function renderBoundsAccordion(bounds) {
 }
 
 function renderRefsAccordion(refs) {
-    const items = refs.map(r => `<li>${esc(r)}</li>`).join('');
+    const items = refs.map(r => {
+        if (typeof r === 'object' && r.text) {
+            if (r.url) {
+                return `<li><a href="${esc(r.url)}" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">${esc(r.text)}</a></li>`;
+            }
+            return `<li>${esc(r.text)}</li>`;
+        }
+        return `<li>${esc(r)}</li>`;
+    }).join('');
 
     const details = document.createElement('details');
     details.className = 'accordion';
@@ -384,7 +423,6 @@ async function renderDetail(container, meta, showBack) {
         <h2>${esc(data.title)}</h2>
         <div class="problem-meta">
             <span class="tag tag--domain">${esc(data.domain)}</span>
-            <span class="tag tag--open">${esc(data.statusLabel)}</span>
         </div>`;
     section.appendChild(header);
 
@@ -413,12 +451,18 @@ async function renderDetail(container, meta, showBack) {
 
     section.appendChild(renderDivider());
 
-    // Two-column: submission + how to start
+    // Two-column: submission + suggested approach
     const twocol = document.createElement('div');
     twocol.className = 'two-col';
     if (data.submissionExample) twocol.appendChild(renderSubmissionBlock(data));
-    if (data.howToStart)        twocol.appendChild(renderHowToStart(data.howToStart));
+    const steps = data.suggestedApproach || data.howToStart;
+    if (steps) twocol.appendChild(renderSuggestedApproach(steps));
     section.appendChild(twocol);
+
+    // Agent prompt (copy-pasteable)
+    if (data.agentPrompt) {
+        section.appendChild(renderAgentPrompt(data.agentPrompt));
+    }
 
     section.appendChild(renderDivider());
 
