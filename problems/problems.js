@@ -341,7 +341,7 @@ function renderApproachSection(data) {
             <div style="margin-top:var(--space-6)">
                 <h4 style="margin-bottom:var(--space-3);font-size:var(--text-base)">AI Agent Instructions</h4>
                 <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:var(--space-3);line-height:1.5">
-                    Copy the button below to get a complete prompt you can paste into your AI agent. It includes the problem description, constraints, references, and task instructions.
+                    Click the button below to get a complete prompt you can paste into your AI agent. It includes the problem description, constraints, references, and task instructions.
                 </p>
                 <button class="copy-agent-btn">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right:5px">
