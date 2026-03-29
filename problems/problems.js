@@ -1,11 +1,11 @@
 /* ================================================================
-   problems.js — Verifiable Problems page logic
+   problems.js  -  Verifiable Problems page logic
    Handles routing, data fetching, and DOM rendering.
    ================================================================ */
 
 'use strict';
 
-// ===== Utilities =====
+/* ---------- Utilities ---------- */
 
 function esc(str) {
     if (str == null) return '';
@@ -16,7 +16,6 @@ function esc(str) {
         .replace(/"/g, '&quot;');
 }
 
-// Convert "2^22" notation to HTML with <sup> tags
 function formatBest(str) {
     if (!str) return null;
     return esc(String(str)).replace(/(\w[\w.]*)\^(\d+)/g, '$1<sup>$2</sup>');
@@ -32,13 +31,8 @@ function showError(container, msg) {
     container.innerHTML = `<div class="error-state"><strong>Error:</strong> ${esc(msg)}</div>`;
 }
 
-// ===== Syntax highlight a JSON string for display =====
 function highlightJSON(str) {
-    const escaped = str
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-
+    const escaped = str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     return escaped
         .replace(/(&quot;[\w\s]+&quot;)\s*:/g, '<span class="tok-key">$1</span>:')
         .replace(/\b(-?\d+)\b/g, '<span class="tok-num">$1</span>')
@@ -46,7 +40,15 @@ function highlightJSON(str) {
         .replace(/\.\.\./g, '<span class="tok-ellip">...</span>');
 }
 
-// ===== Detect leaderboard type from row data =====
+function el(tag, cls, html) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html != null) e.innerHTML = html;
+    return e;
+}
+
+/* ---------- Leaderboard type detection ---------- */
+
 function detectLeaderboardType(rows) {
     if (!rows || rows.length === 0) return 'generic';
     const first = rows[0];
@@ -57,7 +59,7 @@ function detectLeaderboardType(rows) {
     return 'generic';
 }
 
-// ===== Renderers =====
+/* ---------- Problem cards (index view) ---------- */
 
 function renderProblemCard(meta) {
     const a = document.createElement('a');
@@ -68,10 +70,9 @@ function renderProblemCard(meta) {
             <div class="problem-card__left">
                 <div class="problem-card__meta">
                     <span class="tag tag--domain">${esc(meta.domain)}</span>
-                    <span class="tag tag--open">${esc(meta.statusLabel)}</span>
                 </div>
                 <h3>${esc(meta.title)}</h3>
-                <p>${esc(meta.tagline)}</p>
+                <p>${esc(meta.subtitle || '')}</p>
             </div>
             <div class="problem-card__right">
                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -82,182 +83,203 @@ function renderProblemCard(meta) {
     return a;
 }
 
-// ===== Leaderboard renderers by type =====
+/* ---------- Leaderboard renderers ---------- */
 
-function renderHadamardLeaderboard(lb) {
-    const rows = lb.rows.map(row => {
-        const bestHTML = row.best ? formatBest(row.best) : '<span style="color:var(--text-tertiary)">—</span>';
+function renderHadamardLeaderboard(lb, collapsed) {
+    const maxVisible = collapsed ? 10 : lb.rows.length;
+    const rows = lb.rows.map((row, i) => {
+        const bestHTML = row.best ? formatBest(row.best) : '<span style="color:var(--text-tertiary)">-</span>';
         const pctHTML = (row.pct != null)
             ? `<div class="pct-cell">
-                   <div class="pct-bar-track">
-                       <div class="pct-bar-fill" style="width:${row.pct}%"></div>
-                   </div>
+                   <div class="pct-bar-track"><div class="pct-bar-fill" style="width:${row.pct}%"></div></div>
                    <span class="pct-value">${row.pct.toFixed(2)}%</span>
                </div>`
-            : `<span class="pct-unknown">—</span>`;
-        const starTag = row.note
-            ? ` <span class="tag tag--star" title="${esc(row.note)}">★</span>`
-            : '';
-
+            : `<span class="pct-unknown">-</span>`;
+        const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
+        const hidden = i >= maxVisible ? ' style="display:none" data-extra-row' : '';
         return `
-        <tr${row.note ? ' class="row-highlight"' : ''}>
-            <td class="td-n"><div class="n-label">${row.n}${starTag}</div></td>
+        <tr${hidden}>
+            <td class="td-n"><div class="n-label">${row.n}</div>${noteHTML}</td>
             <td class="td-mod">${row.mod4}</td>
             <td class="td-best">${bestHTML}</td>
             <td class="td-pct">${pctHTML}</td>
-            <td class="td-status"><span class="status-open"><span class="status-dot"></span>Open</span></td>
         </tr>`;
     }).join('');
+
+    const showMore = (collapsed && lb.rows.length > maxVisible)
+        ? `<tr class="show-more-row"><td colspan="4" style="text-align:center;padding:var(--space-3)"><button class="show-more-btn">Show all ${lb.rows.length} rows</button></td></tr>`
+        : '';
 
     return `
         <table class="leaderboard" aria-label="Leaderboard">
             <thead><tr>
-                <th>n</th>
-                <th class="td-mod">n mod 4</th>
-                <th>Best Known (factored)</th>
-                <th>% of Bound</th>
-                <th>Status</th>
+                <th>n</th><th class="td-mod">n mod 4</th><th>Best Known (factored)</th><th>% of Bound</th>
             </tr></thead>
-            <tbody>${rows}</tbody>
+            <tbody>${rows}${showMore}</tbody>
         </table>`;
 }
 
 function renderConwayLeaderboard(lb) {
     const rows = lb.rows.map(row => {
-        const statusClass = row.status === 'Unknown' ? 'status-unknown' : 'status-exists';
         const statusHTML = row.status === 'Unknown'
-            ? '<span class="status-open"><span class="status-dot"></span>Unknown</span>'
+            ? '<span class="status-open"><span class="status-dot"></span>Open</span>'
             : `<span class="status-solved">${esc(row.status)}</span>`;
-        const noteHTML = row.note ? ` <span class="tag tag--star" title="${esc(row.note)}">★</span>` : '';
-
+        const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
         return `
-        <tr${row.status === 'Unknown' ? ' class="row-highlight"' : ''}>
-            <td class="td-n"><div class="n-label">${row.n.toLocaleString()}${noteHTML}</div></td>
+        <tr>
+            <td class="td-n"><div class="n-label">${row.n.toLocaleString()}</div>${noteHTML}</td>
             <td class="td-best" style="font-size:0.82rem">${esc(row.params)}</td>
             <td class="td-status">${statusHTML}</td>
         </tr>`;
     }).join('');
-
     return `
         <table class="leaderboard" aria-label="Leaderboard">
-            <thead><tr>
-                <th>Vertices</th>
-                <th>Parameters</th>
-                <th>Status</th>
-            </tr></thead>
+            <thead><tr><th>Vertices</th><th>Parameters</th><th>Status</th></tr></thead>
             <tbody>${rows}</tbody>
         </table>`;
 }
 
-function renderTensorLeaderboard(lb) {
-    const rows = lb.rows.map(row => {
-        // Format "2,3,4" as "2 × 3 × 4"
-        const sizeLabel = String(row.n).replace(/,/g, ' × ');
-        const noteHTML = row.note ? ` <span class="tag tag--star" title="${esc(row.note)}">★</span>` : '';
+function renderTensorLeaderboard(lb, collapsed) {
+    const maxVisible = collapsed ? 8 : lb.rows.length;
+    const rows = lb.rows.map((row, i) => {
+        const sizeLabel = String(row.n).replace(/,/g, ' \u00d7 ');
+        const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
         const pctHTML = (row.pct != null)
             ? `<div class="pct-cell">
-                   <div class="pct-bar-track">
-                       <div class="pct-bar-fill" style="width:${row.pct}%"></div>
-                   </div>
+                   <div class="pct-bar-track"><div class="pct-bar-fill" style="width:${row.pct}%"></div></div>
                    <span class="pct-value">${row.pct.toFixed(1)}%</span>
                </div>`
-            : `<span class="pct-unknown">—</span>`;
-
+            : `<span class="pct-unknown">-</span>`;
+        const hidden = i >= maxVisible ? ' style="display:none" data-extra-row' : '';
         return `
-        <tr${row.pct != null ? ' class="row-highlight"' : ''}>
-            <td class="td-n"><div class="n-label">${esc(sizeLabel)}${noteHTML}</div></td>
+        <tr${hidden}>
+            <td class="td-n"><div class="n-label">${esc(sizeLabel)}</div>${noteHTML}</td>
             <td class="td-mod">${row.naive}</td>
             <td class="td-best" style="font-weight:700">${row.best}</td>
             <td class="td-pct">${pctHTML}</td>
         </tr>`;
     }).join('');
 
+    const showMore = (collapsed && lb.rows.length > maxVisible)
+        ? `<tr class="show-more-row"><td colspan="4" style="text-align:center;padding:var(--space-3)"><button class="show-more-btn">Show all ${lb.rows.length} rows</button></td></tr>`
+        : '';
+
     return `
         <table class="leaderboard" aria-label="Leaderboard">
-            <thead><tr>
-                <th>Size</th>
-                <th class="td-mod">Naive</th>
-                <th>Record</th>
-                <th>% of Naive</th>
-            </tr></thead>
-            <tbody>${rows}</tbody>
+            <thead><tr><th>Size</th><th class="td-mod">Naive</th><th>Record</th><th>% of Naive</th></tr></thead>
+            <tbody>${rows}${showMore}</tbody>
         </table>`;
 }
 
 function renderStillLifeLeaderboard(lb) {
     const rows = lb.rows.map(row => {
-        const noteHTML = row.note ? ` <span class="tag tag--star" title="${esc(row.note)}">★</span>` : '';
+        const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
         const pctHTML = (row.pct != null)
             ? `<div class="pct-cell">
-                   <div class="pct-bar-track">
-                       <div class="pct-bar-fill" style="width:${row.pct}%"></div>
-                   </div>
+                   <div class="pct-bar-track"><div class="pct-bar-fill" style="width:${row.pct}%"></div></div>
                    <span class="pct-value">${row.pct.toFixed(1)}%</span>
                </div>`
-            : `<span class="pct-unknown">—</span>`;
-
+            : `<span class="pct-unknown">-</span>`;
         return `
-        <tr${row.note && row.note.includes('Open') ? ' class="row-highlight"' : ''}>
-            <td class="td-n"><div class="n-label">${row.n} × ${row.n}${noteHTML}</div></td>
+        <tr>
+            <td class="td-n"><div class="n-label">${row.n} \u00d7 ${row.n}</div>${noteHTML}</td>
             <td class="td-best" style="font-weight:700">${row.best}</td>
             <td class="td-pct">${pctHTML}</td>
         </tr>`;
     }).join('');
-
     return `
         <table class="leaderboard" aria-label="Leaderboard">
-            <thead><tr>
-                <th>Box Size</th>
-                <th>Live Cells</th>
-                <th>Density (%)</th>
-            </tr></thead>
+            <thead><tr><th>Box Size</th><th>Live Cells</th><th>Density (%)</th></tr></thead>
             <tbody>${rows}</tbody>
         </table>`;
 }
 
-function renderLeaderboard(lb) {
+function renderLeaderboard(lb, collapsed) {
     const type = detectLeaderboardType(lb.rows);
     let tableHTML;
     switch (type) {
-        case 'hadamard':  tableHTML = renderHadamardLeaderboard(lb); break;
+        case 'hadamard':  tableHTML = renderHadamardLeaderboard(lb, collapsed); break;
         case 'conway':    tableHTML = renderConwayLeaderboard(lb); break;
-        case 'tensor':    tableHTML = renderTensorLeaderboard(lb); break;
+        case 'tensor':    tableHTML = renderTensorLeaderboard(lb, collapsed); break;
         case 'stilllife': tableHTML = renderStillLifeLeaderboard(lb); break;
-        default:          tableHTML = renderHadamardLeaderboard(lb); break;
+        default:          tableHTML = renderHadamardLeaderboard(lb, collapsed); break;
     }
 
-    const section = document.createElement('div');
-    section.className = 'leaderboard-section';
+    const section = el('div', 'leaderboard-section');
     section.innerHTML = `
         <div class="leaderboard-header">
             <h3>Current Records</h3>
             <span class="leaderboard-note">${esc(lb.note)}</span>
         </div>
         <div class="table-wrapper">${tableHTML}</div>`;
+
+    // Wire up "Show all" button
+    setTimeout(() => {
+        const btn = section.querySelector('.show-more-btn');
+        if (btn) {
+            btn.addEventListener('click', () => {
+                section.querySelectorAll('[data-extra-row]').forEach(r => r.style.display = '');
+                btn.closest('tr').remove();
+            });
+        }
+    }, 0);
+
     return section;
+}
+
+/* ---------- Section renderers ---------- */
+
+function renderAttribution(data) {
+    const attr = data.attribution;
+    if (!attr) return null;
+    const authors = attr.authors ? attr.authors.join(', ') : '';
+    const reviewers = attr.reviewers && attr.reviewers.length > 0
+        ? `Reviewed by ${attr.reviewers.join(', ')}`
+        : 'Reviewed by the CAISc 2026 Program Committee';
+    const div = el('div', 'attribution-line');
+    div.innerHTML = `<span class="attribution-text">${esc(authors)}. ${esc(reviewers)}.</span>`;
+    return div;
+}
+
+function renderSubmitCTA() {
+    const div = el('div', 'submit-cta');
+    div.innerHTML = `
+        <span class="btn btn--disabled">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right:5px">
+                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+            </svg>
+            Submit (opens April 15, 2026)
+        </span>`;
+    return div;
+}
+
+function renderOrigin(data) {
+    const div = el('div', 'context-box');
+    div.innerHTML = `<h3 class="section-heading">Origin</h3><p>${esc(data.origin)}</p>`;
+    return div;
+}
+
+function renderInstance(data) {
+    const p = el('p', 'problem-description');
+    p.textContent = data.instance;
+    return p;
 }
 
 function renderWarmup(warmup) {
     if (!warmup) return null;
-
-    const div = document.createElement('div');
-    div.className = 'section-block warmup-block';
-
-    // Format the matrix as a readable string
+    const div = el('div', 'section-block warmup-block');
     const matrixStr = warmup.matrix
         ? warmup.matrix.map(row => '  [' + row.join(', ') + ']').join('\n')
         : '';
-
     div.innerHTML = `
         <h3>${esc(warmup.title)}</h3>
         <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-4)">${esc(warmup.body)}</p>
-        ${matrixStr ? `<div class="code-block" style="font-size:0.78rem;line-height:1.5">[\n${matrixStr}\n]</div>` : ''}`;
+        ${matrixStr ? `<div class="code-block" style="font-size:0.78rem;line-height:1.5">[\\n${matrixStr}\\n]</div>` : ''}`;
     return div;
 }
 
 function renderSubmissionBlock(data) {
-    const div = document.createElement('div');
-    div.className = 'section-block';
+    const div = el('div', 'section-block');
     div.innerHTML = `
         <h3>Submission Format</h3>
         <div class="code-block">${highlightJSON(data.submissionExample)}</div>
@@ -266,67 +288,15 @@ function renderSubmissionBlock(data) {
                 <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
             </svg>
             ${esc(data.verification)}
-        </div>
-        <p style="margin-top:var(--space-4);font-size:var(--text-sm);color:var(--text-secondary);">
-            Submissions open April 15, 2026. Submit via GitHub.
-        </p>
-        <div style="margin-top:var(--space-3);">
-            <span class="btn btn--disabled">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right:5px">
-                    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
-                </svg>
-                Submit (opens April 15)
-            </span>
         </div>`;
     return div;
 }
 
-function renderSuggestedApproach(steps) {
-    const items = steps.map(s =>
-        `<li><p><strong>${esc(s.title)}</strong> - ${esc(s.body)}</p></li>`
-    ).join('');
-
-    const div = document.createElement('div');
-    div.className = 'section-block';
-    div.innerHTML = `<h3>Suggested Approach</h3><ol class="steps">${items}</ol>`;
-    return div;
-}
-
-function renderAgentPrompt(prompt) {
-    const div = document.createElement('div');
-    div.className = 'section-block';
-    div.innerHTML = `
-        <h3>AI Agent Instructions</h3>
-        <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:var(--space-3);line-height:1.5">
-            Copy-paste this prompt into your AI agent to get started:
-        </p>
-        <div class="code-block agent-prompt-block" style="white-space:pre-wrap;cursor:pointer;position:relative" title="Click to copy">
-            ${esc(prompt)}
-        </div>
-        <button class="copy-btn" style="margin-top:var(--space-2);padding:5px 12px;font-size:var(--text-sm);border:1px solid var(--border);border-radius:6px;background:var(--bg-secondary);color:var(--text-secondary);cursor:pointer">
-            Copy to clipboard
-        </button>`;
-
-    // Wire up copy button after insertion
-    setTimeout(() => {
-        const btn = div.querySelector('.copy-btn');
-        if (btn) {
-            btn.addEventListener('click', () => {
-                navigator.clipboard.writeText(prompt).then(() => {
-                    btn.textContent = 'Copied!';
-                    setTimeout(() => { btn.textContent = 'Copy to clipboard'; }, 2000);
-                });
-            });
-        }
-    }, 0);
-
-    return div;
-}
-
-function renderBoundsAccordion(bounds) {
+function renderBounds(bounds) {
+    if (!bounds || bounds.length === 0) return null;
     const rows = bounds.map(b => `
         <li>
-            <span class="mod-key">${esc(b.mod)}</span>
+            <span class="mod-key">${esc(b.label)}</span>
             <span class="bound-detail">
                 <span class="bound-name">${esc(b.name)}:</span> ${esc(b.formula)}
             </span>
@@ -337,32 +307,148 @@ function renderBoundsAccordion(bounds) {
     details.open = true;
     details.innerHTML = `
         <summary>Bounds &amp; Constraints</summary>
-        <div class="accordion-body">
-            <ul class="bounds-list">${rows}</ul>
-        </div>`;
+        <div class="accordion-body"><ul class="bounds-list">${rows}</ul></div>`;
     return details;
 }
 
-function renderRefsAccordion(refs) {
-    const items = refs.map(r => {
+function renderScoring(scoring) {
+    if (!scoring) return null;
+    const metrics = scoring.metrics ? scoring.metrics.map(m =>
+        `<li><strong>${esc(m.name)}:</strong> ${esc(m.description)}</li>`
+    ).join('') : '';
+
+    const div = el('div', 'section-block scoring-block');
+    div.innerHTML = `
+        <h3>Scoring &amp; Evaluation</h3>
+        <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-3)">${esc(scoring.summary)}</p>
+        ${metrics ? `<ul class="scoring-metrics">${metrics}</ul>` : ''}
+        ${scoring.note ? `<p class="scoring-note">${esc(scoring.note)}</p>` : ''}`;
+    return div;
+}
+
+function renderApproachSection(data) {
+    const steps = data.suggestedApproach || [];
+    const items = steps.map(s =>
+        `<li><p><strong>${esc(s.title)}:</strong> ${esc(s.body)}</p></li>`
+    ).join('');
+
+    const div = el('div', 'section-block');
+    let html = '';
+    if (items) html += `<ol class="steps">${items}</ol>`;
+
+    if (data.agentPrompt) {
+        html += `
+            <div style="margin-top:var(--space-6)">
+                <h4 style="margin-bottom:var(--space-3);font-size:var(--text-base)">AI Agent Instructions</h4>
+                <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:var(--space-3);line-height:1.5">
+                    Copy the button below to get a complete prompt you can paste into your AI agent. It includes the problem description, constraints, references, and task instructions.
+                </p>
+                <button class="copy-agent-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right:5px">
+                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                    </svg>
+                    Copy agent.md
+                </button>
+            </div>`;
+    }
+
+    div.innerHTML = html;
+    return div;
+}
+
+function renderReferences(refs) {
+    if (!refs || refs.length === 0) return null;
+    const items = refs.map((r, i) => {
+        const num = i + 1;
         if (typeof r === 'object' && r.text) {
             if (r.url) {
-                return `<li><a href="${esc(r.url)}" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">${esc(r.text)}</a></li>`;
+                return `<li><span class="ref-num">[${num}]</span> <a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.text)}</a></li>`;
             }
-            return `<li>${esc(r.text)}</li>`;
+            return `<li><span class="ref-num">[${num}]</span> ${esc(r.text)}</li>`;
         }
-        return `<li>${esc(r)}</li>`;
+        return `<li><span class="ref-num">[${num}]</span> ${esc(r)}</li>`;
     }).join('');
 
+    const div = el('div', 'references-section');
+    div.innerHTML = `<h3>References</h3><ol class="refs-list refs-list--numbered">${items}</ol>`;
+    return div;
+}
+
+function renderCiteBlock(data) {
+    const attr = data.attribution;
+    if (!attr) return null;
+    const authors = attr.authors ? attr.authors.join(', ') : 'CAISc 2026';
+    const year = '2026';
+    const title = data.title;
+
+    const div = el('div', 'cite-block');
+    div.innerHTML = `
+        <h3>Cite This Problem</h3>
+        <div class="code-block cite-bibtex">${esc(authors)} (${year}). ${esc(title)}. CAISc 2026 Verifiable Problems Track. https://caisc2026.github.io/problems/?problem=${esc(data.id)}</div>`;
+    return div;
+}
+
+function renderWitnessExample(witness) {
+    if (!witness) return null;
     const details = document.createElement('details');
     details.className = 'accordion';
+
+    let matrixHTML = '';
+    if (witness.matrix) {
+        const rows = witness.matrix.map(row =>
+            '  [' + row.map(v => v === 1 ? '+1' : '-1').join(', ') + ']'
+        ).join('\n');
+        matrixHTML = `<div class="code-block" style="font-size:0.72rem;line-height:1.4;max-height:300px;overflow:auto;margin-top:var(--space-3)">[\n${rows}\n]</div>`;
+    }
+
     details.innerHTML = `
-        <summary>References</summary>
+        <summary>Record-Holding Matrix</summary>
         <div class="accordion-body">
-            <ul class="refs-list">${items}</ul>
+            <p style="font-size:0.875rem;color:var(--text-secondary);line-height:1.6">${esc(witness.note)}</p>
+            ${matrixHTML}
         </div>`;
     return details;
 }
+
+/* ---------- Build agent.md content ---------- */
+
+function buildAgentMD(data) {
+    let md = `# ${data.title}\n\n`;
+
+    md += `## Task\n${data.agentPrompt}\n\n`;
+    md += `## Problem\n${data.instance}\n\n`;
+    md += `## Background\n${data.origin}\n\n`;
+
+    if (data.bounds && data.bounds.length > 0) {
+        md += `## Bounds & Constraints\n`;
+        data.bounds.forEach(b => { md += `- **${b.name}** (${b.label}): ${b.formula}\n`; });
+        md += '\n';
+    }
+
+    if (data.scoring) {
+        md += `## Scoring\n${data.scoring.summary}\n`;
+        if (data.scoring.metrics) {
+            data.scoring.metrics.forEach(m => { md += `- **${m.name}:** ${m.description}\n`; });
+        }
+        md += '\n';
+    }
+
+    md += `## Submission Format\n\`\`\`json\n${data.submissionExample}\n\`\`\`\n\n`;
+    md += `## Verification\n${data.verification}\n\n`;
+
+    if (data.references && data.references.length > 0) {
+        md += `## References\n`;
+        data.references.forEach((r, i) => {
+            const text = (typeof r === 'object') ? r.text : r;
+            const url = (typeof r === 'object' && r.url) ? ` ${r.url}` : '';
+            md += `[${i + 1}] ${text}${url}\n`;
+        });
+    }
+
+    return md;
+}
+
+/* ---------- Divider ---------- */
 
 function renderDivider() {
     const hr = document.createElement('hr');
@@ -370,115 +456,206 @@ function renderDivider() {
     return hr;
 }
 
-// ===== Page views =====
+/* ---------- Video map for manim animations ---------- */
+const VIDEO_MAP = {
+    'hadamard-maximal-determinant': 'videos/HadamardScene.mp4',
+    'conways-99-graph': 'videos/ConwayScene.mp4',
+    'matrix-multiplication-tensor-rank': 'videos/TensorRankScene.mp4',
+    'connected-still-life': 'videos/StillLifeScene.mp4'
+};
 
-async function renderIndex(container) {
-    let index;
-    try { index = await fetchJSON('index.json'); }
-    catch (e) { showError(container, e.message); return; }
-
-    if (!index.problems || index.problems.length === 0) {
-        container.innerHTML = '<p style="color:var(--text-secondary);padding:var(--space-8) var(--content-padding)">No problems published yet. Check back April 15, 2026.</p>';
-        return;
-    }
-
-    // Single problem: skip the list and jump straight to detail
-    if (index.problems.length === 1) {
-        await renderDetail(container, index.problems[0], false);
-        return;
-    }
-
-    // Multiple problems: card list
-    const section = document.createElement('section');
-    section.className = 'problems-index';
-    for (const meta of index.problems) {
-        section.appendChild(renderProblemCard(meta));
-    }
-    container.replaceWith(section);
+function renderVideo(problemId) {
+    const src = VIDEO_MAP[problemId];
+    if (!src) return null;
+    const div = el('div', 'video-block');
+    div.innerHTML = `
+        <video controls preload="metadata" playsinline>
+            <source src="${src}" type="video/mp4">
+        </video>`;
+    return div;
 }
+
+/* ---------- Detail page ---------- */
 
 async function renderDetail(container, meta, showBack) {
     let data;
     try { data = await fetchJSON(meta.file); }
     catch (e) { showError(container, e.message); return; }
 
-    const section = document.createElement('section');
-    section.className = 'problem-detail';
+    // Collapse hero when viewing detail
+    const hero = document.querySelector('.problems-hero');
+    if (hero) hero.style.display = 'none';
+
+    const section = el('section', 'problem-detail');
 
     // Back link
     if (showBack) {
-        const back = document.createElement('a');
-        back.className = 'back-link';
+        const back = el('a', 'back-link');
         back.href = 'index.html';
-        back.innerHTML = `
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
-            All Problems`;
+        back.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg> All Problems`;
         section.appendChild(back);
     }
 
-    // Header
-    const header = document.createElement('div');
-    header.className = 'problem-header';
-    header.innerHTML = `
-        <h2>${esc(data.title)}</h2>
-        <div class="problem-meta">
-            <span class="tag tag--domain">${esc(data.domain)}</span>
-        </div>`;
+    /* 1. HEADER: title only, clean */
+    const header = el('div', 'problem-header');
+    header.innerHTML = `<h2>${esc(data.title)}</h2>`;
     section.appendChild(header);
 
-    // Description
-    const desc = document.createElement('p');
-    desc.className = 'problem-description';
-    desc.textContent = data.description;
-    section.appendChild(desc);
+    /* 2. THE PROBLEM: text left, video right */
+    const problemCard = el('div', 'section-card');
+    const problemHeading = el('h3', 'section-card__title');
+    problemHeading.textContent = 'The Problem';
+    problemCard.appendChild(problemHeading);
 
-    // Context
-    const ctx = document.createElement('div');
-    ctx.className = 'context-box';
-    ctx.innerHTML = `<p>${esc(data.context)}</p>`;
-    section.appendChild(ctx);
-
-    // Warmup (Conway)
-    if (data.warmup) {
-        const warmupEl = renderWarmup(data.warmup);
-        if (warmupEl) section.appendChild(warmupEl);
+    const videoEl = renderVideo(data.id);
+    if (videoEl) {
+        // Two-column: text + video side-by-side
+        const problemGrid = el('div', 'problem-grid');
+        const textCol = el('div', 'problem-grid__text');
+        textCol.appendChild(renderInstance(data));
+        textCol.appendChild(renderOrigin(data));
+        if (data.warmup) {
+            const warmupEl = renderWarmup(data.warmup);
+            if (warmupEl) textCol.appendChild(warmupEl);
+        }
+        problemGrid.appendChild(textCol);
+        const videoCol = el('div', 'problem-grid__video');
+        videoCol.appendChild(videoEl);
+        problemGrid.appendChild(videoCol);
+        problemCard.appendChild(problemGrid);
+    } else {
+        problemCard.appendChild(renderInstance(data));
+        problemCard.appendChild(renderOrigin(data));
+        if (data.warmup) {
+            const warmupEl = renderWarmup(data.warmup);
+            if (warmupEl) problemCard.appendChild(warmupEl);
+        }
     }
 
-    // Leaderboard
+    section.appendChild(problemCard);
+
+    /* 3. HOW TO SUBMIT (solution chunk) */
+    const submitCard = el('div', 'section-card');
+    const solHeading = el('h3', 'section-card__title');
+    solHeading.textContent = 'How to Submit';
+    submitCard.appendChild(solHeading);
+
+    const solGrid = el('div', 'two-col');
+    solGrid.appendChild(renderSubmissionBlock(data));
+
+    // Right column: bounds
+    const boundsEl = renderBounds(data.bounds);
+    if (boundsEl) {
+        const boundsWrap = el('div', 'section-block');
+        boundsWrap.appendChild(boundsEl);
+        solGrid.appendChild(boundsWrap);
+    }
+    submitCard.appendChild(solGrid);
+
+    // Witness example (Hadamard)
+    if (data.witnessExample) {
+        submitCard.appendChild(renderWitnessExample(data.witnessExample));
+    }
+
+    // Scoring
+    const scoringEl = renderScoring(data.scoring);
+    if (scoringEl) submitCard.appendChild(scoringEl);
+
+    // Submit button at bottom of this section
+    const submitBtnWrap = el('div', 'submit-cta-section');
+    submitBtnWrap.innerHTML = `
+        <span class="btn btn--disabled">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+            </svg>
+            Submit (opens April 15, 2026)
+        </span>`;
+    submitCard.appendChild(submitBtnWrap);
+
+    section.appendChild(submitCard);
+
+    /* 4. HOW TO APPROACH */
+    const approachCard = el('div', 'section-card');
+    const appHeading = el('h3', 'section-card__title');
+    appHeading.textContent = 'How to Approach';
+    approachCard.appendChild(appHeading);
+    approachCard.appendChild(renderApproachSection(data));
+    section.appendChild(approachCard);
+
+    /* 5. CURRENT RECORDS (leaderboard, moved down) */
     if (data.leaderboard) {
-        section.appendChild(renderLeaderboard(data.leaderboard));
+        const lbCard = el('div', 'section-card');
+        lbCard.appendChild(renderLeaderboard(data.leaderboard, true));
+        section.appendChild(lbCard);
     }
 
-    section.appendChild(renderDivider());
-
-    // Two-column: submission + suggested approach
-    const twocol = document.createElement('div');
-    twocol.className = 'two-col';
-    if (data.submissionExample) twocol.appendChild(renderSubmissionBlock(data));
-    const steps = data.suggestedApproach || data.howToStart;
-    if (steps) twocol.appendChild(renderSuggestedApproach(steps));
-    section.appendChild(twocol);
-
-    // Agent prompt (copy-pasteable)
-    if (data.agentPrompt) {
-        section.appendChild(renderAgentPrompt(data.agentPrompt));
+    /* 6. REFERENCES (flat numbered list) */
+    if (data.references) {
+        const refsCard = el('div', 'section-card');
+        refsCard.appendChild(renderReferences(data.references));
+        section.appendChild(refsCard);
     }
 
-    section.appendChild(renderDivider());
+    /* 7. CITE THIS PROBLEM */
+    const citeCard = el('div', 'section-card');
+    const citeEl = renderCiteBlock(data);
+    if (citeEl) citeCard.appendChild(citeEl);
+    section.appendChild(citeCard);
 
-    // Technical details
-    const techHeading = document.createElement('h3');
-    techHeading.style.cssText = 'margin-top:0;margin-bottom:var(--space-4);font-size:var(--text-lg)';
-    techHeading.textContent = 'Technical Details';
-    section.appendChild(techHeading);
+    container.replaceWith(section);
 
-    if (data.bounds)     section.appendChild(renderBoundsAccordion(data.bounds));
-    if (data.references) section.appendChild(renderRefsAccordion(data.references));
+    // Wire up "Copy agent.md" button
+    const copyBtn = section.querySelector('.copy-agent-btn');
+    if (copyBtn && data.agentPrompt) {
+        copyBtn.addEventListener('click', () => {
+            const md = buildAgentMD(data);
+            navigator.clipboard.writeText(md).then(() => {
+                copyBtn.innerHTML = `
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right:5px">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                    Copied!`;
+                setTimeout(() => {
+                    copyBtn.innerHTML = `
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right:5px">
+                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                        </svg>
+                        Copy agent.md`;
+                }, 2000);
+            });
+        });
+    }
+}
 
+/* ---------- Index view ---------- */
+
+async function renderIndex(container) {
+    let index;
+    try { index = await fetchJSON('index.json'); }
+    catch (e) { showError(container, e.message); return; }
+
+    // Show hero on index view
+    const hero = document.querySelector('.problems-hero');
+    if (hero) hero.style.display = '';
+
+    if (!index.problems || index.problems.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-secondary);padding:var(--space-8) var(--content-padding)">No problems published yet. Check back April 15, 2026.</p>';
+        return;
+    }
+
+    if (index.problems.length === 1) {
+        await renderDetail(container, index.problems[0], false);
+        return;
+    }
+
+    const section = el('section', 'problems-index');
+    for (const meta of index.problems) {
+        section.appendChild(renderProblemCard(meta));
+    }
     container.replaceWith(section);
 }
 
-// ===== Bootstrap =====
+/* ---------- Bootstrap ---------- */
 
 async function init() {
     const container = document.getElementById('main-content');

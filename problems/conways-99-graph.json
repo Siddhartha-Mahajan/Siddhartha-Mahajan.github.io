@@ -2,12 +2,34 @@
   "id": "conways-99-graph",
   "title": "Conway's 99-Graph",
   "domain": "Math - Graph Theory",
-  "statusLabel": "Open",
-  "tagline": "$1,000 prize. 55 years. No one knows if this graph exists.",
 
-  "description": "Build a graph on 99 vertices where every vertex has exactly 14 neighbors, every pair of adjacent vertices shares exactly 1 common neighbor, and every pair of non-adjacent vertices shares exactly 2. This is called srg(99, 14, 1, 2). No one has built one or proved it impossible. Conway offered $1,000 for either.",
+  "attribution": {
+    "authors": ["Siddhartha Mahajan (Lossfunk)"],
+    "reviewers": []
+  },
 
-  "context": "The parameters pass every known necessary condition (integrality, Krein, absolute bound), yet no one has built the graph or ruled it out. The graph cannot be vertex-transitive, which eliminates all standard algebraic constructions. If it exists, it has to be found by search. Conway offered the prize before his death in 2020; it was never claimed. A smaller cousin exists: the Paley graph on 9 vertices satisfies srg(9, 4, 1, 2).",
+  "origin": "In 1971, John Conway asked whether a strongly regular graph with parameters srg(99, 14, 1, 2) exists. The parameters pass every known necessary condition (integrality, Krein, absolute bound), yet no one has built the graph or ruled it out. The graph cannot be vertex-transitive, which eliminates all standard algebraic constructions. If it exists, it has to be found by search. Conway offered a $1,000 prize before his death in 2020; it was never claimed.",
+
+  "instance": "Build a graph on 99 vertices where every vertex has exactly 14 neighbors, every pair of adjacent vertices shares exactly 1 common neighbor, and every pair of non-adjacent vertices shares exactly 2. This is called srg(99, 14, 1, 2). Submit a 99 x 99 adjacency matrix of 0s and 1s. If it satisfies all constraints, you have solved a 55-year-old open problem.",
+
+  "scoring": {
+    "summary": "This is a binary existence problem: either the graph exists or it does not. We score partial progress by measuring how close a submitted graph comes to satisfying all constraints.",
+    "metrics": [
+      {
+        "name": "Constraint satisfaction rate",
+        "description": "For a submitted 99 x 99 adjacency matrix, we check three classes of constraints: (1) degree: each vertex must have degree 14 (99 constraints), (2) lambda: each adjacent pair must share exactly 1 common neighbor, (3) mu: each non-adjacent pair must share exactly 2 common neighbors. The total is 99 + 4851 = 4950 constraints. Your score is (constraints satisfied / 4950) as a percentage."
+      },
+      {
+        "name": "Perfect score",
+        "description": "A score of 100% means the graph exists and you found it. This would resolve the problem."
+      },
+      {
+        "name": "Impossibility proof",
+        "description": "A proof that no such graph exists is also a valid submission. This cannot be auto-verified and will undergo manual review by the Program Committee."
+      }
+    ],
+    "note": "Even scores in the high 90s represent significant partial progress. The best known search attempts have found graphs satisfying all but a handful of constraints."
+  },
 
   "warmup": {
     "title": "Warm-up: srg(9, 4, 1, 2)",
@@ -25,9 +47,18 @@
     ]
   },
 
+  "submissionExample": "{\n  \"matrix\": [\n    [0, 1, 0, 1, ...],\n    [1, 0, 1, 0, ...],\n    ...\n  ]\n}",
+
+  "verification": "We check: (1) 99 x 99 symmetric matrix with zero diagonal and all entries 0 or 1, (2) every row sums to 14, (3) A^2[i][j] = 1 whenever A[i][j] = 1 (lambda = 1), (4) A^2[i][j] = 2 whenever A[i][j] = 0 and i != j (mu = 2). Runs in milliseconds.",
+
+  "bounds": [
+    { "label": "Eigenvalues", "name": "Forced spectrum", "formula": "14 (multiplicity 1), 2 (multiplicity 77), -7 (multiplicity 21)" },
+    { "label": "Symmetry", "name": "Not vertex-transitive", "formula": "Rules out Paley, Latin square, and most algebraic constructions" },
+    { "label": "Feasibility", "name": "All necessary conditions pass", "formula": "k(k - lambda - 1) = (v - k - 1) * mu = 168. Krein and absolute bound satisfied." }
+  ],
+
   "leaderboard": {
-    "note": "The (lambda=1, mu=2) SRG family",
-    "columns": ["Vertices", "Parameters", "Status"],
+    "note": "The (lambda=1, mu=2) strongly regular graph family",
     "rows": [
       { "n": 9,    "params": "srg(9, 4, 1, 2)",       "status": "Exists (unique)", "note": "Paley graph of order 9" },
       { "n": 99,   "params": "srg(99, 14, 1, 2)",      "status": "Unknown",        "note": "Conway's problem" },
@@ -37,30 +68,20 @@
     ]
   },
 
-  "submissionExample": "{\n  \"matrix\": [\n    [0, 1, 0, 1, ...],\n    [1, 0, 1, 0, ...],\n    ...\n  ]\n}",
-
-  "verification": "Checks: 99 x 99 symmetric matrix, zero diagonal, all entries 0/1, every row sums to 14. Then computes A^2 and checks that A^2[i][j] = 1 whenever A[i][j] = 1 (lambda) and A^2[i][j] = 2 whenever A[i][j] = 0 and i != j (mu). Milliseconds.",
-
   "suggestedApproach": [
     { "title": "Study the 9-vertex case", "body": "Verify the warm-up matrix satisfies srg(9, 4, 1, 2). This builds intuition for the constraint structure." },
-    { "title": "Constraint propagation", "body": "Assign edges incrementally. After each, propagate degree-14 and common-neighbor constraints. Most partial assignments contradict quickly." },
-    { "title": "SAT / CSP encoding", "body": "4851 binary variables (upper triangle). Constraints: row sums = 14, A^2 values forced. Modern SAT solvers handle millions of clauses." },
+    { "title": "Constraint propagation", "body": "Assign edges incrementally. After each assignment, propagate degree-14 and common-neighbor constraints. Most partial assignments contradict quickly." },
+    { "title": "SAT / CSP encoding", "body": "4851 binary variables (upper triangle). Constraints: row sums = 14, A^2 values forced by lambda and mu. Modern SAT solvers handle millions of clauses." },
     { "title": "Simulated annealing", "body": "Start with a random 14-regular graph on 99 vertices. Score = number of pairs violating lambda/mu. Flip edges to reduce violations." }
   ],
 
   "agentPrompt": "I want you to search for a strongly regular graph srg(99, 14, 1, 2): a graph on 99 vertices where every vertex has degree 14, every pair of adjacent vertices shares exactly 1 common neighbor, and every non-adjacent pair shares exactly 2. Represent the graph as a 99x99 symmetric adjacency matrix of 0s and 1s with zero diagonal. Try a combination of constraint propagation (build partial graphs, reject early when constraints are violated) and simulated annealing (start from random 14-regular graphs, swap edges to minimize constraint violations). If you find a valid graph, output the adjacency matrix as a JSON array of arrays.",
 
-  "bounds": [
-    { "mod": "Eigenvalues", "name": "Forced spectrum", "formula": "14 (mult 1), 2 (mult 77), -7 (mult 21)" },
-    { "mod": "Symmetry", "name": "Not vertex-transitive", "formula": "Rules out Paley, Latin square, and most algebraic constructions" },
-    { "mod": "Feasibility", "name": "All conditions pass", "formula": "k(k-lambda-1) = (v-k-1)*mu = 168. Krein and absolute bound satisfied." }
-  ],
-
   "references": [
-    { "text": "Wikipedia: Conway's 99-graph problem.", "url": "https://en.wikipedia.org/wiki/Conway%27s_99-graph_problem" },
-    { "text": "Brouwer's table of strongly regular graphs.", "url": "https://www.win.tue.nl/~aeb/graphs/srg/srgtab.html" },
-    { "text": "Brouwer, Cohen, Neumaier (1989). Distance-Regular Graphs. Springer.", "url": "https://doi.org/10.1007/978-3-642-74341-2" },
-    { "text": "Biggs, N.L. (1971). Finite Groups of Automorphisms. Cambridge University Press.", "url": null },
-    { "text": "Handbook of Combinatorial Designs, 2nd ed. CRC Press.", "url": null }
+    { "text": "Wikipedia contributors. Conway's 99-graph problem. Wikipedia.", "url": "https://en.wikipedia.org/wiki/Conway%27s_99-graph_problem" },
+    { "text": "Brouwer, A. E. Parameters of strongly regular graphs. Eindhoven University of Technology.", "url": "https://www.win.tue.nl/~aeb/graphs/srg/srgtab.html" },
+    { "text": "Brouwer, A. E., Cohen, A. M., & Neumaier, A. (1989). Distance-Regular Graphs. Springer.", "url": "https://doi.org/10.1007/978-3-642-74341-2" },
+    { "text": "Biggs, N. L. (1971). Finite Groups of Automorphisms. Cambridge University Press.", "url": null },
+    { "text": "Colbourn, C. J., & Dinitz, J. H. (Eds.). (2007). Handbook of Combinatorial Designs (2nd ed.). CRC Press.", "url": null }
   ]
 }

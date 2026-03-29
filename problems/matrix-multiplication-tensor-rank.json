@@ -2,62 +2,82 @@
   "id": "matrix-multiplication-tensor-rank",
   "title": "Matrix Multiplication Tensor Rank",
   "domain": "Math - Algebraic Complexity",
-  "statusLabel": "Open",
-  "tagline": "Strassen multiplied 2x2 with 7 mults in 1969. For 5x5, the record is 96. Beat it.",
 
-  "description": "Find a way to multiply matrices using fewer scalar multiplications than the current record. For example, the naive way to multiply two 3x3 matrices uses 27 multiplications, but it can be done in 23. For 5x5, naive uses 125 but the record is 96. Both square (n x n) and rectangular (n x m times m x p) cases count.",
+  "attribution": {
+    "authors": ["Siddhartha Mahajan (Lossfunk)"],
+    "reviewers": []
+  },
 
-  "context": "Strassen (1969) showed 2x2 can be done in 7 instead of 8, the first proof that matrix multiplication is sub-cubic. For 3x3, the record of 23 has stood since 1976 (lower bound: 19). DeepMind's AlphaTensor (2022) found improvements over finite fields but matched or fell short over the integers for these sizes. Rectangular cases like R(2,3,4) and R(3,3,6) are less studied and may be more tractable. All submissions must work over standard arithmetic (integers/rationals).",
+  "origin": "Strassen (1969) showed that two 2x2 matrices can be multiplied using 7 scalar multiplications instead of 8, the first proof that matrix multiplication is sub-cubic. For 3x3, the record of 23 multiplications has stood since 1976 (lower bound: 19). DeepMind's AlphaTensor (2022) found improvements over finite fields but matched or fell short over the integers for these sizes. Rectangular cases like R(2,3,4) and R(3,3,6) are less studied and may be more tractable.",
+
+  "instance": "Find a bilinear algorithm that multiplies two matrices of a given size using fewer scalar multiplications than the current record. For example, the naive way to multiply two 3x3 matrices uses 27 multiplications, but it can be done in 23. For 5x5, naive uses 125 but the record is 96. Choose any size from the records table (square or rectangular). Submit the tensor decomposition (U, V, W factor matrices) that defines your algorithm. All coefficients must be integers or rationals. All submissions must work over standard arithmetic, not finite fields.",
+
+  "scoring": {
+    "summary": "Each submission is scored on how many multiplications it saves relative to the naive algorithm.",
+    "metrics": [
+      {
+        "name": "Multiplication count",
+        "description": "The number of scalar multiplications in your algorithm for the chosen size (n, m, p). Lower is better."
+      },
+      {
+        "name": "Savings ratio",
+        "description": "savings = (naive - submitted) / naive. Strassen's 2x2 algorithm scores 1/8 = 12.5% savings. The 3x3 record scores 4/27 = 14.8%."
+      },
+      {
+        "name": "New record",
+        "description": "If your multiplication count is strictly less than the current best known for that size, you have a new record."
+      }
+    ],
+    "note": "Different valid decompositions at the same multiplication count are also interesting (distinct algorithms), though they score equally."
+  },
+
+  "submissionExample": "{\n  \"n\": 3, \"m\": 3, \"p\": 6,\n  \"num_multiplications\": 39,\n  \"U\": [[[...], ...], ...],\n  \"V\": [[[...], ...], ...],\n  \"W\": [[[...], ...], ...]\n}",
+
+  "verification": "We run your algorithm on 100 random integer matrix pairs of the declared size (n x m times m x p). We check exact equality with the true product A * B for every pair. All coefficients must be rational. If any test fails, the submission is rejected.",
+
+  "bounds": [
+    { "label": "R(2,2,2)", "name": "Optimal: 7", "formula": "Winograd (1971) proved 6 is impossible." },
+    { "label": "R(3,3,3)", "name": "Best 23, lower bound 19", "formula": "Laderman (1976). Gap open for 50 years." },
+    { "label": "R(4,4,4)", "name": "Best 49, lower bound 48", "formula": "Bl\u00e4ser (2003). Tight but optimality unproved." },
+    { "label": "R(5,5,5)", "name": "Best 96, lower bound ~60", "formula": "Sedoglavic et al. (2022). Largest gap." },
+    { "label": "Rectangular", "name": "Less studied", "formula": "Lower bounds weaker. R(2,3,4), R(3,3,6), R(4,4,5) all have room for improvement." },
+    { "label": "Exponent", "name": "omega <= 2.371552", "formula": "Williams, Xu, Xu, & Zhou (2024). Lower bound 2. Whether omega = 2 is open." }
+  ],
 
   "leaderboard": {
-    "note": "Records over integers/rationals. Finite-field results (e.g. AlphaTensor over F2) excluded.",
-    "columns": ["Size", "Naive", "Record", "Note"],
+    "note": "Records over integers/rationals. Finite-field results (e.g. AlphaTensor over F2) are excluded.",
     "rows": [
-      { "n": "2,2,2", "naive": 8,   "best": 7,   "pct": null, "note": "Optimal - Strassen (1969)" },
+      { "n": "2,2,2", "naive": 8,   "best": 7,   "pct": null, "note": "Optimal (Strassen, 1969)" },
       { "n": "2,2,3", "naive": 12,  "best": 11,  "pct": null, "note": "Hopcroft & Kerr (1971)" },
-      { "n": "2,2,4", "naive": 16,  "best": 26,  "pct": null, "note": "Derived via R(2,2,2)" },
-      { "n": "2,3,3", "naive": 18,  "best": 11,  "pct": null, "note": "Smirnov (2013)" },
+      { "n": "2,3,3", "naive": 18,  "best": 15,  "pct": null, "note": "Smirnov (2013)" },
       { "n": "2,3,4", "naive": 24,  "best": 20,  "pct": null, "note": "Smirnov (2013)" },
-      { "n": "2,4,5", "naive": 40,  "best": 30,  "pct": null, "note": "" },
-      { "n": "3,3,3", "naive": 27,  "best": 23,  "pct": null, "note": "Makarov & Laderman (1976). Lower bound 19." },
+      { "n": "2,4,5", "naive": 40,  "best": 30,  "pct": 75.0, "note": "" },
+      { "n": "3,3,3", "naive": 27,  "best": 23,  "pct": null, "note": "Laderman (1976). Lower bound 19." },
       { "n": "3,3,4", "naive": 36,  "best": 29,  "pct": null, "note": "Smirnov (2015)" },
-      { "n": "3,3,6", "naive": 54,  "best": 40,  "pct": 74.1, "note": "Less studied - potentially improvable" },
-      { "n": "4,4,4", "naive": 64,  "best": 49,  "pct": 76.6, "note": "Lower bound 49 - tight but optimality unproved" },
+      { "n": "3,3,6", "naive": 54,  "best": 40,  "pct": 74.1, "note": "Less studied, potentially improvable" },
+      { "n": "4,4,4", "naive": 64,  "best": 49,  "pct": 76.6, "note": "Lower bound 48, tight but optimality unproved" },
       { "n": "4,4,5", "naive": 80,  "best": 58,  "pct": 72.5, "note": "" },
       { "n": "5,5,5", "naive": 125, "best": 96,  "pct": 76.8, "note": "Sedoglavic et al. (2022). Lower bound ~60." }
     ]
   },
 
-  "submissionExample": "{\n  \"n\": 3, \"m\": 3, \"p\": 6,\n  \"num_multiplications\": 39,\n  \"U\": [[[...], ...], ...],\n  \"V\": [[[...], ...], ...],\n  \"W\": [[[...], ...], ...]\n}",
-
-  "verification": "Runs the algorithm on 100 random integer matrix pairs (n x m times m x p). Checks exact equality with the true product A*B. All coefficients must be rational.",
-
   "suggestedApproach": [
-    { "title": "Implement Strassen", "body": "The 2x2 case with 7 multiplications. Understand how 7 products reconstruct all 4 output entries - this is the template for all tensor-rank algorithms." },
+    { "title": "Implement Strassen", "body": "The 2x2 case with 7 multiplications. Understand how 7 products reconstruct all 4 output entries. This is the template for all tensor-rank algorithms." },
     { "title": "Pick a target", "body": "R(5,5,5) has the largest gap for square cases. Rectangular cases like R(3,3,6) and R(4,4,5) are less studied and may yield to fresh approaches." },
-    { "title": "Tensor decomposition", "body": "The multiplication tensor for (n,m,p) has shape nm x mp x np. Decompose it into r rank-1 terms. Each term = one scalar multiplication in the algorithm." },
-    { "title": "Search methods", "body": "Gradient descent on decomposition error with random restarts. AlphaTensor used MCTS + RL. Simpler evolutionary approaches also work." }
+    { "title": "Tensor decomposition", "body": "The multiplication tensor for (n,m,p) has shape nm x mp x np. Decompose it into r rank-1 terms. Each term corresponds to one scalar multiplication in the algorithm." },
+    { "title": "Search methods", "body": "Gradient descent on decomposition error with random restarts. AlphaTensor used MCTS + RL. Simpler evolutionary and simulated annealing approaches also work." }
   ],
 
-  "agentPrompt": "I want you to find a bilinear algorithm for multiplying two 3x3x6 matrices (a 3x3 matrix times a 3x6 matrix) using fewer than 40 scalar multiplications over the integers. Represent the algorithm as a tensor decomposition: three lists U, V, W of length r (the number of multiplications). For each t in 1..r: U[t] is a 3x3 matrix of coefficients applied to A, V[t] is a 3x6 matrix applied to B, and W[t] is a 3x6 matrix of reconstruction weights. The product is C = sum_t W[t] * (sum(U[t] * A) * sum(V[t] * B)). Verify by testing on random integer matrices. Output U, V, W as JSON arrays.",
-
-  "bounds": [
-    { "mod": "R(2,2,2)", "name": "Optimal: 7", "formula": "Winograd (1971) proved 6 is impossible." },
-    { "mod": "R(3,3,3)", "name": "Best 23, lower bound 19", "formula": "Makarov & Laderman (1976). Gap open for 50 years." },
-    { "mod": "R(4,4,4)", "name": "Best 49, lower bound 49", "formula": "Oh (2019). Tight but optimality unproved." },
-    { "mod": "R(5,5,5)", "name": "Best 96, lower bound ~60", "formula": "Sedoglavic et al. (2022). Largest gap." },
-    { "mod": "Rectangular", "name": "Less studied", "formula": "Lower bounds weaker. R(2,3,4), R(3,3,6), R(4,4,5) all have room." },
-    { "mod": "omega", "name": "Exponent <= 2.371552", "formula": "Williams et al. (2024). Lower bound 2. Whether omega = 2 is open." }
-  ],
+  "agentPrompt": "I want you to find a bilinear algorithm for multiplying a 3x3 matrix by a 3x6 matrix using fewer than 40 scalar multiplications over the integers. Represent the algorithm as a tensor decomposition: three lists U, V, W of length r (the number of multiplications). For each t in 1..r, U[t] is a 3x3 matrix of coefficients applied to entries of A, V[t] is a 3x6 matrix applied to entries of B, and W[t] is a 3x6 matrix of reconstruction weights. The product C = sum_t (W[t] .* outer(U[t] . A, V[t] . B)). Verify correctness by testing on random integer matrices. Output U, V, W as JSON arrays.",
 
   "references": [
-    { "text": "Strassen, V. (1969). Gaussian elimination is not optimal. Numerische Mathematik 13(4).", "url": "https://doi.org/10.1007/BF02165411" },
-    { "text": "Hopcroft, J. & Kerr, L. (1971). On minimizing the number of multiplications.", "url": null },
-    { "text": "Laderman, J.D. (1976). A noncommutative algorithm of length 23 for 3x3 matrix multiplication.", "url": "https://doi.org/10.1090/S0002-9904-1976-14174-4" },
-    { "text": "Smirnov, M. (2013-2015). Bilinear complexity of small matrix multiplication.", "url": null },
-    { "text": "Blaser, M. (2013). Fast matrix multiplication. Theory of Computing, Graduate Surveys 5.", "url": "https://theoryofcomputing.org/articles/gs005/" },
-    { "text": "Fawzi, A. et al. (2022). Discovering faster matrix multiplication algorithms with RL. Nature 610.", "url": "https://doi.org/10.1038/s41586-022-05172-4" },
-    { "text": "Sedoglavic, Serdyuk, Yakovlev (2022). On the tensor rank of 5x5 matrix multiplication.", "url": null },
-    { "text": "Williams, Xu, Xu, Zhou (2024). New bounds on omega.", "url": "https://doi.org/10.1145/3618260.3649753" }
+    { "text": "Strassen, V. (1969). Gaussian elimination is not optimal. Numerische Mathematik, 13(4), 354-356.", "url": "https://doi.org/10.1007/BF02165411" },
+    { "text": "Hopcroft, J., & Kerr, L. (1971). On minimizing the number of multiplications necessary for matrix multiplication. IBM Research Report RC 3322.", "url": null },
+    { "text": "Laderman, J. D. (1976). A noncommutative algorithm of length 23 for multiplying 6x6 matrices. Bulletin of the AMS, 82(1), 126-128.", "url": "https://doi.org/10.1090/S0002-9904-1976-14174-4" },
+    { "text": "Smirnov, M. (2013). Bilinear complexity of algebras and computation. Russian Mathematical Surveys, 68(1), 85-160.", "url": null },
+    { "text": "Bl\u00e4ser, M. (2013). Fast matrix multiplication. Theory of Computing, Graduate Surveys 5.", "url": "https://theoryofcomputing.org/articles/gs005/" },
+    { "text": "Fawzi, A., Balog, M., Huang, A., et al. (2022). Discovering faster matrix multiplication algorithms with reinforcement learning. Nature, 610, 47-53.", "url": "https://doi.org/10.1038/s41586-022-05172-4" },
+    { "text": "Sedoglavic, A., Serdyuk, A., & Yakovlev, S. (2022). On the tensor rank of the multiplication in the finite field. arXiv preprint.", "url": null },
+    { "text": "Williams, V. V., Xu, Y., Xu, Z., & Zhou, R. (2024). New bounds on the complexity of matrix multiplication. Proceedings of STOC 2024.", "url": "https://doi.org/10.1145/3618260.3649753" }
   ]
 }

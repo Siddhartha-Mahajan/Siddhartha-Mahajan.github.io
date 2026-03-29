@@ -2,14 +2,79 @@
   "id": "hadamard-maximal-determinant",
   "title": "Hadamard Maximal Determinant",
   "domain": "Math - Linear Algebra",
-  "statusLabel": "Open",
-  "tagline": "+1s and -1s in a grid. Maximize the determinant.",
-  "description": "Fill an n x n grid with +1s and -1s. Compute the determinant. Try to beat the current record for that n. For example, for n = 23 the best known determinant is 704,643,072. Submit a 23 x 23 matrix of +1s and -1s with a larger one.",
-  "context": "Hadamard asked in 1893: if every entry of a matrix is +1 or -1, how large can the determinant be? For n up to 22, the answer is known exactly after over a century of work. For n = 23 onwards, the best constructions come from hill-climbing searches run by Orrick et al. in 2003. Many of those records have stood for 20+ years. Every n in the table below is independently attackable - you pick one and try to beat it.",
+
+  "attribution": {
+    "authors": ["Siddhartha Mahajan (Lossfunk)"],
+    "reviewers": []
+  },
+
+  "origin": "In 1893, Jacques Hadamard posed a fundamental question: given an n x n matrix whose entries are all +1 or -1, what is the largest possible value of its determinant? For small matrices (n up to 22), mathematicians have found exact answers, though it took over a century of effort. For n = 23 and beyond, no one knows the true maximum. The best values found so far come from computer searches by Orrick, Solomon, Dowdeswell, and Smith in 2003, using hill-climbing and simulated annealing. Most of those records have stood unchallenged for over 20 years.",
+
+  "instance": "Pick any value of n from the records table below. Your goal: construct an n x n matrix of +1s and -1s whose determinant (in absolute value) is larger than the current best known value for that n. For example, the record for n = 23 is |det| = 2,779,447,296,000,000. To claim a new record, submit a single matrix that beats this value. Each n is an independent challenge and you only need to improve one.",
+
+  "scoring": {
+    "summary": "Each submission is scored on how close its determinant gets to the theoretical upper bound for the chosen n.",
+    "metrics": [
+      {
+        "name": "Bound ratio",
+        "description": "The primary score is |det(M)| / B(n), where B(n) is the theoretical upper bound (Hadamard, Barba, Ehlich-Wojtas, or Ehlich depending on n mod 4). This gives a percentage between 0% and 100%. Higher is better."
+      },
+      {
+        "name": "New record",
+        "description": "If |det(M)| strictly exceeds the previously best known value for that n, the submission is flagged as a new record and the submitter is credited on the leaderboard."
+      },
+      {
+        "name": "Tiebreaker",
+        "description": "If two submissions achieve the same determinant for the same n, the earlier submission ranks higher."
+      }
+    ],
+    "note": "Submissions that match but do not beat the current record are still accepted and scored. Getting to 93% of the theoretical bound is meaningful even without setting a new record."
+  },
+
+  "submissionExample": "{\n  \"n\": 23,\n  \"claimed_det\": 2779447296000001,\n  \"matrix\": [\n    [1, -1, 1, ...],\n    [-1, 1, 1, ...],\n    ...\n  ]\n}",
+
+  "verification": "We compute the exact integer determinant of your matrix using sympy (no floating point). The submission is accepted if the matrix is n x n, all entries are +1 or -1, and |det(M)| matches your claimed_det. It scores if |det(M)| is at or above the current record for that n.",
+
+  "bounds": [
+    { "label": "n = 0 (mod 4)", "name": "Hadamard bound", "formula": "n^(n/2). Tight when a Hadamard matrix exists." },
+    { "label": "n = 1 (mod 4)", "name": "Barba bound",  "formula": "((2n-1)/n)^(1/2) * (n-1)^((n-1)/2)" },
+    { "label": "n = 2 (mod 4)", "name": "Ehlich-Wojtas bound", "formula": "(2n-2) * ((n-2)/2)^((n-2)/2)" },
+    { "label": "n = 3 (mod 4)", "name": "Ehlich bound",  "formula": "Derived from eigenvalue analysis of M^T M. See Ehlich (1964)." }
+  ],
+
+  "witnessExample": {
+    "note": "Record-holding matrix for n = 23 from Orrick et al. (2003). Determinant = 2,779,447,296,000,000 (93.2% of theoretical bound). Use this to verify your search is producing competitive results.",
+    "matrix": [
+      [ 1,-1, 1,-1,-1,-1,-1, 1, 1,-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [-1, 1, 1,-1,-1, 1, 1,-1,-1,-1,-1, 1, 1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [ 1, 1,-1, 1, 1,-1,-1,-1,-1, 1, 1,-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [-1,-1, 1, 1,-1,-1,-1, 1, 1, 1, 1, 1, 1,-1,-1, 1, 1,-1,-1, 1, 1,-1,-1],
+      [-1,-1, 1,-1, 1,-1,-1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1, 1, 1,-1,-1, 1, 1],
+      [-1, 1,-1,-1,-1,-1,-1, 1, 1, 1,-1,-1,-1,-1,-1,-1, 1, 1,-1,-1, 1, 1,-1],
+      [-1, 1,-1,-1,-1,-1,-1, 1, 1,-1, 1,-1,-1,-1,-1, 1,-1,-1, 1, 1,-1,-1, 1],
+      [ 1,-1,-1, 1, 1, 1, 1, 1, 1,-1,-1, 1,-1,-1,-1, 1,-1,-1, 1,-1, 1, 1,-1],
+      [ 1,-1,-1, 1, 1, 1, 1, 1, 1,-1,-1,-1, 1,-1,-1,-1, 1, 1,-1, 1,-1,-1, 1],
+      [-1,-1, 1, 1, 1, 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1,-1, 1, 1,-1, 1,-1],
+      [-1,-1, 1, 1, 1,-1, 1,-1,-1,-1,-1,-1,-1,-1,-1, 1,-1, 1,-1,-1, 1,-1, 1],
+      [-1, 1,-1, 1, 1,-1,-1, 1,-1,-1,-1, 1, 1, 1, 1, 1,-1, 1,-1, 1,-1, 1,-1],
+      [-1, 1,-1, 1, 1,-1,-1,-1, 1,-1,-1, 1, 1, 1, 1,-1, 1,-1, 1,-1, 1,-1, 1],
+      [ 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1, 1, 1,-1,-1,-1, 1, 1, 1, 1,-1,-1],
+      [ 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1, 1,-1, 1, 1, 1,-1,-1,-1,-1, 1, 1],
+      [ 1, 1, 1, 1,-1,-1, 1, 1,-1,-1, 1, 1,-1,-1, 1,-1, 1, 1, 1,-1,-1,-1,-1],
+      [ 1, 1, 1, 1,-1, 1,-1,-1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 1, 1,-1,-1,-1,-1],
+      [ 1, 1, 1,-1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 1,-1, 1, 1, 1,-1,-1,-1,-1,-1],
+      [ 1, 1, 1,-1, 1,-1, 1, 1,-1, 1,-1,-1, 1, 1,-1, 1, 1,-1, 1,-1,-1,-1,-1],
+      [ 1, 1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 1,-1, 1,-1,-1,-1,-1,-1, 1,-1, 1, 1],
+      [ 1, 1, 1, 1,-1, 1,-1, 1,-1,-1, 1,-1, 1, 1,-1,-1,-1,-1,-1,-1, 1, 1, 1],
+      [ 1, 1, 1,-1, 1, 1,-1, 1,-1, 1,-1, 1,-1,-1, 1,-1,-1,-1,-1, 1, 1,-1, 1],
+      [ 1, 1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1,-1,-1,-1, 1, 1, 1,-1]
+    ]
+  },
+
   "leaderboard": {
-    "note": "Orrick, Solomon, Dowdeswell & Smith (2003), arXiv:math/0304410",
+    "note": "Best known determinants from Orrick et al. (2003), arXiv:math/0304410. All values are raw (not normalized).",
     "rows": [
-      { "n": 23,  "mod4": 3, "best": "3 x 2^22 x 56",           "pct": 93.20, "note": "Smallest open case" },
+      { "n": 23,  "mod4": 3, "best": "2^22 x 3 x 5^6 x 67 x 211", "pct": 93.20, "note": "Smallest open case" },
       { "n": 27,  "mod4": 3, "best": null,                        "pct": null  },
       { "n": 29,  "mod4": 1, "best": "6^11 x 5 x 2^26",          "pct": 91.77 },
       { "n": 31,  "mod4": 3, "best": "7^12 x 2^28",              "pct": 86.50 },
@@ -35,26 +100,22 @@
       { "n": 99,  "mod4": 3, "best": "2^98 x 24^47 x 121^18",   "pct": 71.60 }
     ]
   },
-  "submissionExample": "{\n  \"n\": 23,\n  \"matrix\": [\n    [1, -1, 1, ...],\n    [-1, 1, 1, ...],\n    ...\n  ]\n}",
-  "verification": "Exact integer determinant via sympy. No floating point. Accepts if |det(M)| strictly exceeds the current record for that n.",
+
   "suggestedApproach": [
-    { "title": "Pick an n", "body": "Any row in the table. n = 23 is the smallest open case." },
+    { "title": "Pick an n", "body": "Any row in the records table. n = 23 is the smallest open case and has the most literature. n = 27 has no known factored form, which is unusual." },
     { "title": "Random start", "body": "Generate a random {+1, -1} matrix. Compute its determinant." },
-    { "title": "Hill-climb", "body": "Flip entries that increase |det|. Cofactor expansion lets you update cheaply without recomputing from scratch." },
-    { "title": "Simulated annealing", "body": "Perturb when stuck. This is exactly how the 2003 records were set." }
+    { "title": "Hill-climb", "body": "Flip entries that increase |det|. Cofactor expansion lets you update the determinant cheaply (O(n^2) per flip) without recomputing from scratch." },
+    { "title": "Simulated annealing", "body": "Accept some determinant-decreasing flips to escape local maxima. This is exactly how the Orrick et al. 2003 records were set." }
   ],
-  "agentPrompt": "I want you to find a {+1, -1} matrix of size n = 23 whose determinant (in absolute value) exceeds 704,643,072 (the current record). Use hill-climbing with simulated annealing: start from a random +/-1 matrix, repeatedly flip entries that increase |det(M)| using cofactor updates, and randomly perturb when stuck in a local maximum. Run many restarts and report the best matrix found. Output the matrix as a JSON array of arrays.",
-  "bounds": [
-    { "mod": "n = 0 (mod 4)", "name": "Hadamard bound", "formula": "n^(n/2). Tight when a Hadamard matrix exists." },
-    { "mod": "n = 1 (mod 4)", "name": "Barba's bound",  "formula": "((2n-1)/n)^(1/2) * (n-1)^((n-1)/2)" },
-    { "mod": "n = 2 (mod 4)", "name": "Ehlich-Wojtas",   "formula": "(2n-2) * ((n-2)/2)^((n-2)/2)" },
-    { "mod": "n = 3 (mod 4)", "name": "Ehlich's bound",  "formula": "Derived from eigenvalue analysis of M^T M" }
-  ],
+
+  "agentPrompt": "I want you to find a {+1, -1} matrix of size n = 23 whose determinant (in absolute value) exceeds 2,779,447,296,000,000 (the current record, factored as 2^22 x 3 x 5^6 x 67 x 211). Use hill-climbing with simulated annealing: start from a random +/-1 matrix, repeatedly flip entries that increase |det(M)| using cofactor updates, and randomly perturb when stuck in a local maximum. Run many restarts and report the best matrix found. Output the matrix as a JSON array of arrays, and report the determinant value.",
+
   "references": [
-    { "text": "Orrick, Solomon, Dowdeswell & Smith (2003). New lower bounds for the maximal determinant problem.", "url": "https://arxiv.org/abs/math/0304410" },
-    { "text": "Brent, Orrick, Osborn & Zimmermann (2011). Maximal determinants of orders 19 and 37.", "url": "https://arxiv.org/abs/1112.4160" },
-    { "text": "Chasiotis, Kounias & Farmakis (2018). Proves optimality for n=22. Discrete Mathematics 341.", "url": "https://doi.org/10.1016/j.disc.2017.12.003" },
-    { "text": "OEIS A003433 - proved optima for n=1..22.", "url": "https://oeis.org/A003433" },
-    { "text": "Wikipedia: Hadamard's maximal determinant problem.", "url": "https://en.wikipedia.org/wiki/Hadamard%27s_maximal_determinant_problem" }
+    { "text": "Orrick, W. P., Solomon, B., Dowdeswell, R., & Smith, W. D. (2003). New lower bounds for the maximal determinant problem. arXiv preprint math/0304410.", "url": "https://arxiv.org/abs/math/0304410" },
+    { "text": "Brent, R. P., Orrick, W. P., Osborn, J. H., & Zimmermann, P. (2011). Maximal determinants and saturated D-optimal designs of orders 19 and 37. arXiv preprint 1112.4160.", "url": "https://arxiv.org/abs/1112.4160" },
+    { "text": "Chasiotis, V., Kounias, S., & Farmakis, N. (2018). On the maximal determinant of {-1, +1} matrices of order 22. Discrete Mathematics, 341(6), 1679-1688.", "url": "https://doi.org/10.1016/j.disc.2017.12.003" },
+    { "text": "Ehlich, H. (1964). Determinantenabschatzungen fur binare Matrizen. Mathematische Zeitschrift, 83, 123-132.", "url": null },
+    { "text": "OEIS Foundation. Sequence A003433: Largest determinant of an n x n {0,1} matrix.", "url": "https://oeis.org/A003433" },
+    { "text": "Wikipedia contributors. Hadamard's maximal determinant problem. Wikipedia.", "url": "https://en.wikipedia.org/wiki/Hadamard%27s_maximal_determinant_problem" }
   ]
 }

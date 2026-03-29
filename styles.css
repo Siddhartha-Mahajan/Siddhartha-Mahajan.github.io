@@ -844,6 +844,19 @@ main {
     font-size: var(--text-sm);
 }
 
+.footer__credit {
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: 0.72rem;
+    margin-top: var(--space-2);
+    opacity: 0.7;
+}
+
+.footer__credit a {
+    color: var(--text-tertiary);
+    text-decoration: underline;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 1024px) {
     html {

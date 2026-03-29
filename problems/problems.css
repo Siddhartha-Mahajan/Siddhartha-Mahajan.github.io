@@ -1,5 +1,5 @@
 /* ================================================================
-   problems.css — Verifiable Problems section styles
+   problems.css - Verifiable Problems section styles
    Loaded alongside the site's global styles.css
    ================================================================ */
 
@@ -175,7 +175,7 @@
 .problem-detail {
     max-width: var(--content-width);
     margin: 0 auto;
-    padding: 0 var(--content-padding) var(--space-16);
+    padding: calc(var(--nav-height) + var(--space-8)) var(--content-padding) var(--space-16);
 }
 
 .back-link {
@@ -206,15 +206,9 @@
     border-bottom: none;
     padding-bottom: 0;
     margin-top: 0;
-    margin-bottom: var(--space-2);
-    font-size: var(--text-2xl);
-}
-
-.problem-meta {
-    display: flex;
-    gap: var(--space-2);
-    flex-wrap: wrap;
-    align-items: center;
+    margin-bottom: 0;
+    font-size: var(--text-3xl);
+    line-height: 1.2;
 }
 
 .problem-description {
@@ -307,18 +301,7 @@ table.leaderboard tbody tr:hover {
     background-color: var(--bg-secondary);
 }
 
-/* highlighted row */
-tr.row-highlight {
-    background-color: color-mix(in srgb, var(--accent-light) 40%, transparent);
-}
-
-tr.row-highlight:hover {
-    background-color: color-mix(in srgb, var(--accent-light) 60%, transparent);
-}
-
-tr.row-highlight .td-n {
-    color: var(--accent);
-}
+/* (row-highlight removed; notes now shown as inline text) */
 
 /* column widths + fonts */
 .td-n {
@@ -647,17 +630,266 @@ details.accordion .accordion-body {
     font-size: var(--text-lg);
 }
 
-/* ===== Section divider ===== */
+/* ===== Section divider (legacy, not used in card layout) ===== */
 .section-divider {
     border: none;
     border-top: 1px solid var(--border);
     margin: var(--space-10) 0;
 }
 
+/* Remove margin from last child inside section cards */
+.section-card > *:last-child {
+    margin-bottom: 0;
+}
+
 /* ===== Active nav link ===== */
 .header-link--active {
     color: var(--text-primary) !important;
     font-weight: 600;
+}
+
+/* ===== Submit CTA ===== */
+.btn--disabled {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    border: 1px solid var(--border);
+    color: var(--text-tertiary);
+    background-color: var(--bg-secondary);
+    cursor: not-allowed;
+    opacity: 0.7;
+    white-space: nowrap;
+}
+
+.btn--disabled svg {
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
+/* ===== Section cards ===== */
+.section-card {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: var(--space-8);
+    margin-bottom: var(--space-6);
+}
+
+.section-card__title {
+    font-size: var(--text-2xl);
+    margin-top: 0;
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 2px solid var(--accent);
+    color: var(--text-primary);
+}
+
+/* Sub-headings inside cards */
+.section-card .section-block h3,
+.section-card .scoring-block h3,
+.section-card .references-section h3,
+.section-card .cite-block h3,
+.section-card .leaderboard-header h3 {
+    font-size: var(--text-lg);
+    color: var(--text-primary);
+    margin-top: 0;
+}
+
+.section-card .context-box h3 {
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    margin-top: 0;
+}
+
+/* ===== Problem grid (text + video) ===== */
+.problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--space-8);
+    align-items: start;
+}
+
+.problem-grid__text .problem-description {
+    margin-bottom: var(--space-4);
+}
+
+.problem-grid__video {
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-4));
+}
+
+/* ===== Video block ===== */
+.video-block {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.video-block video {
+    width: 100%;
+    display: block;
+    background: #000;
+}
+
+/* ===== Submit CTA inside section ===== */
+.submit-cta-section {
+    margin-top: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+}
+
+/* ===== Row notes in leaderboard ===== */
+.row-note {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-tertiary);
+    font-style: italic;
+    line-height: 1.3;
+    margin-top: 2px;
+}
+
+/* ===== Section headings (legacy) ===== */
+.section-heading {
+    font-size: var(--text-base);
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+    color: var(--text-primary);
+}
+
+/* ===== Scoring block ===== */
+.scoring-block {
+    margin-bottom: var(--space-8);
+}
+
+.scoring-metrics {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-3);
+}
+
+.scoring-metrics li {
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.scoring-metrics li:last-child {
+    border-bottom: none;
+}
+
+.scoring-metrics strong {
+    color: var(--text-primary);
+}
+
+.scoring-note {
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+    font-style: italic;
+}
+
+/* ===== Copy agent button ===== */
+.copy-agent-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    background-color: var(--accent-light);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.copy-agent-btn:hover {
+    background-color: var(--accent);
+    color: #fff;
+}
+
+.copy-agent-btn:active {
+    transform: scale(0.97);
+}
+
+/* ===== Show more button ===== */
+.show-more-btn {
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    background-color: var(--bg-secondary);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.show-more-btn:hover {
+    background-color: var(--bg-tertiary);
+}
+
+/* ===== References (numbered, flat) ===== */
+.references-section {
+    margin-bottom: var(--space-8);
+}
+
+.references-section h3 {
+    margin-top: 0;
+    margin-bottom: var(--space-4);
+    font-size: var(--text-lg);
+}
+
+.refs-list--numbered {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.refs-list--numbered li {
+    padding: var(--space-2) 0;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    border-bottom: none;
+}
+
+.refs-list--numbered a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.refs-list--numbered a:hover {
+    text-decoration: underline;
+}
+
+.ref-num {
+    font-weight: 600;
+    color: var(--text-tertiary);
+    font-size: 0.8rem;
+    margin-right: var(--space-2);
+}
+
+/* ===== Cite block ===== */
+.cite-block {
+    margin-bottom: var(--space-8);
+}
+
+.cite-block h3 {
+    margin-top: 0;
+    margin-bottom: var(--space-4);
+    font-size: var(--text-lg);
+}
+
+.cite-bibtex {
+    white-space: pre-wrap;
+    font-size: 0.8rem;
+    line-height: 1.7;
 }
 
 /* ===== Responsive ===== */
@@ -695,5 +927,21 @@ details.accordion .accordion-body {
     .bounds-list li {
         grid-template-columns: 1fr;
         gap: var(--space-1);
+    }
+
+    .problem-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .problem-grid__video {
+        position: static;
+    }
+
+    .section-card {
+        padding: var(--space-5) var(--space-4);
+    }
+
+    .section-card__title {
+        font-size: var(--text-xl);
     }
 }
