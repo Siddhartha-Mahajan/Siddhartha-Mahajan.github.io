@@ -458,19 +458,19 @@ function renderDivider() {
 
 /* ---------- Video map for manim animations ---------- */
 const VIDEO_MAP = {
-    'hadamard-maximal-determinant': 'videos/HadamardScene.mp4',
-    'conways-99-graph': 'videos/ConwayScene.mp4',
-    'matrix-multiplication-tensor-rank': 'videos/TensorRankScene.mp4',
-    'connected-still-life': 'videos/StillLifeScene.mp4'
+    'hadamard-maximal-determinant': { src: 'videos/HadamardScene.mp4', poster: 'videos/thumbs/HadamardScene.jpg' },
+    'conways-99-graph': { src: 'videos/ConwayScene.mp4', poster: 'videos/thumbs/ConwayScene.jpg' },
+    'matrix-multiplication-tensor-rank': { src: 'videos/TensorRankScene.mp4', poster: 'videos/thumbs/TensorRankScene.jpg' },
+    'connected-still-life': { src: 'videos/StillLifeScene.mp4', poster: 'videos/thumbs/StillLifeScene.jpg' }
 };
 
 function renderVideo(problemId) {
-    const src = VIDEO_MAP[problemId];
-    if (!src) return null;
+    const entry = VIDEO_MAP[problemId];
+    if (!entry) return null;
     const div = el('div', 'video-block');
     div.innerHTML = `
-        <video controls preload="metadata" playsinline>
-            <source src="${src}" type="video/mp4">
+        <video controls preload="metadata" playsinline poster="${entry.poster}">
+            <source src="${entry.src}" type="video/mp4">
         </video>`;
     return div;
 }
@@ -501,60 +501,67 @@ async function renderDetail(container, meta, showBack) {
     header.innerHTML = `<h2>${esc(data.title)}</h2>`;
     section.appendChild(header);
 
-    /* 2. THE PROBLEM: text left, video right */
+    /* 2. THE PROBLEM: instance text + collapsible context */
     const problemCard = el('div', 'section-card');
     const problemHeading = el('h3', 'section-card__title');
     problemHeading.textContent = 'The Problem';
     problemCard.appendChild(problemHeading);
 
+    problemCard.appendChild(renderInstance(data));
+
+    if (data.warmup) {
+        const warmupEl = renderWarmup(data.warmup);
+        if (warmupEl) problemCard.appendChild(warmupEl);
+    }
+
+    // Collapsible "Additional Context" with origin + video
     const videoEl = renderVideo(data.id);
-    if (videoEl) {
-        // Two-column: text + video side-by-side
-        const problemGrid = el('div', 'problem-grid');
-        const textCol = el('div', 'problem-grid__text');
-        textCol.appendChild(renderInstance(data));
-        textCol.appendChild(renderOrigin(data));
-        if (data.warmup) {
-            const warmupEl = renderWarmup(data.warmup);
-            if (warmupEl) textCol.appendChild(warmupEl);
+    if (data.origin || videoEl) {
+        const contextDetails = document.createElement('details');
+        contextDetails.className = 'accordion';
+        const summary = document.createElement('summary');
+        summary.textContent = 'Background and Context';
+        contextDetails.appendChild(summary);
+
+        const body = el('div', 'accordion-body');
+        if (data.origin) {
+            const originP = el('p', 'context-origin');
+            originP.style.cssText = 'font-size:0.9rem;color:var(--text-secondary);line-height:1.7;margin-bottom:var(--space-4)';
+            originP.textContent = data.origin;
+            body.appendChild(originP);
         }
-        problemGrid.appendChild(textCol);
-        const videoCol = el('div', 'problem-grid__video');
-        videoCol.appendChild(videoEl);
-        problemGrid.appendChild(videoCol);
-        problemCard.appendChild(problemGrid);
-    } else {
-        problemCard.appendChild(renderInstance(data));
-        problemCard.appendChild(renderOrigin(data));
-        if (data.warmup) {
-            const warmupEl = renderWarmup(data.warmup);
-            if (warmupEl) problemCard.appendChild(warmupEl);
+        if (videoEl) {
+            body.appendChild(videoEl);
         }
+        contextDetails.appendChild(body);
+        problemCard.appendChild(contextDetails);
     }
 
     section.appendChild(problemCard);
 
-    /* 3. HOW TO SUBMIT (solution chunk) */
+    /* 3. HOW TO SUBMIT (single-column rows) */
     const submitCard = el('div', 'section-card');
     const solHeading = el('h3', 'section-card__title');
     solHeading.textContent = 'How to Submit';
     submitCard.appendChild(solHeading);
 
-    const solGrid = el('div', 'two-col');
-    solGrid.appendChild(renderSubmissionBlock(data));
+    // Submission format (full width)
+    submitCard.appendChild(renderSubmissionBlock(data));
 
-    // Right column: bounds
-    const boundsEl = renderBounds(data.bounds);
-    if (boundsEl) {
-        const boundsWrap = el('div', 'section-block');
-        boundsWrap.appendChild(boundsEl);
-        solGrid.appendChild(boundsWrap);
-    }
-    submitCard.appendChild(solGrid);
-
-    // Witness example (Hadamard)
+    // Witness example (Hadamard) right after submission format
     if (data.witnessExample) {
         submitCard.appendChild(renderWitnessExample(data.witnessExample));
+    }
+
+    // Bounds (full width, with explanatory note)
+    const boundsEl = renderBounds(data.bounds);
+    if (boundsEl) {
+        const boundsWrap = el('div', 'section-block bounds-section');
+        boundsWrap.appendChild(boundsEl);
+        const boundsNote = el('p', 'bounds-explanation');
+        boundsNote.textContent = 'These are the theoretical upper bounds discovered by mathematicians for various cases of n. Your submission is scored as a percentage of the relevant bound.';
+        boundsWrap.appendChild(boundsNote);
+        submitCard.appendChild(boundsWrap);
     }
 
     // Scoring

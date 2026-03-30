@@ -418,14 +418,6 @@ table.leaderboard tbody tr:hover {
     color: var(--text-tertiary);
 }
 
-/* ===== Two-column layout ===== */
-.two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-8);
-    margin-bottom: var(--space-12);
-}
-
 .section-block h3 {
     margin-top: 0;
     margin-bottom: var(--space-4);
@@ -704,21 +696,15 @@ details.accordion .accordion-body {
     margin-top: 0;
 }
 
-/* ===== Problem grid (text + video) ===== */
-.problem-grid {
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: var(--space-8);
-    align-items: start;
-}
-
-.problem-grid__text .problem-description {
-    margin-bottom: var(--space-4);
-}
-
-.problem-grid__video {
-    position: sticky;
-    top: calc(var(--nav-height) + var(--space-4));
+/* ===== Bounds explanation ===== */
+.bounds-explanation {
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+    font-style: italic;
+    line-height: 1.6;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border);
 }
 
 /* ===== Video block ===== */
@@ -726,6 +712,7 @@ details.accordion .accordion-body {
     border-radius: 10px;
     overflow: hidden;
     border: 1px solid var(--border);
+    max-width: 560px;
 }
 
 .video-block video {
@@ -898,10 +885,6 @@ details.accordion .accordion-body {
         padding-top: calc(var(--nav-height) + var(--space-8));
     }
 
-    .two-col {
-        grid-template-columns: 1fr;
-    }
-
     .td-mod {
         display: none;
     }
@@ -927,14 +910,6 @@ details.accordion .accordion-body {
     .bounds-list li {
         grid-template-columns: 1fr;
         gap: var(--space-1);
-    }
-
-    .problem-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .problem-grid__video {
-        position: static;
     }
 
     .section-card {
