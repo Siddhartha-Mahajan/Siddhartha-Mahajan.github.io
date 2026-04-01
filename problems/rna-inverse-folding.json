@@ -1,0 +1,85 @@
+{
+  "id": "rna-inverse-folding",
+  "title": "RNA Inverse Folding",
+  "domain": "Computational Biology - RNA Design",
+
+  "attribution": {
+    "authors": ["Siddhartha Mahajan (Lossfunk)"],
+    "reviewers": []
+  },
+
+  "origin": "RNA molecules fold into secondary structures governed by base-pairing rules and thermodynamics. Given a target structure, the inverse folding problem asks: design a sequence that folds into it. This is the core challenge in mRNA vaccine design, synthetic biology, and RNA therapeutics. The Eterna100 benchmark, curated from the Eterna citizen-science game, contains 100 RNA design puzzles of increasing difficulty. As of 2025, DesiRNA solved all 100 under the minimum free energy (MFE) criterion, but 15-18 puzzles remain provably unsolvable under the stricter ensemble criterion. Beyond Eterna100, designing sequences for large, complex RNA structures (riboswitches, ribozymes, >200 nucleotides) remains wide open.",
+
+  "instance": "We provide a set of target RNA secondary structures in dot-bracket notation at multiple difficulty tiers. For each target, design an RNA sequence (a string over {A, C, G, U}) whose MFE fold, as computed by ViennaRNA RNAfold, exactly matches the target structure. The harder tiers include large structures (>200 nt) where no algorithm has found solutions, and ensemble-criterion puzzles where even the MFE-optimal sequences fail to dominate the Boltzmann ensemble.",
+
+  "scoring": {
+    "summary": "Each puzzle is scored pass/fail: does the designed sequence fold into the target structure? Total score is puzzles solved. Tiebreaker is ensemble defect (lower is better).",
+    "metrics": [
+      {
+        "name": "Puzzles solved",
+        "description": "Number of target structures for which your submitted sequence folds exactly into the target under ViennaRNA RNAfold. This is the primary score."
+      },
+      {
+        "name": "Ensemble defect",
+        "description": "For each solved puzzle, we compute 1 - P(target), where P(target) is the Boltzmann probability of the target structure in the full ensemble. Lower ensemble defect means the target dominates the thermodynamic ensemble, not just the MFE. Used as a tiebreaker."
+      },
+      {
+        "name": "Tier bonus",
+        "description": "Solving a Hard or Open tier puzzle counts more than a Warm-up puzzle. Warm-up: 1 point. Medium: 2 points. Hard: 5 points. Open: 10 points."
+      }
+    ],
+    "note": "All valid sequences are accepted and scored, even if they don't beat existing solutions. The Open tier puzzles (ensemble-criterion unsolved) are worth the most because no known algorithm can solve them."
+  },
+
+  "warmup": {
+    "title": "Warm-up: Simple Hairpin",
+    "body": "Design a sequence that folds into the hairpin structure: ((((....)))). This is a stem of 4 base pairs enclosing a loop of 4 unpaired nucleotides. A valid solution is GGGGAAAACCCC, which folds into ((((....)))). under ViennaRNA. Try it: install ViennaRNA and run RNA.fold('GGGGAAAACCCC').",
+    "target": "((((....)))) ",
+    "solution": "GGGGAAAACCCC"
+  },
+
+  "submissionExample": "{\n  \"solutions\": [\n    {\n      \"puzzle_id\": \"warmup_01\",\n      \"sequence\": \"GGGGAAAACCCC\"\n    },\n    {\n      \"puzzle_id\": \"hard_01\",\n      \"sequence\": \"GCGCAAUAGCGCUUAA...\"\n    }\n  ]\n}",
+
+  "verification": "For each submitted sequence: (1) Check it is a valid RNA string over {A, C, G, U}, (2) Check its length matches the target structure length, (3) Run ViennaRNA RNAfold (version 2.6.x, Turner 2004 energy parameters, 37C) to compute the MFE structure, (4) Compare the predicted structure to the target character-by-character. Exact match = solved. Verification takes <100ms per sequence. For the ensemble defect tiebreaker, we run the partition function (RNA.pf_fold) and compute P(target).",
+
+  "bounds": [
+    { "label": "Thermodynamics", "name": "MFE is deterministic", "formula": "ViennaRNA computes the minimum free energy structure via O(n^3) dynamic programming on the Turner nearest-neighbor energy model. Same input always gives same output." },
+    { "label": "Complexity", "name": "Inverse folding is NP-hard", "formula": "Finding a sequence whose MFE fold matches a given target is NP-hard in the general case (Bonnet et al., 2020)." },
+    { "label": "Ensemble", "name": "Some structures are undesignable", "formula": "15-18 Eterna100 targets have been proven undesignable under the ensemble criterion: no sequence exists where the target dominates the Boltzmann ensemble (arXiv:2311.08339)." },
+    { "label": "Alphabet", "name": "4 letters, 6 pair types", "formula": "RNA uses {A, C, G, U}. Valid base pairs: A-U, G-C (Watson-Crick), G-U (wobble). The wobble pair makes the design space richer than DNA." }
+  ],
+
+  "leaderboard": {
+    "note": "State of the art on the Eterna100 benchmark (MFE criterion) and extensions. The competition includes harder tiers beyond Eterna100.",
+    "rows": [
+      { "method": "RNAinverse",  "year": 1994, "solved": "~30/100",  "time": "seconds",     "note": "Classic ViennaRNA tool, random mutation + selection" },
+      { "method": "INFO-RNA",    "year": 2006, "solved": "~40/100",  "time": "seconds",     "note": "Stochastic local search with thermodynamic guidance" },
+      { "method": "antaRNA",     "year": 2015, "solved": "~50/100",  "time": "minutes",     "note": "Ant colony optimization on sequence space" },
+      { "method": "LEARNA",      "year": 2019, "solved": "~65/100",  "time": "hours",       "note": "Reinforcement learning, trained on RNA design" },
+      { "method": "SentRNA",     "year": 2020, "solved": "~70/100",  "time": "minutes",     "note": "Graph neural network + local search" },
+      { "method": "NEMO",        "year": 2018, "solved": "~85/100",  "time": "minutes",     "note": "Monte Carlo tree search with adaptive restarts" },
+      { "method": "DesiRNA",     "year": 2025, "solved": "100/100",  "time": "24 hours",    "note": "Replica Exchange Monte Carlo. Current SOTA." }
+    ]
+  },
+
+  "suggestedApproach": [
+    { "title": "Start with the warm-up", "body": "Verify that GGGGAAAACCCC folds into ((((....)))) using ViennaRNA. Then try slightly harder structures with internal loops and bulges." },
+    { "title": "Covariance-based mutation", "body": "Start from a random sequence. Mutate positions that break the target structure. Use the base-pairing rules to guide mutations: if position i should pair with position j, try all 6 valid base-pair combinations (AU, UA, GC, CG, GU, UG)." },
+    { "title": "Monte Carlo with RNAfold oracle", "body": "Propose random mutations to the sequence. Accept if the new sequence folds closer to the target (fewer mismatched positions). This is the core of most successful solvers." },
+    { "title": "Decompose large structures", "body": "For structures >200 nt, break them into stems and loops. Design each sub-structure independently, then stitch sequences together while checking global fold." },
+    { "title": "Target the Open tier", "body": "The ensemble-criterion puzzles are the hardest. Even finding a sequence where P(target) > 0.5 (not just MFE match) would be progress. Use partition function feedback to guide mutations." }
+  ],
+
+  "agentPrompt": "I want you to solve RNA inverse folding puzzles. For each target secondary structure given in dot-bracket notation (e.g., '((((....))))'), find an RNA sequence over {A, C, G, U} whose minimum free energy fold matches the target exactly. Use ViennaRNA's RNA.fold() function to verify. Strategy: start with a random sequence, then iteratively mutate positions that cause mismatches between the predicted fold and target. Focus on paired positions: if i pairs with j in the target, try all valid base-pair combinations (AU, UA, GC, CG, GU, UG). For unpaired positions, prefer A or U (less likely to form unwanted pairs). Accept mutations that reduce the number of mismatched positions. Report each solved puzzle as {puzzle_id, sequence}.",
+
+  "references": [
+    { "text": "Anderson-Lee, J., et al. (2016). Principles for Predicting RNA Secondary Structure Design Difficulty. Journal of Molecular Biology, 428(5), 748-757.", "url": "https://doi.org/10.1016/j.jmb.2015.11.013" },
+    { "text": "Wirecki, T. K., et al. (2025). DesiRNA: De novo RNA design using Monte Carlo simulations. Nucleic Acids Research.", "url": null },
+    { "text": "Lorenz, R., et al. (2011). ViennaRNA Package 2.0. Algorithms for Molecular Biology, 6, 26.", "url": "https://doi.org/10.1186/1748-7188-6-26" },
+    { "text": "Portela, F. (2018). An unexpectedly effective Monte Carlo technique for the RNA inverse folding problem. bioRxiv.", "url": null },
+    { "text": "Runge, F., et al. (2019). Learning to Design RNA. ICLR 2019.", "url": null },
+    { "text": "Eterna100 Benchmarking Repository. GitHub.", "url": "https://github.com/eternagame/eterna100-benchmarking" },
+    { "text": "Provably undesignable Eterna100 puzzles. arXiv:2311.08339 (2023).", "url": "https://arxiv.org/abs/2311.08339" },
+    { "text": "Taneda, A. (2015). Multi-objective optimization for RNA design. BMC Bioinformatics.", "url": null }
+  ]
+}

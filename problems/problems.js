@@ -55,6 +55,8 @@ function detectLeaderboardType(rows) {
     if ('mod4' in first && 'best' in first) return 'hadamard';
     if ('params' in first && 'status' in first) return 'conway';
     if ('naive' in first && 'best' in first) return 'tensor';
+    if ('method' in first && 'solved' in first) return 'rna';
+    if ('sequence' in first && 'optimal' in first) return 'hp';
     if ('best' in first && 'pct' in first) return 'stilllife';
     return 'generic';
 }
@@ -194,6 +196,52 @@ function renderStillLifeLeaderboard(lb) {
         </table>`;
 }
 
+function renderRNALeaderboard(lb) {
+    const rows = lb.rows.map(row => {
+        const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
+        return `
+        <tr>
+            <td class="td-n"><div class="n-label">${esc(row.method)}</div>${noteHTML}</td>
+            <td class="td-mod">${row.year}</td>
+            <td class="td-best" style="font-weight:700">${esc(row.solved)}</td>
+            <td class="td-mod">${esc(row.time)}</td>
+        </tr>`;
+    }).join('');
+    return `
+        <table class="leaderboard" aria-label="Leaderboard">
+            <thead><tr><th>Method</th><th>Year</th><th>Solved</th><th>Time</th></tr></thead>
+            <tbody>${rows}</tbody>
+        </table>`;
+}
+
+function renderHPLeaderboard(lb, collapsed) {
+    const maxVisible = collapsed ? 6 : lb.rows.length;
+    const rows = lb.rows.map((row, i) => {
+        const optLabel = row.optimal
+            ? '<span class="status-solved" style="font-size:0.75rem">Proven</span>'
+            : '<span class="status-open"><span class="status-dot"></span>Open</span>';
+        const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
+        const hidden = i >= maxVisible ? ' style="display:none" data-extra-row' : '';
+        return `
+        <tr${hidden}>
+            <td class="td-n"><div class="n-label">${esc(row.id)}</div>${noteHTML}</td>
+            <td class="td-mod">${row.length}</td>
+            <td class="td-best" style="font-weight:700">${row.best}</td>
+            <td class="td-status">${optLabel}</td>
+        </tr>`;
+    }).join('');
+
+    const showMore = (collapsed && lb.rows.length > maxVisible)
+        ? `<tr class="show-more-row"><td colspan="4" style="text-align:center;padding:var(--space-3)"><button class="show-more-btn">Show all ${lb.rows.length} rows</button></td></tr>`
+        : '';
+
+    return `
+        <table class="leaderboard" aria-label="Leaderboard">
+            <thead><tr><th>ID</th><th>Length</th><th>Best H-H</th><th>Optimal?</th></tr></thead>
+            <tbody>${rows}${showMore}</tbody>
+        </table>`;
+}
+
 function renderLeaderboard(lb, collapsed) {
     const type = detectLeaderboardType(lb.rows);
     let tableHTML;
@@ -201,6 +249,8 @@ function renderLeaderboard(lb, collapsed) {
         case 'hadamard':  tableHTML = renderHadamardLeaderboard(lb, collapsed); break;
         case 'conway':    tableHTML = renderConwayLeaderboard(lb); break;
         case 'tensor':    tableHTML = renderTensorLeaderboard(lb, collapsed); break;
+        case 'rna':       tableHTML = renderRNALeaderboard(lb); break;
+        case 'hp':        tableHTML = renderHPLeaderboard(lb, collapsed); break;
         case 'stilllife': tableHTML = renderStillLifeLeaderboard(lb); break;
         default:          tableHTML = renderHadamardLeaderboard(lb, collapsed); break;
     }
@@ -268,13 +318,24 @@ function renderInstance(data) {
 function renderWarmup(warmup) {
     if (!warmup) return null;
     const div = el('div', 'section-block warmup-block');
-    const matrixStr = warmup.matrix
-        ? warmup.matrix.map(row => '  [' + row.join(', ') + ']').join('\n')
-        : '';
+    let dataHTML = '';
+
+    if (warmup.matrix) {
+        const matrixStr = warmup.matrix.map(row => '  [' + row.join(', ') + ']').join('\n');
+        dataHTML = `<div class="code-block" style="font-size:0.78rem;line-height:1.5">[\\n${matrixStr}\\n]</div>`;
+    } else if (warmup.target) {
+        dataHTML = `<div class="code-block" style="font-size:0.82rem;line-height:1.6"><span class="tok-key">Target:</span>   ${esc(warmup.target)}\n<span class="tok-key">Solution:</span> ${esc(warmup.solution || '')}</div>`;
+    } else if (warmup.sequence) {
+        const coordStr = warmup.solution
+            ? JSON.stringify(warmup.solution).replace(/\],/g, '],\n  ')
+            : '';
+        dataHTML = `<div class="code-block" style="font-size:0.82rem;line-height:1.6"><span class="tok-key">Sequence:</span> ${esc(warmup.sequence)}${coordStr ? `\n<span class="tok-key">Coords:</span>   ${coordStr}` : ''}</div>`;
+    }
+
     div.innerHTML = `
         <h3>${esc(warmup.title)}</h3>
         <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-4)">${esc(warmup.body)}</p>
-        ${matrixStr ? `<div class="code-block" style="font-size:0.78rem;line-height:1.5">[\\n${matrixStr}\\n]</div>` : ''}`;
+        ${dataHTML}`;
     return div;
 }
 
@@ -559,7 +620,7 @@ async function renderDetail(container, meta, showBack) {
         const boundsWrap = el('div', 'section-block bounds-section');
         boundsWrap.appendChild(boundsEl);
         const boundsNote = el('p', 'bounds-explanation');
-        boundsNote.textContent = 'These are the theoretical upper bounds discovered by mathematicians for various cases of n. Your submission is scored as a percentage of the relevant bound.';
+        boundsNote.textContent = 'These constraints and theoretical bounds define the problem space. Your submission is verified and scored within these limits.';
         boundsWrap.appendChild(boundsNote);
         submitCard.appendChild(boundsWrap);
     }
