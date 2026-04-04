@@ -282,16 +282,11 @@ function renderLeaderboard(lb, collapsed) {
 function renderAttribution(data) {
     const attr = data.attribution;
     if (!attr) return null;
-    const curators = attr.authors ? attr.authors.join(', ') : '';
     const reviewers = (attr.reviewers && attr.reviewers.length > 0)
         ? attr.reviewers.join(', ')
         : 'CAISc 2026 Program Committee';
     const div = el('div', 'attribution-block');
     div.innerHTML = `
-        <div class="attribution-row">
-            <span class="attribution-label">Curated by</span>
-            <span class="attribution-names">${esc(curators)}</span>
-        </div>
         <div class="attribution-row">
             <span class="attribution-label">Reviewed by</span>
             <span class="attribution-names">${esc(reviewers)}</span>
@@ -357,7 +352,7 @@ function renderGameOfLifeWidget() {
     const heading = el('h3', null, 'Try It: Game of Life');
     const desc = el('p', null);
     desc.style.cssText = 'font-size:0.9rem;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-4)';
-    desc.textContent = 'Click cells to toggle alive/dead. Press Space or Play to run. A still life stays unchanged \u2014 try building one!';
+    desc.innerHTML = 'Each cell has 8 neighbors (horizontal, vertical, diagonal). A live cell survives if it has 2 or 3 live neighbors, otherwise it dies. A dead cell becomes alive if it has exactly 3 live neighbors. Click cells to toggle alive/dead. Press Space or Play to run. A still life stays unchanged. Try building one!';
 
     const canvas = document.createElement('canvas');
     canvas.width = W; canvas.height = H;

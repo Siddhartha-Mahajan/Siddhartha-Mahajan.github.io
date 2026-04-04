@@ -10,7 +10,7 @@
 
   "origin": "In 1971, John Conway asked whether a strongly regular graph with parameters srg(99, 14, 1, 2) exists. The parameters pass every known necessary condition (integrality, Krein, absolute bound), yet no one has built the graph or ruled it out. The graph cannot be vertex-transitive, which eliminates all standard algebraic constructions. If it exists, it has to be found by search. Conway offered a $1,000 prize before his death in 2020; it was never claimed.",
 
-  "instance": "A strongly regular graph srg(v, k, \u03bb, \u03bc) is a graph on v vertices where every vertex has exactly k neighbors, every pair of adjacent vertices (connected by an edge) shares exactly \u03bb common neighbors, and every pair of non-adjacent vertices (not connected by an edge) shares exactly \u03bc common neighbors. Your challenge: build a graph with parameters srg(99, 14, 1, 2) \u2014 99 vertices, each with exactly 14 neighbors, where every adjacent pair shares exactly 1 common neighbor and every non-adjacent pair shares exactly 2 common neighbors. Submit a 99 x 99 adjacency matrix of 0s and 1s. If it satisfies all constraints, you have solved a 55-year-old open problem.",
+  "instance": "A strongly regular graph srg(v, k, \u03bb, \u03bc) is a graph on v vertices where every vertex has exactly k neighbors, every pair of adjacent vertices (connected by an edge) shares exactly \u03bb common neighbors, and every pair of non-adjacent vertices (not connected by an edge) shares exactly \u03bc common neighbors. Your challenge: build a graph with parameters srg(99, 14, 1, 2), that is, 99 vertices, each with exactly 14 neighbors, where every adjacent pair shares exactly 1 common neighbor and every non-adjacent pair shares exactly 2 common neighbors. Submit a 99 x 99 adjacency matrix of 0s and 1s. If it satisfies all constraints, you have solved a 55-year-old open problem.",
 
   "scoring": {
     "summary": "This is a binary existence problem: either the graph exists or it does not. We score partial progress by measuring how close a submitted graph comes to satisfying all constraints.",
@@ -53,7 +53,7 @@
 
   "bounds": [
     { "label": "Eigenvalues", "name": "Forced spectrum", "formula": "Any srg(99,14,1,2) must have exactly three eigenvalues: 14 (once), 2 (77 times), and -7 (21 times). These are determined by the parameters and tightly constrain the adjacency matrix's algebraic structure." },
-    { "label": "Symmetry", "name": "Not vertex-transitive", "formula": "The graph cannot look the same from every vertex. This rules out Paley graphs, Latin square graphs, and most standard algebraic constructions \u2014 it must be found by search." },
+    { "label": "Symmetry", "name": "Not vertex-transitive", "formula": "The graph cannot look the same from every vertex. This rules out Paley graphs, Latin square graphs, and most standard algebraic constructions, so the graph must be found by search." },
     { "label": "Feasibility", "name": "All necessary conditions pass", "formula": "The parameter equation k(k - \u03bb - 1) = (v - k - 1)\u03bc = 168 is satisfied, meaning the parameters are internally consistent. The Krein conditions and absolute bound are also satisfied, so no known obstruction rules the graph out." }
   ],
 
