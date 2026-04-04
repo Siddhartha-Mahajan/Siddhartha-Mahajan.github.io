@@ -36,10 +36,10 @@
   "verification": "We compute the exact integer determinant of your matrix using sympy (no floating point). The submission is accepted if the matrix is n x n, all entries are +1 or -1, and |det(M)| matches your claimed_det. It scores if |det(M)| is at or above the current record for that n.",
 
   "bounds": [
-    { "label": "n = 0 (mod 4)", "name": "Hadamard bound", "formula": "n^(n/2). Tight when a Hadamard matrix exists." },
-    { "label": "n = 1 (mod 4)", "name": "Barba bound",  "formula": "((2n-1)/n)^(1/2) * (n-1)^((n-1)/2)" },
-    { "label": "n = 2 (mod 4)", "name": "Ehlich-Wojtas bound", "formula": "(2n-2) * ((n-2)/2)^((n-2)/2)" },
-    { "label": "n = 3 (mod 4)", "name": "Ehlich bound",  "formula": "Derived from eigenvalue analysis of M^T M. See Ehlich (1964)." }
+    { "label": "n mod 4 ≡ 0", "name": "Hadamard bound", "formula": "n^(n/2). Tight when a Hadamard matrix exists." },
+    { "label": "n mod 4 ≡ 1", "name": "Barba bound",  "formula": "((2n-1)/n)^(1/2) * (n-1)^((n-1)/2)" },
+    { "label": "n mod 4 ≡ 2", "name": "Ehlich-Wojtas bound", "formula": "(2n-2) * ((n-2)/2)^((n-2)/2)" },
+    { "label": "n mod 4 ≡ 3", "name": "Ehlich bound",  "formula": "Derived from eigenvalue analysis of M^T M. See Ehlich (1964)." }
   ],
 
   "witnessExample": {

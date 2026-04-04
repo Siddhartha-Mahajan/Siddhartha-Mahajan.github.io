@@ -282,12 +282,20 @@ function renderLeaderboard(lb, collapsed) {
 function renderAttribution(data) {
     const attr = data.attribution;
     if (!attr) return null;
-    const authors = attr.authors ? attr.authors.join(', ') : '';
-    const reviewers = attr.reviewers && attr.reviewers.length > 0
-        ? `Reviewed by ${attr.reviewers.join(', ')}`
-        : 'Reviewed by the CAISc 2026 Program Committee';
-    const div = el('div', 'attribution-line');
-    div.innerHTML = `<span class="attribution-text">${esc(authors)}. ${esc(reviewers)}.</span>`;
+    const curators = attr.authors ? attr.authors.join(', ') : '';
+    const reviewers = (attr.reviewers && attr.reviewers.length > 0)
+        ? attr.reviewers.join(', ')
+        : 'CAISc 2026 Program Committee';
+    const div = el('div', 'attribution-block');
+    div.innerHTML = `
+        <div class="attribution-row">
+            <span class="attribution-label">Curated by</span>
+            <span class="attribution-names">${esc(curators)}</span>
+        </div>
+        <div class="attribution-row">
+            <span class="attribution-label">Reviewed by</span>
+            <span class="attribution-names">${esc(reviewers)}</span>
+        </div>`;
     return div;
 }
 
@@ -337,6 +345,144 @@ function renderWarmup(warmup) {
         <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-4)">${esc(warmup.body)}</p>
         ${dataHTML}`;
     return div;
+}
+
+function renderGameOfLifeWidget() {
+    const ROWS = 20, COLS = 20, CELL = 15;
+    const W = COLS * CELL, H = ROWS * CELL;
+    let grid = Array.from({ length: ROWS }, () => new Uint8Array(COLS));
+    let running = false, timer = null, gen = 0;
+
+    const wrap = el('div', 'section-block warmup-block gol-widget');
+    const heading = el('h3', null, 'Try It: Game of Life');
+    const desc = el('p', null);
+    desc.style.cssText = 'font-size:0.9rem;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-4)';
+    desc.textContent = 'Click cells to toggle alive/dead. Press Space or Play to run. A still life stays unchanged \u2014 try building one!';
+
+    const canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    function getColor(varName) {
+        return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    }
+
+    function draw() {
+        const alive = getColor('--accent') || '#6c63ff';
+        const dead = getColor('--bg-secondary') || '#1a1a2e';
+        const line = getColor('--border') || '#333';
+        ctx.fillStyle = dead;
+        ctx.fillRect(0, 0, W, H);
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                if (grid[r][c]) {
+                    ctx.fillStyle = alive;
+                    ctx.fillRect(c * CELL + 1, r * CELL + 1, CELL - 2, CELL - 2);
+                }
+            }
+        }
+        ctx.strokeStyle = line;
+        ctx.lineWidth = 0.5;
+        for (let r = 0; r <= ROWS; r++) {
+            ctx.beginPath(); ctx.moveTo(0, r * CELL); ctx.lineTo(W, r * CELL); ctx.stroke();
+        }
+        for (let c = 0; c <= COLS; c++) {
+            ctx.beginPath(); ctx.moveTo(c * CELL, 0); ctx.lineTo(c * CELL, H); ctx.stroke();
+        }
+    }
+
+    function countNeighbors(r, c) {
+        let n = 0;
+        for (let dr = -1; dr <= 1; dr++) {
+            for (let dc = -1; dc <= 1; dc++) {
+                if (dr === 0 && dc === 0) continue;
+                const nr = r + dr, nc = c + dc;
+                if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) n += grid[nr][nc];
+            }
+        }
+        return n;
+    }
+
+    function step() {
+        const next = Array.from({ length: ROWS }, () => new Uint8Array(COLS));
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                const nb = countNeighbors(r, c);
+                if (grid[r][c]) next[r][c] = (nb === 2 || nb === 3) ? 1 : 0;
+                else next[r][c] = (nb === 3) ? 1 : 0;
+            }
+        }
+        grid = next;
+        gen++;
+        draw();
+        status.textContent = 'Generation ' + gen;
+    }
+
+    function toggleRun() {
+        running = !running;
+        if (running) {
+            timer = setInterval(step, 150);
+            playBtn.textContent = 'Pause';
+            playBtn.classList.add('gol-btn--active');
+        } else {
+            clearInterval(timer);
+            playBtn.textContent = 'Play';
+            playBtn.classList.remove('gol-btn--active');
+        }
+    }
+
+    canvas.addEventListener('click', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const c = Math.floor((e.clientX - rect.left) / CELL);
+        const r = Math.floor((e.clientY - rect.top) / CELL);
+        if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
+            grid[r][c] = grid[r][c] ? 0 : 1;
+            draw();
+        }
+    });
+
+    const controls = el('div', 'gol-controls');
+    const playBtn = el('button', 'gol-btn', 'Play');
+    const stepBtn = el('button', 'gol-btn', 'Step');
+    const randomBtn = el('button', 'gol-btn', 'Random');
+    const clearBtn = el('button', 'gol-btn', 'Clear');
+
+    playBtn.addEventListener('click', toggleRun);
+    stepBtn.addEventListener('click', () => { if (!running) step(); });
+    randomBtn.addEventListener('click', () => {
+        grid = Array.from({ length: ROWS }, () => {
+            const row = new Uint8Array(COLS);
+            for (let c = 0; c < COLS; c++) row[c] = Math.random() < 0.3 ? 1 : 0;
+            return row;
+        });
+        gen = 0; draw(); status.textContent = 'Generation 0';
+    });
+    clearBtn.addEventListener('click', () => {
+        if (running) toggleRun();
+        grid = Array.from({ length: ROWS }, () => new Uint8Array(COLS));
+        gen = 0; draw(); status.textContent = 'Generation 0';
+    });
+
+    controls.append(playBtn, stepBtn, randomBtn, clearBtn);
+
+    const status = el('div', 'gol-status', 'Generation 0');
+
+    wrap.append(heading, desc, canvas, controls, status);
+
+    // Keyboard: spacebar toggles play/pause
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Space' && document.activeElement === document.body) {
+            e.preventDefault();
+            toggleRun();
+        }
+    });
+
+    // Redraw on theme change
+    const observer = new MutationObserver(() => draw());
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    setTimeout(draw, 0);
+    return wrap;
 }
 
 function renderSubmissionBlock(data) {
@@ -439,13 +585,16 @@ function renderCiteBlock(data) {
     const attr = data.attribution;
     if (!attr) return null;
     const authors = attr.authors ? attr.authors.join(', ') : 'CAISc 2026';
+    const reviewers = (attr.reviewers && attr.reviewers.length > 0)
+        ? attr.reviewers.join(', ')
+        : 'CAISc 2026 Program Committee';
     const year = '2026';
     const title = data.title;
 
     const div = el('div', 'cite-block');
     div.innerHTML = `
         <h3>Cite This Problem</h3>
-        <div class="code-block cite-bibtex">${esc(authors)} (${year}). ${esc(title)}. CAISc 2026 Verifiable Problems Track. https://caisc2026.github.io/problems/?problem=${esc(data.id)}</div>`;
+        <div class="code-block cite-bibtex">${esc(authors)} (${year}). ${esc(title)}. Reviewed by ${esc(reviewers)}. CAISc 2026 Verifiable Problems Track. https://caisc2026.github.io/problems/?problem=${esc(data.id)}</div>`;
     return div;
 }
 
@@ -562,6 +711,10 @@ async function renderDetail(container, meta, showBack) {
     header.innerHTML = `<h2>${esc(data.title)}</h2>`;
     section.appendChild(header);
 
+    /* 1b. ATTRIBUTION: Curated by / Reviewed by */
+    const attrEl = renderAttribution(data);
+    if (attrEl) section.appendChild(attrEl);
+
     /* 2. THE PROBLEM: instance text + collapsible context */
     const problemCard = el('div', 'section-card');
     const problemHeading = el('h3', 'section-card__title');
@@ -575,11 +728,18 @@ async function renderDetail(container, meta, showBack) {
         if (warmupEl) problemCard.appendChild(warmupEl);
     }
 
+    // Interactive Game of Life widget (connected-still-life only)
+    if (data.id === 'connected-still-life') {
+        const golWidget = renderGameOfLifeWidget();
+        if (golWidget) problemCard.appendChild(golWidget);
+    }
+
     // Collapsible "Additional Context" with origin + video
     const videoEl = renderVideo(data.id);
     if (data.origin || videoEl) {
         const contextDetails = document.createElement('details');
         contextDetails.className = 'accordion';
+        contextDetails.open = true;
         const summary = document.createElement('summary');
         summary.textContent = 'Background and Context';
         contextDetails.appendChild(summary);

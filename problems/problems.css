@@ -211,6 +211,37 @@
     line-height: 1.2;
 }
 
+/* ===== Attribution block ===== */
+.attribution-block {
+    margin-bottom: var(--space-6);
+    padding: var(--space-3) var(--space-6);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.attribution-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding: var(--space-1) 0;
+}
+
+.attribution-label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    min-width: 100px;
+    flex-shrink: 0;
+}
+
+.attribution-names {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
 .problem-description {
     font-size: var(--text-base);
     color: var(--text-secondary);
@@ -620,6 +651,61 @@ details.accordion .accordion-body {
     margin-top: 0;
     margin-bottom: var(--space-3);
     font-size: var(--text-lg);
+}
+
+/* ===== Game of Life Widget ===== */
+.gol-widget {
+    text-align: center;
+}
+
+.gol-widget h3 {
+    text-align: left;
+}
+
+.gol-widget p {
+    text-align: left;
+}
+
+.gol-widget canvas {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: crosshair;
+    display: block;
+    margin: 0 auto var(--space-4);
+}
+
+.gol-controls {
+    display: flex;
+    gap: var(--space-3);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.gol-btn {
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    background-color: var(--bg-secondary);
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+}
+
+.gol-btn:hover {
+    background-color: var(--bg-tertiary);
+}
+
+.gol-btn--active {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.gol-status {
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
 }
 
 /* ===== Section divider (legacy, not used in card layout) ===== */
