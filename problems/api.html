@@ -804,7 +804,10 @@
                 <h2 class="section-card__title">Examples</h2>
                 <p>All examples below were run against the live API. Copy any <code>curl</code> command and run it directly.</p>
 
-                <!-- Example 1: Health -->
+                <!-- ===== BASICS ===== -->
+
+                <h3>Basics</h3>
+
                 <div class="example-block">
                     <h4>Health Check</h4>
                     <div class="code-wrapper">
@@ -820,7 +823,6 @@
 }</pre>
                 </div>
 
-                <!-- Example 2: List instances -->
                 <div class="example-block">
                     <h4>List Instances</h4>
                     <p class="example-desc">Query which problem sizes / parameters are accepted.</p>
@@ -839,10 +841,213 @@
 }</pre>
                 </div>
 
-                <!-- Example 3: Successful submission -->
+                <!-- ===== SUCCESSFUL SUBMISSIONS ===== -->
+
+                <h3>Successful Submissions</h3>
+                <p class="example-desc" style="margin-bottom: var(--space-6);">One working example per problem. All of these pass verification and return a score and percentile.</p>
+
+                <!-- Hadamard n=23: Orrick record matrix -->
                 <div class="example-block">
-                    <h4>Successful Submission &mdash; Connected Still Life</h4>
-                    <p class="example-desc">A 2 &times; 2 block (the simplest still life) on an 8 &times; 8 grid. Every live cell has exactly 3 neighbors, the pattern is stable and connected.</p>
+                    <h4>Hadamard n=23 &mdash; Record-Holding Matrix (Orrick et al. 2003)</h4>
+                    <p class="example-desc">The current best-known 23&times;23 &plusmn;1 matrix, with |det| = 2,779,447,296,000,000. This is the smallest open case of the Hadamard maximal determinant problem.</p>
+                    <div class="code-wrapper">
+                        <div class="code-label">curl</div>
+                        <pre class="code-block" data-copy>curl -X POST http://168.144.71.199:8080/api/v1/submit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "alice@example.com",
+    "problem_name": "hadamard",
+    "instance": {"n": 23},
+    "submission": {
+      "claimed_det": 2779447296000000,
+      "matrix": [
+        [ 1,-1, 1,-1,-1,-1,-1, 1, 1,-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [-1, 1, 1,-1,-1, 1, 1,-1,-1,-1,-1, 1, 1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [ 1, 1,-1, 1, 1,-1,-1,-1,-1, 1, 1,-1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [-1,-1, 1, 1,-1,-1,-1, 1, 1, 1, 1, 1, 1,-1,-1, 1, 1,-1,-1, 1, 1,-1,-1],
+        [-1,-1, 1,-1, 1,-1,-1, 1, 1, 1, 1, 1, 1,-1,-1,-1,-1, 1, 1,-1,-1, 1, 1],
+        [-1, 1,-1,-1,-1,-1,-1, 1, 1, 1,-1,-1,-1,-1,-1,-1, 1, 1,-1,-1, 1, 1,-1],
+        [-1, 1,-1,-1,-1,-1,-1, 1, 1,-1, 1,-1,-1,-1,-1, 1,-1,-1, 1, 1,-1,-1, 1],
+        [ 1,-1,-1, 1, 1, 1, 1, 1, 1,-1,-1, 1,-1,-1,-1, 1,-1,-1, 1,-1, 1, 1,-1],
+        [ 1,-1,-1, 1, 1, 1, 1, 1, 1,-1,-1,-1, 1,-1,-1,-1, 1, 1,-1, 1,-1,-1, 1],
+        [-1,-1, 1, 1, 1, 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1,-1, 1, 1,-1, 1,-1],
+        [-1,-1, 1, 1, 1,-1, 1,-1,-1,-1,-1,-1,-1,-1,-1, 1,-1, 1,-1,-1, 1,-1, 1],
+        [-1, 1,-1, 1, 1,-1,-1, 1,-1,-1,-1, 1, 1, 1, 1, 1,-1, 1,-1, 1,-1, 1,-1],
+        [-1, 1,-1, 1, 1,-1,-1,-1, 1,-1,-1, 1, 1, 1, 1,-1, 1,-1, 1,-1, 1,-1, 1],
+        [ 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1, 1, 1,-1,-1,-1, 1, 1, 1, 1,-1,-1],
+        [ 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1, 1,-1, 1, 1, 1,-1,-1,-1,-1, 1, 1],
+        [ 1, 1, 1, 1,-1,-1, 1, 1,-1,-1, 1, 1,-1,-1, 1,-1, 1, 1, 1,-1,-1,-1,-1],
+        [ 1, 1, 1, 1,-1, 1,-1,-1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 1, 1,-1,-1,-1,-1],
+        [ 1, 1, 1,-1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 1,-1, 1, 1, 1,-1,-1,-1,-1,-1],
+        [ 1, 1, 1,-1, 1,-1, 1, 1,-1, 1,-1,-1, 1, 1,-1, 1, 1,-1, 1,-1,-1,-1,-1],
+        [ 1, 1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 1,-1, 1,-1,-1,-1,-1,-1, 1,-1, 1, 1],
+        [ 1, 1, 1, 1,-1, 1,-1, 1,-1,-1, 1,-1, 1, 1,-1,-1,-1,-1,-1,-1, 1, 1, 1],
+        [ 1, 1, 1,-1, 1, 1,-1, 1,-1, 1,-1, 1,-1,-1, 1,-1,-1,-1,-1, 1, 1,-1, 1],
+        [ 1, 1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1,-1,-1,-1, 1, 1, 1,-1]
+      ]
+    }
+  }'</pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+                    </div>
+                    <p class="response-label">Response &middot; 200</p>
+                    <pre class="code-block">{
+  "<span class="tok-key">success</span>": <span class="tok-num">true</span>,
+  "<span class="tok-key">submission_id</span>": <span class="tok-punc">"</span>019d676e-78ac-75cd-9d17-b5fa93e13d46<span class="tok-punc">"</span>,
+  "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>hadamard<span class="tok-punc">"</span>,
+  "<span class="tok-key">instance</span>": { "<span class="tok-key">n</span>": <span class="tok-num">23</span> },
+  "<span class="tok-key">score</span>": <span class="tok-num">2779447296000000</span>,
+  "<span class="tok-key">percentile</span>": <span class="tok-num">60.0</span>,
+  "<span class="tok-key">is_record</span>": <span class="tok-num">false</span>,
+  "<span class="tok-key">message</span>": <span class="tok-punc">"</span>Verification passed<span class="tok-punc">"</span>
+}</pre>
+                </div>
+
+                <!-- Hadamard n=29: random matrix -->
+                <div class="example-block">
+                    <h4>Hadamard n=29 &mdash; Random &plusmn;1 Matrix</h4>
+                    <p class="example-desc">A random 29&times;29 matrix of &plusmn;1 entries. Even a random matrix gets a valid score &mdash; the challenge is maximizing it. This one scores |det| = 1,093,127,158,890,496 vs. the record of 6,240,837,824,260,096.</p>
+                    <div class="code-wrapper">
+                        <div class="code-label">curl</div>
+                        <pre class="code-block" data-copy>curl -X POST http://168.144.71.199:8080/api/v1/submit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "alice@example.com",
+    "problem_name": "hadamard",
+    "instance": {"n": 29},
+    "submission": {
+      "claimed_det": 1093127158890496,
+      "matrix": [
+        [ 1,-1, 1, 1, 1,-1, 1, 1, 1,-1, 1, 1, 1, 1,-1, 1,-1,-1,-1, 1,-1, 1,-1,-1,-1,-1,-1,-1,-1],
+        [-1, 1, 1,-1,-1,-1, 1,-1, 1, 1, 1, 1, 1,-1,-1,-1,-1,-1, 1,-1,-1, 1,-1, 1,-1, 1,-1,-1, 1],
+        [ 1, 1, 1, 1, 1, 1, 1,-1,-1, 1,-1,-1,-1,-1, 1,-1, 1,-1,-1,-1, 1,-1, 1,-1, 1,-1, 1, 1,-1],
+        [ 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1, 1,-1,-1,-1,-1,-1,-1,-1,-1, 1,-1, 1,-1,-1, 1,-1],
+        [ 1,-1,-1, 1,-1, 1,-1, 1, 1,-1,-1, 1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1, 1, 1,-1, 1,-1,-1,-1],
+        [ 1, 1, 1, 1,-1, 1, 1, 1, 1, 1,-1, 1,-1, 1,-1, 1, 1,-1,-1,-1, 1,-1, 1, 1,-1,-1, 1, 1,-1],
+        [-1,-1, 1, 1, 1, 1, 1, 1,-1, 1, 1, 1,-1, 1, 1,-1, 1, 1, 1, 1, 1,-1,-1,-1, 1, 1, 1,-1, 1],
+        [ 1,-1, 1,-1,-1,-1, 1, 1, 1, 1, 1, 1, 1,-1, 1,-1, 1, 1, 1,-1,-1,-1,-1, 1,-1, 1, 1,-1,-1],
+        [-1,-1,-1,-1,-1,-1, 1,-1,-1, 1,-1, 1, 1,-1, 1, 1, 1, 1,-1, 1,-1, 1, 1, 1, 1,-1,-1, 1, 1],
+        [-1, 1, 1, 1,-1,-1,-1, 1, 1,-1,-1,-1,-1, 1,-1, 1,-1, 1,-1,-1,-1,-1, 1,-1, 1, 1, 1, 1,-1],
+        [ 1, 1, 1,-1,-1,-1,-1, 1, 1,-1, 1, 1, 1,-1,-1, 1,-1,-1,-1,-1,-1, 1,-1, 1, 1,-1, 1, 1, 1],
+        [-1,-1, 1,-1,-1,-1,-1, 1, 1,-1,-1, 1, 1,-1, 1,-1,-1, 1, 1,-1,-1, 1,-1, 1,-1, 1, 1, 1,-1],
+        [-1, 1,-1, 1, 1,-1,-1, 1,-1,-1, 1, 1,-1, 1, 1,-1, 1, 1,-1,-1, 1, 1,-1,-1,-1,-1, 1,-1,-1],
+        [ 1,-1, 1,-1,-1,-1, 1, 1,-1, 1, 1, 1, 1, 1, 1,-1,-1, 1,-1,-1,-1,-1, 1,-1,-1, 1, 1,-1,-1],
+        [-1,-1,-1,-1, 1,-1,-1, 1, 1, 1, 1,-1,-1,-1,-1,-1,-1, 1,-1, 1, 1,-1, 1,-1, 1,-1, 1,-1,-1],
+        [-1,-1,-1, 1, 1, 1,-1, 1,-1,-1, 1, 1,-1, 1,-1,-1,-1,-1,-1, 1, 1,-1,-1, 1, 1,-1, 1,-1, 1],
+        [-1, 1,-1, 1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1,-1,-1, 1,-1, 1,-1, 1,-1, 1, 1,-1, 1, 1],
+        [-1, 1, 1, 1,-1, 1,-1, 1, 1, 1,-1, 1, 1,-1, 1,-1,-1, 1,-1, 1,-1,-1, 1,-1,-1,-1,-1,-1, 1],
+        [-1, 1,-1, 1, 1,-1,-1,-1, 1,-1, 1, 1, 1,-1,-1, 1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1,-1, 1, 1],
+        [-1, 1,-1, 1,-1,-1,-1,-1,-1,-1, 1, 1, 1,-1,-1,-1,-1, 1, 1,-1, 1, 1,-1, 1,-1, 1,-1,-1,-1],
+        [-1, 1,-1,-1,-1, 1,-1, 1,-1, 1, 1,-1, 1,-1,-1,-1, 1, 1,-1,-1, 1,-1,-1,-1, 1, 1, 1,-1,-1],
+        [-1, 1,-1,-1,-1,-1, 1, 1,-1, 1, 1,-1,-1, 1,-1, 1,-1, 1,-1, 1, 1, 1,-1, 1, 1,-1,-1, 1, 1],
+        [-1,-1,-1,-1,-1, 1,-1, 1, 1, 1,-1, 1, 1,-1, 1, 1,-1, 1, 1, 1,-1,-1,-1, 1, 1,-1, 1, 1,-1],
+        [-1, 1, 1, 1,-1,-1,-1,-1, 1,-1,-1,-1,-1,-1, 1, 1,-1, 1,-1,-1, 1, 1,-1,-1,-1, 1,-1,-1,-1],
+        [ 1,-1,-1, 1,-1,-1, 1,-1, 1, 1,-1,-1,-1,-1, 1,-1, 1,-1,-1,-1, 1,-1,-1,-1,-1, 1,-1, 1, 1],
+        [ 1, 1, 1, 1,-1, 1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 1,-1,-1, 1, 1,-1, 1, 1, 1,-1,-1, 1,-1,-1],
+        [-1,-1,-1, 1, 1, 1,-1,-1, 1,-1, 1, 1, 1,-1,-1, 1, 1, 1, 1,-1,-1, 1, 1,-1,-1, 1, 1, 1,-1],
+        [-1,-1, 1, 1,-1,-1, 1,-1,-1, 1,-1, 1, 1, 1, 1, 1, 1, 1,-1, 1, 1,-1,-1,-1, 1,-1, 1, 1, 1],
+        [ 1,-1,-1, 1, 1, 1,-1, 1, 1,-1,-1, 1,-1,-1, 1,-1, 1,-1, 1, 1, 1,-1, 1,-1, 1, 1,-1, 1, 1]
+      ]
+    }
+  }'</pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+                    </div>
+                    <p class="response-label">Response &middot; 200</p>
+                    <pre class="code-block">{
+  "<span class="tok-key">success</span>": <span class="tok-num">true</span>,
+  "<span class="tok-key">submission_id</span>": <span class="tok-punc">"</span>019d676f-f470-7efd-9ccf-f0c1df902770<span class="tok-punc">"</span>,
+  "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>hadamard<span class="tok-punc">"</span>,
+  "<span class="tok-key">instance</span>": { "<span class="tok-key">n</span>": <span class="tok-num">29</span> },
+  "<span class="tok-key">score</span>": <span class="tok-num">1093127158890496</span>,
+  "<span class="tok-key">percentile</span>": <span class="tok-num">58.3333</span>,
+  "<span class="tok-key">is_record</span>": <span class="tok-num">false</span>,
+  "<span class="tok-key">message</span>": <span class="tok-punc">"</span>Verification passed<span class="tok-punc">"</span>
+}</pre>
+                </div>
+
+                <!-- Strassen's algorithm -->
+                <div class="example-block">
+                    <h4>Tensor Rank &mdash; Strassen's Algorithm, R(2,2,2) = 7</h4>
+                    <p class="example-desc">The famous Strassen (1969) algorithm that multiplies two 2&times;2 matrices using 7 scalar multiplications instead of 8. This is provably optimal. The U, V, W tensors encode the bilinear decomposition.</p>
+                    <div class="code-wrapper">
+                        <div class="code-label">curl</div>
+                        <pre class="code-block" data-copy>curl -X POST http://168.144.71.199:8080/api/v1/submit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "alice@example.com",
+    "problem_name": "tensor",
+    "instance": {"n": 2, "m": 2, "p": 2},
+    "submission": {
+      "num_multiplications": 7,
+      "U": [
+        [[1,0],[0,1]], [[0,0],[1,1]], [[1,0],[0,0]],
+        [[0,0],[0,1]], [[1,1],[0,0]], [[-1,0],[1,0]], [[0,1],[0,-1]]
+      ],
+      "V": [
+        [[1,0],[0,1]], [[1,0],[0,0]], [[0,1],[0,-1]],
+        [[-1,0],[1,0]], [[0,0],[0,1]], [[1,1],[0,0]], [[0,0],[1,1]]
+      ],
+      "W": [
+        [[1,0],[0,1]], [[0,0],[1,-1]], [[0,1],[0,1]],
+        [[1,0],[1,0]], [[-1,1],[0,0]], [[0,0],[0,1]], [[1,0],[0,0]]
+      ]
+    }
+  }'</pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+                    </div>
+                    <p class="response-label">Response &middot; 200</p>
+                    <pre class="code-block">{
+  "<span class="tok-key">success</span>": <span class="tok-num">true</span>,
+  "<span class="tok-key">submission_id</span>": <span class="tok-punc">"</span>019d676e-7e8a-7890-9793-7ff30dba1af1<span class="tok-punc">"</span>,
+  "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>tensor<span class="tok-punc">"</span>,
+  "<span class="tok-key">instance</span>": { "<span class="tok-key">n</span>": <span class="tok-num">2</span>, "<span class="tok-key">m</span>": <span class="tok-num">2</span>, "<span class="tok-key">p</span>": <span class="tok-num">2</span> },
+  "<span class="tok-key">score</span>": <span class="tok-num">7</span>,
+  "<span class="tok-key">percentile</span>": <span class="tok-num">66.6667</span>,
+  "<span class="tok-key">is_record</span>": <span class="tok-num">false</span>,
+  "<span class="tok-key">message</span>": <span class="tok-punc">"</span>Verification passed<span class="tok-punc">"</span>
+}</pre>
+                </div>
+
+                <!-- Conway's 99-Graph: circular 14-regular -->
+                <div class="example-block">
+                    <h4>Conway's 99-Graph &mdash; Circular 14-Regular Graph</h4>
+                    <p class="example-desc">A simple attempt: connect each vertex to its 7 nearest neighbors on each side in a circular layout. This gives a valid 14-regular graph, but the lambda/mu constraints are mostly violated. Partial solutions are accepted &mdash; this one satisfies 198 of 4,950 constraints (4.0%).<br><br>The matrix is too large to show inline (99&times;99). Here's how to generate and submit it:</p>
+                    <div class="code-wrapper">
+                        <div class="code-label">Python</div>
+                        <pre class="code-block" data-copy>import requests, json
+
+n = 99
+matrix = [[0]*n for _ in range(n)]
+for i in range(n):
+    for d in range(1, 8):
+        matrix[i][(i+d) % n] = 1
+        matrix[(i+d) % n][i] = 1
+
+resp = requests.post("http://168.144.71.199:8080/api/v1/submit", json={
+    "email": "you@example.com",
+    "problem_name": "conway",
+    "instance": {},
+    "submission": {"matrix": matrix}
+})
+print(json.dumps(resp.json(), indent=2))</pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+                    </div>
+                    <p class="response-label">Response &middot; 200</p>
+                    <pre class="code-block">{
+  "<span class="tok-key">success</span>": <span class="tok-num">true</span>,
+  "<span class="tok-key">submission_id</span>": <span class="tok-punc">"</span>019d6770-2b4b-7bd5-a402-6a16d4884ab4<span class="tok-punc">"</span>,
+  "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>conway<span class="tok-punc">"</span>,
+  "<span class="tok-key">instance</span>": {},
+  "<span class="tok-key">score</span>": <span class="tok-num">4.0</span>,
+  "<span class="tok-key">percentile</span>": <span class="tok-num">66.6667</span>,
+  "<span class="tok-key">is_record</span>": <span class="tok-num">true</span>,
+  "<span class="tok-key">message</span>": <span class="tok-punc">"</span>198 of 4950 constraints satisfied<span class="tok-punc">"</span>
+}</pre>
+                </div>
+
+                <!-- Still Life: loaf (7 cells) -->
+                <div class="example-block">
+                    <h4>Connected Still Life &mdash; Loaf (7 cells, n=8)</h4>
+                    <p class="example-desc">A "loaf" &mdash; a classic Game of Life still life with 7 live cells. Stable, connected, and scores higher than a simple block (4 cells) or beehive (6 cells). The current record for n=8 is 20 cells.</p>
                     <div class="code-wrapper">
                         <div class="code-label">curl</div>
                         <pre class="code-block" data-copy>curl -X POST http://168.144.71.199:8080/api/v1/submit \
@@ -852,14 +1057,14 @@
     "problem_name": "stilllife",
     "instance": {"n": 8},
     "submission": {
-      "claimed_cells": 4,
+      "claimed_cells": 7,
       "grid": [
         [0,0,0,0,0,0,0,0],
-        [0,0,1,1,0,0,0,0],
-        [0,0,1,1,0,0,0,0],
         [0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0],
+        [0,0,0,1,1,0,0,0],
+        [0,0,1,0,0,1,0,0],
+        [0,0,0,1,0,1,0,0],
+        [0,0,0,0,1,0,0,0],
         [0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0]
       ]
@@ -870,39 +1075,45 @@
                     <p class="response-label">Response &middot; 200</p>
                     <pre class="code-block">{
   "<span class="tok-key">success</span>": <span class="tok-num">true</span>,
-  "<span class="tok-key">submission_id</span>": <span class="tok-punc">"</span>019d6745-930d-7594-b098-8366adeb631c<span class="tok-punc">"</span>,
+  "<span class="tok-key">submission_id</span>": <span class="tok-punc">"</span>019d676e-c5dc-7093-adf6-91114b727719<span class="tok-punc">"</span>,
   "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>stilllife<span class="tok-punc">"</span>,
   "<span class="tok-key">instance</span>": { "<span class="tok-key">n</span>": <span class="tok-num">8</span> },
-  "<span class="tok-key">score</span>": <span class="tok-num">4</span>,
-  "<span class="tok-key">percentile</span>": <span class="tok-num">50.0</span>,
+  "<span class="tok-key">score</span>": <span class="tok-num">7</span>,
+  "<span class="tok-key">percentile</span>": <span class="tok-num">75.0</span>,
   "<span class="tok-key">is_record</span>": <span class="tok-num">false</span>,
   "<span class="tok-key">message</span>": <span class="tok-punc">"</span>Verification passed<span class="tok-punc">"</span>
 }</pre>
                 </div>
 
-                <!-- Example 4: Retrieve -->
+                <!-- ===== UTILITY ===== -->
+
+                <h3>Retrieving Results</h3>
+
                 <div class="example-block">
                     <h4>Retrieve a Past Submission</h4>
                     <p class="example-desc">Use the <code>submission_id</code> from any successful or failed submission to look up the result later.</p>
                     <div class="code-wrapper">
                         <div class="code-label">curl</div>
-                        <pre class="code-block" data-copy>curl http://168.144.71.199:8080/api/v1/submission/019d6745-930d-7594-b098-8366adeb631c</pre>
+                        <pre class="code-block" data-copy>curl http://168.144.71.199:8080/api/v1/submission/019d676e-78ac-75cd-9d17-b5fa93e13d46</pre>
                         <button class="copy-btn" aria-label="Copy to clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
                     </div>
                     <p class="response-label">Response &middot; 200</p>
                     <pre class="code-block">{
-  "<span class="tok-key">submission_id</span>": <span class="tok-punc">"</span>019d6745-930d-7594-b098-8366adeb631c<span class="tok-punc">"</span>,
-  "<span class="tok-key">created_at</span>": <span class="tok-punc">"</span>2026-04-07T09:28:26.098551Z<span class="tok-punc">"</span>,
-  "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>stilllife<span class="tok-punc">"</span>,
-  "<span class="tok-key">instance</span>": { "<span class="tok-key">n</span>": <span class="tok-num">8</span> },
+  "<span class="tok-key">submission_id</span>": <span class="tok-punc">"</span>019d676e-78ac-75cd-9d17-b5fa93e13d46<span class="tok-punc">"</span>,
+  "<span class="tok-key">created_at</span>": <span class="tok-punc">"</span>2026-04-07T09:29:58.508000Z<span class="tok-punc">"</span>,
+  "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>hadamard<span class="tok-punc">"</span>,
+  "<span class="tok-key">instance</span>": { "<span class="tok-key">n</span>": <span class="tok-num">23</span> },
   "<span class="tok-key">is_valid</span>": <span class="tok-num">true</span>,
-  "<span class="tok-key">score</span>": <span class="tok-num">4</span>,
-  "<span class="tok-key">percentile</span>": <span class="tok-num">50.0</span>,
+  "<span class="tok-key">score</span>": <span class="tok-num">2779447296000000</span>,
+  "<span class="tok-key">percentile</span>": <span class="tok-num">60.0</span>,
   "<span class="tok-key">is_record</span>": <span class="tok-num">false</span>
 }</pre>
                 </div>
 
-                <!-- Example 5: Format error -->
+                <!-- ===== ERROR EXAMPLES ===== -->
+
+                <h3>Error Examples</h3>
+
                 <div class="example-block">
                     <h4>Validation Error &mdash; Wrong Dimensions</h4>
                     <p class="example-desc">Submitting a 2 &times; 2 matrix for n=23 Hadamard.</p>
@@ -929,7 +1140,6 @@
 }</pre>
                 </div>
 
-                <!-- Example 6: Verification failure -->
                 <div class="example-block">
                     <h4>Verification Failure &mdash; Tensor Rank</h4>
                     <p class="example-desc">An incorrectly encoded algorithm. The verifier reports exactly which output entry was wrong.</p>
@@ -964,7 +1174,6 @@
 }</pre>
                 </div>
 
-                <!-- Example 7: Unknown problem -->
                 <div class="example-block">
                     <h4>Unknown Problem</h4>
                     <div class="code-wrapper">
