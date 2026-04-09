@@ -43,10 +43,10 @@
   "verification": "For each submission: (1) Check coords length matches sequence length, (2) Check all coordinates are unique (self-avoidance), (3) Check consecutive residues are lattice-adjacent (Manhattan distance = 1), (4) Count H-H contacts: pairs (i, j) where |i-j| > 1, both sequence[i] and sequence[j] are H, and coords are lattice-adjacent. Pure integer arithmetic, runs in microseconds.",
 
   "bounds": [
-    { "label": "Complexity", "name": "NP-hard", "formula": "Proven by Berger & Leighton (1998) for 2D square lattice. No polynomial-time algorithm is known or expected." },
-    { "label": "Search space", "name": "Exponential", "formula": "~3^n self-avoiding walks for a length-n chain on the square lattice. For n=100: approximately 5 x 10^47 conformations." },
+    { "label": "Complexity", "name": "NP-hard", "formula": "Proven NP-complete in 3D by Berger & Leighton (1998) and in 2D by Crescenzi et al. (1998). No polynomial-time algorithm is known or expected." },
+    { "label": "Search space", "name": "Exponential", "formula": "~mu^n self-avoiding walks (mu ≈ 2.638 for the 2D square lattice). For n=100: approximately 10^42 conformations." },
     { "label": "Upper bound", "name": "Contacts <= H*(H-1)/2", "formula": "Each H residue has at most 4 lattice neighbors (2D) minus the 1-2 occupied by chain neighbors. The packing limit depends on H-density and chain topology." },
-    { "label": "Proven optima", "name": "Known for n <= 36", "formula": "Exhaustive search and branch-and-bound have confirmed optimal values for sequences up to length 36. Beyond that, only heuristic best-known values exist." }
+    { "label": "Proven optima", "name": "Known for benchmark sequences up to length 36", "formula": "Exhaustive search and branch-and-bound have confirmed optimal values for the standard benchmark sequences S1-S4 (lengths 20-36). Beyond that, only heuristic best-known values exist." }
   ],
 
   "leaderboard": {
@@ -57,11 +57,11 @@
       { "id": "S3",  "length": 25,  "sequence": "PPHPPHHPPPPHHPPPPHHPPPPHH",  "best": 8,  "optimal": true,  "note": "Proven optimal" },
       { "id": "S4",  "length": 36,  "sequence": "PPPHHPPHHPPPPPHHHHHHHPPHHPPPPHHPPHPP",  "best": 14,  "optimal": true,  "note": "Proven optimal" },
       { "id": "S5",  "length": 48,  "sequence": "PPHPPHHPPHHPPPPPHHHHHHHHHHPPPPPPHHPPHHPPHPPHHHHH",  "best": 23,  "optimal": false,  "note": "Open — best known since ~2004" },
-      { "id": "S6",  "length": 50,  "sequence": "HHPHPHPHPHHHHPHPPPHPPPHPPPPHPPPHPPPHPHHHHPHPHPHPHH",  "best": 21,  "optimal": false,  "note": "Open — best known since ~2000" },
-      { "id": "S7",  "length": 64,  "sequence": "PPHHHPHHHHHHHHPPPHHHHHHHHHHPHPPPHHHHHHHHHHHHPPPPHHHHHHPHHPHHHHHH",  "best": 36,  "optimal": false,  "note": "Open — likely suboptimal" },
+      { "id": "S6",  "length": 50,  "sequence": "PPHPPHPHPHHHHPHPPPHPPPHPPPPHPPPHPPPHPHHHHPHPHPHPHH",  "best": 21,  "optimal": false,  "note": "Open — best known since ~2000" },
+      { "id": "S7",  "length": 60,  "sequence": "PPHHHPHHHHHHHHPPPHHHHHHHHHHPHPPPHHHHHHHHHHHHPPPPHHHHHHPHHPHP",  "best": 36,  "optimal": false,  "note": "Open — likely suboptimal" },
       { "id": "S8",  "length": 64,  "sequence": "HHHHHHHHHHHHPHPHPPHHPPHHPPHPPHHPPHHPPHPPHHPPHHPPHPHPHHHHHHHHHHHH",  "best": 42,  "optimal": false,  "note": "Open — largest well-studied sequence" },
       { "id": "S9",  "length": 85,  "sequence": "HHHHPPPPHHHHHHHHHHHHPPPPPPHHHHHHHHHHHHPPPHHHHHHHHHHHHPPPHHHHHHHHHHHHPPPHPPHHPPHHPPHPH",  "best": 53,  "optimal": false,  "note": "Open — Wust & Landau (2012) found putative ground state" },
-      { "id": "S10", "length": 100, "sequence": "PPPHHPPHHHHPPHHHPHHPHHPHHHHPPPPPPPPHHHHHHPPHHHHHHPPPPPPPPPHPHHPHHHHHHHHHHHPPHHHPHHPHPPHPHHHPPPPPPHHH",  "best": 48,  "optimal": false,  "note": "Open — longest standard benchmark" }
+      { "id": "S10", "length": 100, "sequence": "PPPHHPPHHHHPPHHHPHHPHHPHHHHPPPPPPPPHHHHHHPPHHHHHHPPPPPPPPPHPHHPHHHHHHHHHHHPPHHHPHHPHPPHPHHHPPPPPPHHH",  "best": 50,  "optimal": false,  "note": "Open — longest standard benchmark. Putative ground state -50 from Wang-Landau sampling (Wust & Landau, 2012)" }
     ]
   },
 
