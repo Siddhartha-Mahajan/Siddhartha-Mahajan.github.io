@@ -1,0 +1,81 @@
+{
+  "id": "sbox-design",
+  "title": "Cryptographic S-Box Design",
+  "domain": "Cryptography - Boolean Functions",
+
+  "attribution": {
+    "authors": ["Siddhartha Mahajan (Lossfunk)"],
+    "reviewers": []
+  },
+
+  "origin": "Substitution boxes (S-boxes) are the nonlinear core of virtually every modern block cipher, including AES, DES, and their successors. An 8x8 S-box is a permutation of {0,...,255}: it maps each byte to a unique byte. The cryptographic strength of a cipher depends critically on the S-box's resistance to linear and differential cryptanalysis, quantified by its nonlinearity and differential uniformity. The AES S-box, based on the multiplicative inverse in GF(2^8), achieves nonlinearity 112 and differential uniformity 4 — both optimal for its class. But AES optimizes a single algebraic construction. The question remains: can we find S-boxes that match or exceed AES properties using novel constructions, or achieve better trade-offs across multiple metrics simultaneously? This is an active area of research with implications for post-quantum and lightweight cipher design.",
+
+  "instance": "A submission is a complete 8x8 S-box: a list of 256 distinct integers in the range [0, 255], representing the permutation S(0), S(1), ..., S(255). The verifier computes cryptographic quality metrics. Your goal is to maximize a composite score based on: (1) Nonlinearity — the minimum Hamming distance from all affine Boolean functions across all component functions, (2) Differential uniformity — the maximum value in the difference distribution table, excluding the trivial row, (3) Algebraic degree — the maximum degree in the algebraic normal form. Higher nonlinearity, lower differential uniformity, and higher algebraic degree are all better.",
+
+  "scoring": {
+    "summary": "S-boxes are scored on a weighted combination of cryptographic properties. Higher composite score is better.",
+    "metrics": [
+      {
+        "name": "Nonlinearity",
+        "description": "Minimum nonlinearity across all 255 non-trivial component functions. Computed from the Walsh-Hadamard spectrum. Higher is better. The theoretical maximum for 8-bit permutations is 112 (achieved by AES). Any permutation with nonlinearity >= 104 is cryptographically strong."
+      },
+      {
+        "name": "Differential uniformity",
+        "description": "The maximum entry in the difference distribution table (DDT) for non-zero input difference. Lower is better. The minimum possible for 8-bit permutations is 4 (achieved by APN-like constructions). AES achieves 4."
+      },
+      {
+        "name": "Algebraic degree",
+        "description": "The maximum degree of the algebraic normal form (ANF) across component functions. For 8-bit permutations, maximum possible is 7. Higher degree resists algebraic attacks."
+      }
+    ],
+    "note": "The AES S-box baseline: nonlinearity 112, differential uniformity 4, algebraic degree 7. Any S-box matching all three would be notable. Finding S-boxes with novel constructions that achieve nonlinearity >= 108 and differential uniformity <= 6 is an open challenge."
+  },
+
+  "warmup": {
+    "title": "Warm-up: 4-bit S-box",
+    "body": "Construct a permutation of {0,...,15} with good nonlinearity. One strong 4-bit S-box (from PRESENT cipher): [12, 5, 6, 11, 9, 0, 10, 13, 3, 14, 15, 8, 4, 7, 1, 2]. Its nonlinearity is 4 (maximum for 4-bit is 4), differential uniformity is 4, and algebraic degree is 3. Verify by computing the Walsh spectrum and DDT.",
+    "sbox": [12, 5, 6, 11, 9, 0, 10, 13, 3, 14, 15, 8, 4, 7, 1, 2],
+    "n": 4
+  },
+
+  "submissionExample": "{\n  \"sbox\": [99, 124, 119, 123, 242, 107, 111, 197, ...]\n}",
+
+  "verification": "For each submission: (1) Check the array has 256 entries, all distinct, each in [0,255] (valid permutation). (2) Compute the Walsh-Hadamard spectrum: for each non-zero mask a (1..255), compute the component function f_a(x) = a . S(x) over GF(2), then its Walsh transform W(b) = sum_x (-1)^(f_a(x) XOR b.x) for all b. Nonlinearity of component a = 128 - max|W(b)|/2. Report minimum over all a. (3) Compute the DDT: for each non-zero input difference delta (1..255) and each x, compute S(x) XOR S(x XOR delta). The differential uniformity is the maximum frequency. (4) Compute algebraic degree via ANF. All operations are pure integer/bitwise; total runtime under 2 seconds in Python, milliseconds in C.",
+
+  "bounds": [
+    { "label": "Nonlinearity", "name": "Max 112 for 8-bit permutations", "formula": "The covering radius bound: for n=8, the maximum nonlinearity of any bijective Boolean vectorial function is 2^(n-1) - 2^(n/2-1) = 112. Bent functions achieve 120 but are not bijections." },
+    { "label": "Differential uniformity", "name": "Min 4 for 8-bit permutations (open: min 2?)", "formula": "APN (Almost Perfect Nonlinear) functions achieve differential uniformity 2, but whether an APN permutation of GF(2^8) exists is one of the biggest open problems in symmetric cryptography (open since ~1994). The only known APN permutation for even n was found on GF(2^6) by Browning-Dillon-McQuistan-Wolfe (2010). Best known 8-bit permutations achieve 4." },
+    { "label": "Trade-offs", "name": "Joint optimization is hard", "formula": "Whether nonlinearity > 112 is possible for an 8-bit permutation is unknown (conjectured impossible, never proven). Known constructions achieving 112 use the algebraic structure of x^(-1) in GF(2^8)." },
+    { "label": "Search space", "name": "256! permutations", "formula": "The total number of 8-bit permutations is 256! ~ 10^507. Even modulo affine equivalence, the space is enormous." }
+  ],
+
+  "leaderboard": {
+    "note": "Notable 8x8 S-boxes from the literature. NL = nonlinearity, DU = differential uniformity, Deg = algebraic degree.",
+    "rows": [
+      { "name": "AES (Rijndael)",         "nl": 112, "du": 4,  "deg": 7, "year": 2001, "note": "Multiplicative inverse in GF(2^8) + affine transform" },
+      { "name": "Camellia S1",             "nl": 112, "du": 4,  "deg": 7, "year": 2000, "note": "Based on inverse in GF(2^8) with different affine" },
+      { "name": "Kuznetsov GA (2024)",     "nl": 104, "du": 6,  "deg": 7, "year": 2024, "note": "Genetic algorithm construction, no algebraic structure" },
+      { "name": "Mileva et al. (2020)",    "nl": 100, "du": 8,  "deg": 7, "year": 2020, "note": "Composite construction" },
+      { "name": "Random permutation avg",  "nl": 96,  "du": 12, "deg": 7, "year": "-",  "note": "Expected values for uniform random 8-bit permutation" }
+    ]
+  },
+
+  "suggestedApproach": [
+    { "title": "Verify the AES S-box", "body": "Implement the Walsh transform and DDT computation for the AES S-box. Confirm nonlinearity 112 and differential uniformity 4. This gives you the verification tooling needed for your own constructions." },
+    { "title": "Algebraic constructions", "body": "Start with the multiplicative inverse in GF(2^8) and apply random affine transformations. This produces S-boxes with guaranteed nonlinearity 112 and differential uniformity 4, forming a baseline." },
+    { "title": "Genetic algorithms", "body": "Start from a random permutation. Mutate by swapping pairs. Fitness = weighted combination of nonlinearity and inverse differential uniformity. Select and recombine. Kuznetsov (2024) achieved nonlinearity 104 this way." },
+    { "title": "Hill climbing on Walsh spectrum", "body": "Directly optimize the Walsh spectrum. Swap two S-box entries, recompute affected Walsh values, accept if nonlinearity improves. This is faster than full recomputation." },
+    { "title": "Target novel trade-off points", "body": "Instead of matching AES, seek S-boxes with unusual property combinations: e.g., nonlinearity 108 with differential uniformity 4, or nonlinearity 112 with additional algebraic properties (e.g., low absolute indicator)." }
+  ],
+
+  "agentPrompt": "I want you to construct an 8x8 cryptographic S-box (a permutation of {0,...,255}) with the best possible cryptographic properties. Metrics: (1) Nonlinearity — computed from the Walsh-Hadamard spectrum of all 255 component functions. Target: >= 104, ideally 112. (2) Differential uniformity — from the DDT. Target: <= 6, ideally 4. (3) Algebraic degree — from the ANF. Target: 7. Strategy: Start with the AES S-box as a baseline. Then try: (a) genetic algorithm: maintain a population of permutations, mutate by swapping entries, select for high nonlinearity and low differential uniformity, (b) algebraic construction: compute inverses in GF(2^8) with different irreducible polynomials and affine transforms. Report the S-box as a JSON array of 256 integers.",
+
+  "references": [
+    { "text": "Daemen, J. & Rijmen, V. (2002). The Design of Rijndael: AES — The Advanced Encryption Standard. Springer.", "url": null },
+    { "text": "Kuznetsov, O. et al. (2024). Optimizing Nonlinear Substitutions in Symmetric Ciphers Using Genetic Algorithms. arXiv:2407.03510.", "url": "https://arxiv.org/abs/2407.03510" },
+    { "text": "Boyar, J. et al. (2016). On Various Nonlinearity Measures for Boolean Functions. Cryptography and Communications, 8, 313-330.", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4957665/" },
+    { "text": "Mileva, A. et al. (2020). Investigation of Some Cryptographic Properties of the 8x8 S-Boxes. Computer Science Journal of Moldova, 28(3), 346-372.", "url": null },
+    { "text": "Nyberg, K. (1991). Perfect Nonlinear S-Boxes. EUROCRYPT '91, LNCS 547, 378-386.", "url": null },
+    { "text": "Carlet, C. (2010). Boolean Functions for Cryptography and Error Correcting Codes. Chapter in Boolean Models and Methods in Mathematics, Computer Science, and Engineering.", "url": null }
+  ]
+}

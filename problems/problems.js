@@ -58,6 +58,11 @@ function detectLeaderboardType(rows) {
     if ('method' in first && 'solved' in first) return 'rna';
     if ('sequence' in first && 'optimal' in first) return 'hp';
     if ('best' in first && 'pct' in first) return 'stilllife';
+    if ('size' in first && 'depth' in first && 'optimal_size' in first) return 'sorting';
+    if ('k' in first && 'value' in first && 'type' in first) return 'waerden';
+    if ('s' in first && 'value' in first && 'type' in first) return 'ramsey';
+    if ('nl' in first && 'du' in first) return 'sbox';
+    if ('best_d' in first && 'bound' in first) return 'codes';
     return 'generic';
 }
 
@@ -242,6 +247,114 @@ function renderHPLeaderboard(lb, collapsed) {
         </table>`;
 }
 
+/* ---------- New leaderboard renderers (WIP problems) ---------- */
+
+function renderSortingLeaderboard(lb) {
+    const rows = lb.rows.map(row => {
+        const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
+        const sizeOpt = row.optimal_size
+            ? '<span class="status-solved">Proven</span>'
+            : '<span class="status-open"><span class="status-dot"></span>Open</span>';
+        const depthOpt = row.optimal_depth
+            ? '<span class="status-solved">Proven</span>'
+            : '<span class="status-open"><span class="status-dot"></span>Open</span>';
+        return `
+        <tr>
+            <td class="td-n"><div class="n-label">${row.n}</div>${noteHTML}</td>
+            <td class="td-best" style="font-weight:700">${row.size}</td>
+            <td class="td-mod">${sizeOpt}</td>
+            <td class="td-best">${row.depth}</td>
+            <td class="td-mod">${depthOpt}</td>
+        </tr>`;
+    }).join('');
+    return `
+        <table class="leaderboard" aria-label="Leaderboard">
+            <thead><tr><th>n</th><th>Size</th><th>Size Optimal?</th><th>Depth</th><th>Depth Optimal?</th></tr></thead>
+            <tbody>${rows}</tbody>
+        </table>`;
+}
+
+function renderWaerdenLeaderboard(lb) {
+    const rows = lb.rows.map(row => {
+        const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
+        const typeHTML = row.type === 'exact'
+            ? '<span class="status-solved">Exact</span>'
+            : '<span class="status-open"><span class="status-dot"></span>Lower bound</span>';
+        return `
+        <tr>
+            <td class="td-n"><div class="n-label">${row.k}</div>${noteHTML}</td>
+            <td class="td-best" style="font-weight:700">${esc(row.value)}</td>
+            <td class="td-status">${typeHTML}</td>
+            <td class="td-mod">${esc(row.year)}</td>
+        </tr>`;
+    }).join('');
+    return `
+        <table class="leaderboard" aria-label="Leaderboard">
+            <thead><tr><th>k</th><th>W(2,k)</th><th>Status</th><th>Year</th></tr></thead>
+            <tbody>${rows}</tbody>
+        </table>`;
+}
+
+function renderRamseyLeaderboard(lb) {
+    const rows = lb.rows.map(row => {
+        const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
+        const typeHTML = row.type === 'exact'
+            ? '<span class="status-solved">Exact</span>'
+            : '<span class="status-open"><span class="status-dot"></span>Bounds</span>';
+        return `
+        <tr>
+            <td class="td-n"><div class="n-label">R(${row.s},${row.s})</div>${noteHTML}</td>
+            <td class="td-best" style="font-weight:700">${esc(row.value)}</td>
+            <td class="td-status">${typeHTML}</td>
+            <td class="td-mod">${esc(row.year)}</td>
+        </tr>`;
+    }).join('');
+    return `
+        <table class="leaderboard" aria-label="Leaderboard">
+            <thead><tr><th>Number</th><th>Value / Bounds</th><th>Status</th><th>Year</th></tr></thead>
+            <tbody>${rows}</tbody>
+        </table>`;
+}
+
+function renderSBoxLeaderboard(lb) {
+    const rows = lb.rows.map(row => {
+        const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
+        return `
+        <tr>
+            <td class="td-n"><div class="n-label">${esc(row.name)}</div>${noteHTML}</td>
+            <td class="td-best" style="font-weight:700">${row.nl}</td>
+            <td class="td-best">${row.du}</td>
+            <td class="td-mod">${row.deg}</td>
+            <td class="td-mod">${row.year}</td>
+        </tr>`;
+    }).join('');
+    return `
+        <table class="leaderboard" aria-label="Leaderboard">
+            <thead><tr><th>S-Box</th><th>Nonlinearity</th><th>Diff. Unif.</th><th>Degree</th><th>Year</th></tr></thead>
+            <tbody>${rows}</tbody>
+        </table>`;
+}
+
+function renderCodesLeaderboard(lb) {
+    const rows = lb.rows.map(row => {
+        const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
+        const gap = row.bound - row.best_d;
+        return `
+        <tr>
+            <td class="td-n"><div class="n-label">[${row.n}, ${row.k}]</div>${noteHTML}</td>
+            <td class="td-best" style="font-weight:700">${row.best_d}</td>
+            <td class="td-mod">${row.bound}</td>
+            <td class="td-mod">${gap}</td>
+            <td class="td-mod">${esc(row.age)}</td>
+        </tr>`;
+    }).join('');
+    return `
+        <table class="leaderboard" aria-label="Leaderboard">
+            <thead><tr><th>[n, k]</th><th>Best d</th><th>Upper Bound</th><th>Gap</th><th>Record Age</th></tr></thead>
+            <tbody>${rows}</tbody>
+        </table>`;
+}
+
 function renderLeaderboard(lb, collapsed) {
     const type = detectLeaderboardType(lb.rows);
     let tableHTML;
@@ -252,6 +365,11 @@ function renderLeaderboard(lb, collapsed) {
         case 'rna':       tableHTML = renderRNALeaderboard(lb); break;
         case 'hp':        tableHTML = renderHPLeaderboard(lb, collapsed); break;
         case 'stilllife': tableHTML = renderStillLifeLeaderboard(lb); break;
+        case 'sorting':   tableHTML = renderSortingLeaderboard(lb); break;
+        case 'waerden':   tableHTML = renderWaerdenLeaderboard(lb); break;
+        case 'ramsey':    tableHTML = renderRamseyLeaderboard(lb); break;
+        case 'sbox':      tableHTML = renderSBoxLeaderboard(lb); break;
+        case 'codes':     tableHTML = renderCodesLeaderboard(lb); break;
         default:          tableHTML = renderHadamardLeaderboard(lb, collapsed); break;
     }
 

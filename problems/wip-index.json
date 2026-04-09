@@ -1,0 +1,57 @@
+{
+  "attribution": {
+    "organization": "Lossfunk x BITS Pilani",
+    "programCommittee": "Reviewed by the CAISc 2026 Program Committee"
+  },
+  "problems": [
+    {
+      "id": "rna-inverse-folding",
+      "file": "rna-inverse-folding.json",
+      "title": "RNA Inverse Folding",
+      "domain": "Computational Biology - RNA Design",
+      "subtitle": "Design an RNA sequence that folds into a target structure. Verified by ViennaRNA in milliseconds."
+    },
+    {
+      "id": "hp-protein-folding",
+      "file": "hp-protein-folding.json",
+      "title": "HP Protein Folding",
+      "domain": "Computational Biology - Protein Structure",
+      "subtitle": "Fold an HP chain on a 2D lattice to maximize hydrophobic contacts. NP-hard with open records since the 1990s."
+    },
+    {
+      "id": "sorting-networks",
+      "file": "sorting-networks.json",
+      "title": "Minimal Sorting Networks",
+      "domain": "Algorithms - Circuit Design",
+      "subtitle": "Find a sorting network for 17 inputs with fewer than 71 comparators. Classic open problem from Knuth."
+    },
+    {
+      "id": "van-der-waerden",
+      "file": "van-der-waerden.json",
+      "title": "Van der Waerden Colorings",
+      "domain": "Math - Combinatorics / Ramsey Theory",
+      "subtitle": "2-color {1,...,N} with no monochromatic k-AP. Beat bounds unchanged since the mid-2000s."
+    },
+    {
+      "id": "ramsey-r55",
+      "file": "ramsey-r55.json",
+      "title": "Ramsey Number R(5,5)",
+      "domain": "Math - Graph Theory / Ramsey Theory",
+      "subtitle": "Find a 2-edge-coloring of K_44 with no monochromatic K_5. One of Erdos's most famous open problems."
+    },
+    {
+      "id": "sbox-design",
+      "file": "sbox-design.json",
+      "title": "Cryptographic S-Box Design",
+      "domain": "Cryptography - Boolean Functions",
+      "subtitle": "Construct 8x8 S-boxes with maximal nonlinearity and minimal differential uniformity."
+    },
+    {
+      "id": "binary-linear-codes",
+      "file": "binary-linear-codes.json",
+      "title": "Binary Linear Code Design",
+      "domain": "Information Theory - Coding Theory",
+      "subtitle": "Beat Grassl's tables: find binary linear codes with higher minimum distance than the current records."
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "id": "binary-linear-codes",
+  "title": "Binary Linear Code Design",
+  "domain": "Information Theory - Coding Theory",
+
+  "attribution": {
+    "authors": ["Siddhartha Mahajan (Lossfunk)"],
+    "reviewers": []
+  },
+
+  "origin": "Binary linear codes are the backbone of error correction in digital communication, from deep-space transmissions to QR codes. A binary linear [n, k, d] code is a k-dimensional subspace of GF(2)^n with minimum Hamming distance d between distinct codewords. Higher minimum distance means more errors can be detected and corrected. Markus Grassl maintains widely-used online tables of the best-known minimum distances for each (n, k) pair, analogous to a leaderboard for code design. Many entries in these tables have stood unchanged for over a decade, and improving even a single entry is publishable. Recent work (2024) has found new record-breaking codes, demonstrating that the frontier is still active and that AI-driven search could push it further.",
+
+  "instance": "For a given block length n and dimension k, submit a k x n binary generator matrix G over GF(2). The code C is the set of all 2^k linear combinations of rows of G. The minimum distance d_min is the smallest Hamming weight among all non-zero codewords. Your goal: for selected (n, k) pairs where the current best-known d has not been improved in 10+ years, find a generator matrix achieving d_min greater than the current record in Grassl's tables.",
+
+  "scoring": {
+    "summary": "Primary score is the minimum distance d_min achieved. Higher is better. A submission that improves on Grassl's table entry for that (n,k) is a new record.",
+    "metrics": [
+      {
+        "name": "Minimum distance d_min",
+        "description": "The minimum Hamming weight among all 2^k - 1 non-zero codewords. This is the primary score. Higher distance means a stronger code."
+      },
+      {
+        "name": "Table improvement",
+        "description": "Whether d_min exceeds the current best-known value in Grassl's tables for this (n, k). Any improvement is a significant result in coding theory."
+      },
+      {
+        "name": "Number of improved entries",
+        "description": "Bonus for improving multiple (n, k) entries. A single generator matrix may also imply improvements for shortened or punctured codes at nearby parameters."
+      }
+    ],
+    "note": "The track will select 5-10 specific (n, k) pairs with stale records and k <= 16 (so verification is fast). Any valid linear code is accepted; improving the record earns a leaderboard highlight."
+  },
+
+  "warmup": {
+    "title": "Warm-up: The [7,4,3] Hamming code",
+    "body": "The Hamming code is a [7, 4, 3] binary linear code. Its generator matrix has 4 rows of 7 bits. All 2^4 = 16 codewords have minimum distance 3, meaning it can correct any single-bit error. Generator matrix: [[1,0,0,0,1,1,0],[0,1,0,0,1,0,1],[0,0,1,0,0,1,1],[0,0,0,1,1,1,1]]. Verify: enumerate all 16 codewords and check that every non-zero codeword has Hamming weight >= 3.",
+    "generator": [[1,0,0,0,1,1,0],[0,1,0,0,1,0,1],[0,0,1,0,0,1,1],[0,0,0,1,1,1,1]],
+    "params": "[7, 4, 3]"
+  },
+
+  "submissionExample": "{\n  \"n\": 65,\n  \"k\": 13,\n  \"generator\": [\n    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, ...],\n    [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, ...],\n    ...\n  ]\n}",
+
+  "verification": "For each submission: (1) Check that G is a k x n binary matrix (entries 0 or 1), (2) Verify rank(G) = k over GF(2) via Gaussian elimination, (3) Enumerate all 2^k codewords by computing all GF(2) linear combinations of rows, (4) Compute the Hamming weight of each non-zero codeword. The minimum weight is d_min. For k <= 16, this requires at most 65,536 codewords; for n ~ 80, each weight computation is O(n). Total: well under 1 second in Python. Pure integer arithmetic, fully deterministic.",
+
+  "bounds": [
+    { "label": "Singleton bound", "name": "d <= n - k + 1", "formula": "The minimum distance of any [n, k, d] code cannot exceed n - k + 1. Codes meeting this bound are called MDS (Maximum Distance Separable)." },
+    { "label": "Hamming bound", "name": "Sphere-packing limit", "formula": "The number of codewords times the volume of Hamming balls of radius t = floor((d-1)/2) cannot exceed 2^n. Codes meeting this are perfect." },
+    { "label": "Plotkin bound", "name": "d <= n*2^(k-1)/(2^k - 1)", "formula": "For binary codes, this gives a tighter upper bound on d for certain parameter ranges." },
+    { "label": "Grassl's tables", "name": "Best-known d for each (n,k)", "formula": "Maintained at codetables.de, these tables represent decades of cumulative results from algebraic geometry, computer search, and combinatorial constructions." }
+  ],
+
+  "leaderboard": {
+    "note": "Selected (n, k) pairs from Grassl's tables where records are long-standing. These are the competition targets.",
+    "rows": [
+      { "n": 65,  "k": 13, "best_d": 24, "bound": 26, "age": "10+ years", "note": "Gap between best known and upper bound" },
+      { "n": 70,  "k": 14, "best_d": 26, "bound": 28, "age": "10+ years", "note": "Moderate search space" },
+      { "n": 72,  "k": 15, "best_d": 26, "bound": 28, "age": "10+ years", "note": "" },
+      { "n": 80,  "k": 16, "best_d": 28, "bound": 32, "age": "10+ years", "note": "Larger gap, harder search" },
+      { "n": 56,  "k": 11, "best_d": 22, "bound": 24, "age": "10+ years", "note": "Smaller, more tractable" },
+      { "n": 48,  "k": 10, "best_d": 18, "bound": 20, "age": "10+ years", "note": "Good starting target" }
+    ]
+  },
+
+  "suggestedApproach": [
+    { "title": "Verify the Hamming code", "body": "Implement the verifier for the [7,4,3] warm-up. Enumerate all 16 codewords, compute weights, confirm d_min = 3. This gives you the core verification loop." },
+    { "title": "Start from known constructions", "body": "BCH codes, Reed-Muller codes, and algebraic geometry codes provide strong baselines. For many (n,k) pairs, the best-known codes come from these families. Compute their generator matrices and check if they match or exceed Grassl's entries." },
+    { "title": "Random search with row operations", "body": "Start from a random k x n matrix in systematic form [I_k | P]. Randomly modify columns of P. Compute d_min. Keep improvements. This is surprisingly effective for moderate k." },
+    { "title": "Genetic algorithm over parity matrices", "body": "Encode the (n-k) x k parity columns as a genome. Crossover and mutate. Fitness = d_min. Population of ~100 with tournament selection." },
+    { "title": "Use automorphisms and orbits", "body": "Many good codes have symmetry groups. Search for codes invariant under specific permutation groups of {1,...,n}. This dramatically reduces the search space." }
+  ],
+
+  "agentPrompt": "I want you to find binary linear codes that beat the best-known minimum distances in Grassl's tables. Start with target (n=48, k=10), where the best-known d_min is 18. A binary linear [48, 10, d] code is specified by a 10 x 48 generator matrix G over GF(2). All 2^10 = 1024 linear combinations of rows form the code. Compute d_min as the minimum Hamming weight of non-zero codewords. Strategy: Start with the best known construction (e.g., a BCH code or shortened Reed-Muller code). Try random perturbations of the parity columns. Use a genetic algorithm: population of generator matrices, crossover on parity columns, mutate random bits, select for highest d_min. Report the generator matrix as a JSON array of arrays of 0s and 1s.",
+
+  "references": [
+    { "text": "Grassl, M. Bounds on the minimum distance of linear codes. Online tables.", "url": "https://www.codetables.de" },
+    { "text": "Yu, Z. et al. (2024). New record-breaking binary linear codes. arXiv:2412.15551.", "url": "https://arxiv.org/abs/2412.15551" },
+    { "text": "Brown, G. & Kasprzyk, A. (2013). Seven new champion linear codes. LMS Journal of Computation and Mathematics.", "url": "https://arxiv.org/abs/1212.5197" },
+    { "text": "Akre, D., Aydin, N. et al. (2021). New Binary and Ternary Quasi-Cyclic Codes with Record Breaking Parameters. arXiv:2108.06752.", "url": "https://arxiv.org/abs/2108.06752" },
+    { "text": "He, J., Kasprzyk, A., Le, T. & Riabchenko, E. (2025). Discovering Champion Codes via Transformers and Genetic Algorithms. arXiv:2512.13370.", "url": "https://arxiv.org/abs/2512.13370" },
+    { "text": "MacWilliams, F. J. & Sloane, N. J. A. (1977). The Theory of Error-Correcting Codes. North-Holland.", "url": null }
+  ]
+}

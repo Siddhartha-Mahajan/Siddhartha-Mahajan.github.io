@@ -1,0 +1,90 @@
+{
+  "id": "ramsey-r55",
+  "title": "Ramsey Number R(5,5)",
+  "domain": "Math - Graph Theory / Ramsey Theory",
+
+  "attribution": {
+    "authors": ["Siddhartha Mahajan (Lossfunk)"],
+    "reviewers": []
+  },
+
+  "origin": "The Ramsey number R(s,t) is the smallest integer n such that any 2-coloring of the edges of the complete graph K_n contains either a monochromatic red K_s or a monochromatic blue K_t. Determining Ramsey numbers is notoriously difficult. Erdos famously quipped: 'Imagine an alien force, vastly more powerful than us, landing on Earth and demanding the value of R(5,5) or they will destroy our planet. In that case, we should marshal all our computers and all our mathematicians and attempt to find the value. But suppose, instead, that they ask for R(6,6). In that case, we should attempt to destroy the aliens.' Currently 43 <= R(5,5) <= 48, with a 2024 preprint by Angeltveit and McKay claiming R(5,5) <= 46. Exoo's 1989 construction of a 43-vertex Ramsey graph provides the lower bound. Finding a 44-vertex graph with no monochromatic K_5 would be a major breakthrough.",
+
+  "instance": "A submission is a 2-coloring of the edges of the complete graph K_n for some target n (ideally n = 43 or 44). Represent this as an n x n symmetric adjacency matrix with entries in {0, 1} (0 = red, 1 = blue) and zeros on the diagonal. The constraint: there must be no set of 5 vertices whose 10 pairwise edges are all the same color (no monochromatic K_5). For n = 44, such a coloring would prove R(5,5) >= 45, improving a bound that has stood since 1989.",
+
+  "scoring": {
+    "summary": "Primary score is the number of vertices n in the coloring. Secondary score is the number of monochromatic K_5 subgraphs (fewer is better).",
+    "metrics": [
+      {
+        "name": "Graph order n",
+        "description": "The number of vertices. Higher is better. A valid (zero-violation) coloring on n vertices proves R(5,5) > n."
+      },
+      {
+        "name": "Monochromatic K_5 count",
+        "description": "The number of 5-vertex subsets whose 10 edges are all the same color. For a perfect submission this is 0. For partial progress, fewer monochromatic K_5s indicates a closer-to-Ramsey graph."
+      },
+      {
+        "name": "Regularity metrics",
+        "description": "Tiebreaker: edge-color balance (how close each color subgraph is to regular) and other structural properties indicative of a strong construction."
+      }
+    ],
+    "note": "Reproducing Exoo's 43-vertex Ramsey graph is a baseline. Any 44-vertex coloring with 0 monochromatic K_5s would resolve a famous open problem. Even 44-vertex colorings with very few monochromatic K_5s represent significant progress."
+  },
+
+  "warmup": {
+    "title": "Warm-up: R(3,3) = 6",
+    "body": "Show that any 2-coloring of K_6 contains a monochromatic triangle (K_3). Conversely, find a 2-coloring of K_5 with no monochromatic triangle. One such coloring: a 5-cycle in red, everything else in blue. The red graph is C_5 (no triangles), the blue graph is also C_5 (no triangles). This proves R(3,3) > 5, and since R(3,3) = 6, no such coloring exists on 6 vertices.",
+    "n": 5,
+    "matrix": [
+      [0, 1, 0, 0, 1],
+      [1, 0, 1, 0, 0],
+      [0, 1, 0, 1, 0],
+      [0, 0, 1, 0, 1],
+      [1, 0, 0, 1, 0]
+    ]
+  },
+
+  "submissionExample": "{\n  \"n\": 44,\n  \"matrix\": [\n    [0, 1, 0, 1, ...],\n    [1, 0, 1, 0, ...],\n    ...\n  ]\n}",
+
+  "verification": "For each submission: (1) Check the matrix is n x n, symmetric, with zero diagonal and entries in {0,1}, (2) Enumerate all C(n,5) 5-vertex subsets. For n=44, that is C(44,5) = 1,086,008 subsets. (3) For each 5-subset, check whether all 10 edges are color 0 (red K_5) or all 10 are color 1 (blue K_5). Count monochromatic K_5s. (4) Total edge inspections: ~10^7. Runs in well under a second in optimized code. A count of 0 means a valid Ramsey graph.",
+
+  "bounds": [
+    { "label": "Lower bound", "name": "R(5,5) >= 43", "formula": "Exoo (1989) constructed a circulant graph on 42 vertices (Z/42Z) whose 2-edge-coloring of K_42 has no monochromatic K_5, proving R(5,5) >= 43. McKay, Radziszowski & Exoo (1997) exhaustively enumerated exactly 656 such Ramsey(5,5,42) graphs." },
+    { "label": "Upper bound", "name": "R(5,5) <= 46", "formula": "Angeltveit and McKay (2024, arXiv:2409.15709) improved the upper bound from 48 to 46 using linear programming and massive computer case-checking. Both authors independently verified all computations. Not yet journal-published as of April 2026." },
+    { "label": "Growth rate", "name": "Exponential in general", "formula": "Erdos (1947) showed R(s,s) grows exponentially: 2^(s/2) <= R(s,s) <= C(2s-2, s-1) ~ 4^s / sqrt(s). Exact values known only for s <= 4." },
+    { "label": "Known values", "name": "R(3,3)=6, R(4,4)=18", "formula": "R(3,3)=6 (Ramsey, 1930). R(4,4)=18 (Greenwood-Gleason, 1955). R(5,5) is the next diagonal case and has been open for 70+ years." },
+    { "label": "Near-misses", "name": "K_43 colorings with 2 mono K_5s", "formula": "Ge et al. (2022) found 43-vertex colorings with only 2 monochromatic K_5s, suggesting the boundary of possibility." }
+  ],
+
+  "leaderboard": {
+    "note": "Diagonal Ramsey numbers R(s,s). Only three exact values are known.",
+    "rows": [
+      { "s": 3, "value": "6",       "type": "exact",  "year": "1930", "note": "Ramsey" },
+      { "s": 4, "value": "18",      "type": "exact",  "year": "1955", "note": "Greenwood & Gleason" },
+      { "s": 5, "value": "43-46",   "type": "bounds", "year": "1989/2024", "note": "TARGET: Exoo lower, Angeltveit-McKay upper" },
+      { "s": 6, "value": "102-165", "type": "bounds", "year": "various",   "note": "Erdos's 'destroy the aliens' problem" },
+      { "s": 7, "value": "205-540", "type": "bounds", "year": "various",   "note": "" },
+      { "s": 8, "value": "282-1870","type": "bounds", "year": "various",   "note": "" }
+    ]
+  },
+
+  "suggestedApproach": [
+    { "title": "Reproduce Exoo's 43-vertex graph", "body": "Start by reconstructing the known Ramsey(5,5) graph on 43 vertices. Exoo's construction is based on a cyclic structure over Z_43. Verify it has 0 monochromatic K_5s." },
+    { "title": "Extend to 44 vertices", "body": "Try adding a 44th vertex to Exoo's graph and choosing its edge colors to minimize new monochromatic K_5s. This is a constrained optimization problem with 43 binary variables." },
+    { "title": "Simulated annealing", "body": "Start from a random 2-edge-coloring of K_44. Define energy = number of monochromatic K_5s. Flip random edge colors and accept if energy decreases (or with Metropolis probability). Cool slowly." },
+    { "title": "Algebraic constructions", "body": "Search over Cayley graphs, Paley graphs, and other algebraic constructions on groups of order 44. Many known Ramsey constructions have algebraic symmetry." },
+    { "title": "Flag algebras and SDP", "body": "Use semidefinite programming to find edge-coloring distributions that minimize the expected number of monochromatic K_5s. This gives structural hints for explicit constructions." }
+  ],
+
+  "agentPrompt": "I want you to search for a 2-coloring of the edges of the complete graph K_44 that has no monochromatic K_5 (no set of 5 vertices with all 10 edges the same color). Represent the graph as a 44x44 symmetric binary matrix with zero diagonal. Strategy: Start from Exoo's known Ramsey(5,5) graph on 43 vertices (a cyclic construction over Z_43). Try to extend it by adding a 44th vertex and optimizing its edge colors. Use simulated annealing: start from a random coloring of K_44, count monochromatic K_5s, flip random edges, accept improvements. The goal is 0 monochromatic K_5s, but even very low counts (1-3) are interesting. Report the adjacency matrix as a JSON array of arrays.",
+
+  "references": [
+    { "text": "Exoo, G. (1989). A lower bound for R(5,5). Journal of Graph Theory, 13(1), 97-98.", "url": null },
+    { "text": "Ge, Z. et al. (2022). Study of Exoo's lower bound for Ramsey number R(5,5). arXiv:2212.12630.", "url": "https://arxiv.org/abs/2212.12630" },
+    { "text": "Angeltveit, V. & McKay, B. D. (2024). R(5,5) <= 46. arXiv:2409.15709.", "url": "https://arxiv.org/abs/2409.15709" },
+    { "text": "DeepMind Formal Conjectures. Ramsey Number R(5,5) and other Ramsey Number Values. Issue #2364.", "url": "https://github.com/google-deepmind/formal-conjectures/issues/2364" },
+    { "text": "Erdos, P. (1947). Some remarks on the theory of graphs. Bull. Amer. Math. Soc., 53(4), 292-294.", "url": null },
+    { "text": "Greenwood, R. E. & Gleason, A. M. (1955). Combinatorial Relations and Chromatic Graphs. Canadian J. Math, 7, 1-7.", "url": null },
+    { "text": "Radziszowski, S. P. (2021). Small Ramsey Numbers. Electronic Journal of Combinatorics, Dynamic Survey DS1.", "url": "https://www.combinatorics.org/ojs/index.php/eljc/article/view/DS1" }
+  ]
+}

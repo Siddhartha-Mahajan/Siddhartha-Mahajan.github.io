@@ -32,10 +32,10 @@
   },
 
   "warmup": {
-    "title": "Warm-up: 10-residue chain",
-    "body": "Fold the sequence HPHPHPHPH on a 2D square lattice. Optimal: 3 H-H contacts. One solution places residues along a U-shaped path: (0,0), (1,0), (1,1), (0,1), (0,2), (1,2), (1,3), (0,3), (0,4). Check: H at positions 0,2,4,6,8. Contacts: (0,2) via (0,0)-(0,1) adjacency? No — (0,0) and (0,1) are not both H. Work through it to build intuition.",
-    "sequence": "HPHPHPHPHP",
-    "solution": [[0,0],[1,0],[1,1],[0,1],[0,2],[1,2],[1,3],[0,3],[0,4],[1,4]]
+    "title": "Warm-up: 6-residue all-H chain",
+    "body": "Fold the sequence HHHHHH on a 2D square lattice. Since every residue is H, any non-sequential lattice adjacency is a contact. One optimal fold forms a 2x3 snake: (0,0), (1,0), (1,1), (0,1), (0,2), (1,2). This achieves 2 H-H contacts: positions 0-3 (via (0,0)-(0,1) adjacency) and positions 2-5 (via (1,1)-(1,2) adjacency). Verify: check each pair (i,j) with |i-j| > 1, both H, Manhattan distance 1 between their coordinates. The maximum for HHHHHH on a 2D lattice is 2 contacts.",
+    "sequence": "HHHHHH",
+    "solution": [[0,0],[1,0],[1,1],[0,1],[0,2],[1,2]]
   },
 
   "submissionExample": "{\n  \"sequence_id\": \"S5\",\n  \"lattice\": \"2D\",\n  \"coords\": [\n    [0, 0], [1, 0], [1, 1], [0, 1], [0, 2],\n    ...\n  ]\n}",
@@ -58,15 +58,15 @@
       { "id": "S4",  "length": 36,  "sequence": "PPPHHPPHHPPPPPHHHHHHHPPHHPPPPHHPPHPP",  "best": 14,  "optimal": true,  "note": "Proven optimal" },
       { "id": "S5",  "length": 48,  "sequence": "PPHPPHHPPHHPPPPPHHHHHHHHHHPPPPPPHHPPHHPPHPPHHHHH",  "best": 23,  "optimal": false,  "note": "Open — best known since ~2004" },
       { "id": "S6",  "length": 50,  "sequence": "HHPHPHPHPHHHHPHPPPHPPPHPPPPHPPPHPPPHPHHHHPHPHPHPHH",  "best": 21,  "optimal": false,  "note": "Open — best known since ~2000" },
-      { "id": "S7",  "length": 60,  "sequence": "PPHHHPHHHHHHHHPPPHHHHHHHHHHPHPPPHHHHHHHHHHHHPPPPHHHHHHPHHPHHHHHH",  "best": 36,  "optimal": false,  "note": "Open — likely suboptimal" },
+      { "id": "S7",  "length": 64,  "sequence": "PPHHHPHHHHHHHHPPPHHHHHHHHHHPHPPPHHHHHHHHHHHHPPPPHHHHHHPHHPHHHHHH",  "best": 36,  "optimal": false,  "note": "Open — likely suboptimal" },
       { "id": "S8",  "length": 64,  "sequence": "HHHHHHHHHHHHPHPHPPHHPPHHPPHPPHHPPHHPPHPPHHPPHHPPHPHPHHHHHHHHHHHH",  "best": 42,  "optimal": false,  "note": "Open — largest well-studied sequence" },
-      { "id": "S9",  "length": 85,  "sequence": "HHHHPPPPHHHHHHHHHHHHPPPPPPHHHHHHHHHHHHPPPHHHHHHHHHHHHPPPHHHHHHHHHHHHPPPHPPHHPPHHPPHPH",  "best": 52,  "optimal": false,  "note": "Open — very few attempts" },
+      { "id": "S9",  "length": 85,  "sequence": "HHHHPPPPHHHHHHHHHHHHPPPPPPHHHHHHHHHHHHPPPHHHHHHHHHHHHPPPHHHHHHHHHHHHPPPHPPHHPPHHPPHPH",  "best": 53,  "optimal": false,  "note": "Open — Wust & Landau (2012) found putative ground state" },
       { "id": "S10", "length": 100, "sequence": "PPPHHPPHHHHPPHHHPHHPHHPHHHHPPPPPPPPHHHHHHPPHHHHHHPPPPPPPPPHPHHPHHHHHHHHHHHPPHHHPHHPHPPHPHHHPPPPPPHHH",  "best": 48,  "optimal": false,  "note": "Open — longest standard benchmark" }
     ]
   },
 
   "suggestedApproach": [
-    { "title": "Verify the warm-up", "body": "Fold the 10-residue chain by hand or code. Count contacts. This builds intuition for how the lattice constrains folding." },
+    { "title": "Verify the warm-up", "body": "Fold the 6-residue all-H chain on paper or in code. Verify the 2x3 snake achieves 2 contacts by checking all pairs (i,j) with |i-j|>1 for lattice adjacency. Then try the first benchmark sequence S1 (length 20) to build intuition for mixed H/P chains." },
     { "title": "Pull moves for Monte Carlo", "body": "Standard single-residue moves get stuck in local minima. Use pull moves (Lesh et al., 2003): grab a residue and pull the chain to a new position while maintaining connectivity. This allows large conformational changes." },
     { "title": "Simulated annealing with restarts", "body": "Energy = -(H-H contacts). Start hot (accept bad moves), cool slowly. Run many independent starts and keep the best. Most record-setting results used this approach." },
     { "title": "Genetic algorithm", "body": "Encode folds as sequences of relative moves (L, R, S for left, right, straight). Crossover partial folds. Select for high contact count. Multi-population with migration often helps." },
@@ -84,6 +84,9 @@
     { "text": "Berger, B., & Leighton, T. (1998). Protein Folding in the Hydrophobic-Hydrophilic (HP) Model is NP-Complete. Journal of Computational Biology, 5(1), 27-40.", "url": null },
     { "text": "Crescenzi, P., et al. (1998). On the complexity of protein folding. Journal of Computational Biology, 5(3), 423-465.", "url": null },
     { "text": "Lesh, N., Mitzenmacher, M., & Whitesides, S. (2003). A complete and effective move set for simplified protein folding. RECOMB 2003.", "url": null },
-    { "text": "Shatabda, S., et al. (2013). An efficient genetic algorithm for 2D HP protein folding. IEEE Congress on Evolutionary Computation.", "url": null }
+    { "text": "Shatabda, S., et al. (2013). An efficient genetic algorithm for 2D HP protein folding. IEEE Congress on Evolutionary Computation.", "url": null },
+    { "text": "Wust, T. & Landau, D. P. (2012). Optimized Wang-Landau sampling of lattice polymers. Journal of Chemical Physics, 137, 064903.", "url": null },
+    { "text": "Thachuk, C., Shmygelska, A. & Hoos, H. H. (2007). A replica exchange Monte Carlo algorithm for protein folding in the HP model. BMC Bioinformatics, 8, 342.", "url": null },
+    { "text": "Khandoker, T., Inack, E. M. & Hibat-Allah, M. (2025). Lattice Protein Folding with Variational Annealing. Machine Learning: Science and Technology. arXiv:2502.20632.", "url": "https://arxiv.org/abs/2502.20632" }
   ]
 }

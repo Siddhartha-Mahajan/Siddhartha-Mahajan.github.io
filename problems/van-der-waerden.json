@@ -1,0 +1,86 @@
+{
+  "id": "van-der-waerden",
+  "title": "Van der Waerden Colorings",
+  "domain": "Math - Combinatorics / Ramsey Theory",
+
+  "attribution": {
+    "authors": ["Siddhartha Mahajan (Lossfunk)"],
+    "reviewers": []
+  },
+
+  "origin": "Van der Waerden's theorem (1927) states that for any positive integers r and k, there exists a smallest integer W(r,k) such that any r-coloring of {1, ..., W(r,k)} contains a monochromatic arithmetic progression of length k. Despite nearly a century of work, exact values of W(r,k) are known for only a handful of cases. For 2 colors (r=2), we know W(2,3)=9, W(2,4)=35, W(2,5)=178, and W(2,6)=1132. For k>=7, only lower bounds from computer search are known: W(2,7) > 3703 and W(2,8) > 11495, established by SAT-based constructions from Herwig, Heule, and collaborators in the mid-2000s. These bounds have not been improved in nearly two decades. Beating them with a new construction would be a notable result in additive combinatorics.",
+
+  "instance": "Fix k in {7, 8}. A submission is a 2-coloring of the integers {1, 2, ..., N}, represented as a binary string or array of length N (where each entry is 0 or 1). The goal is to maximize N subject to the constraint that there is no monochromatic arithmetic progression of length k. That is, for every arithmetic progression a, a+d, a+2d, ..., a+(k-1)d contained in {1,...,N}, at least two of these positions must have different colors.",
+
+  "scoring": {
+    "summary": "Primary score is the length N of the coloring. Secondary score is the number of monochromatic k-APs (for soft progress when no AP-free coloring exists at that N).",
+    "metrics": [
+      {
+        "name": "Coloring length N",
+        "description": "The length of the submitted AP-free coloring. The primary metric: larger is better. Current targets: N > 3703 for k=7, N > 11495 for k=8."
+      },
+      {
+        "name": "Monochromatic k-AP count",
+        "description": "For submissions that are not perfectly AP-free, the number of monochromatic k-APs present. Used as a secondary metric: fewer is better. A count of 0 means a valid, AP-free coloring."
+      },
+      {
+        "name": "Target k",
+        "description": "Longer progressions (k=8) are harder to avoid, so improvements for k=8 are weighted more heavily than for k=7."
+      }
+    ],
+    "note": "Any valid AP-free coloring is accepted and scored by its length. Even matching the current records (3703 for k=7, 11495 for k=8) is meaningful, as independent constructions often reveal new structural insights."
+  },
+
+  "warmup": {
+    "title": "Warm-up: W(2,3) = 9",
+    "body": "Find a 2-coloring of {1,...,8} with no monochromatic 3-term arithmetic progression. One solution: [0,1,1,0,0,1,1,0]. Check: the 3-APs in {1,...,8} include (1,2,3), (2,4,6), (1,4,7), etc. For each, verify that not all three positions share the same color. No valid 2-coloring of {1,...,9} exists with no monochromatic 3-AP, which is why W(2,3) = 9.",
+    "k": 3,
+    "N": 8,
+    "coloring": [0,1,1,0,0,1,1,0]
+  },
+
+  "submissionExample": "{\n  \"k\": 7,\n  \"coloring\": [0, 1, 1, 0, 0, 1, 0, 1, ...]\n}",
+
+  "verification": "For each submission with coloring c[1..N] and target k: enumerate all arithmetic progressions of length k within {1,...,N}. For each starting position a and common difference d (where a + (k-1)*d <= N), check whether c[a], c[a+d], ..., c[a+(k-1)*d] are all the same color. If any such monochromatic progression is found, it is counted as a violation. A coloring with 0 violations is valid. Runs in O(N^2/k) time; for N in the range 5,000-50,000, this completes in well under a second in optimized code.",
+
+  "bounds": [
+    { "label": "Exact values", "name": "W(2,k) for small k", "formula": "W(2,3) = 9, W(2,4) = 35, W(2,5) = 178, W(2,6) = 1132. Proven by exhaustive computation." },
+    { "label": "Lower bound k=7", "name": "W(2,7) > 3703", "formula": "Established by SAT-based construction (Herwig, Heule, van Lambalgen, van Maaren, 2007). No improvement since." },
+    { "label": "Lower bound k=8", "name": "W(2,8) > 11495", "formula": "Established by SAT-based construction. No improvement since mid-2000s." },
+    { "label": "Asymptotic", "name": "W(2,k) grows very fast", "formula": "Gowers (2001) proved W(2,k) <= 2^(2^(2^(2^(2^(k+9))))). The true growth rate is between polynomial towers and the Ackermann function." },
+    { "label": "Formal math", "name": "Lean formalization exists", "formula": "DeepMind Formal Conjectures issue #2286 formalizes van der Waerden numbers in Lean 4, so a Lean proof certificate is an alternative submission format." }
+  ],
+
+  "leaderboard": {
+    "note": "Two-color van der Waerden numbers W(2,k). Values marked 'exact' are proven; 'lower bound' means only the best construction is known.",
+    "rows": [
+      { "k": 3,  "value": "9",      "type": "exact",       "year": "1927", "note": "Chvatal (1970) first computation" },
+      { "k": 4,  "value": "35",     "type": "exact",       "year": "1970", "note": "Chvatal" },
+      { "k": 5,  "value": "178",    "type": "exact",       "year": "1978", "note": "Stevens & Shantaram" },
+      { "k": 6,  "value": "1132",   "type": "exact",       "year": "2008", "note": "Kouril & Paul, via SAT" },
+      { "k": 7,  "value": "> 3703", "type": "lower bound", "year": "2007", "note": "TARGET: Herwig et al., SAT construction" },
+      { "k": 8,  "value": "> 11495","type": "lower bound", "year": "~2005","note": "TARGET: SAT construction" },
+      { "k": 9,  "value": "> 41265","type": "lower bound", "year": "~2005","note": "SAT construction" }
+    ]
+  },
+
+  "suggestedApproach": [
+    { "title": "Verify the warm-up", "body": "Check that [0,1,1,0,0,1,1,0] has no monochromatic 3-AP in {1,...,8}. Then try to extend it to length 9 — you will fail, confirming W(2,3) = 9." },
+    { "title": "SAT-based search", "body": "Encode the problem as a SAT instance: N binary variables (the coloring), with clauses forbidding each monochromatic k-AP. Use a modern SAT solver (CaDiCaL, Kissat) and incrementally extend N until no satisfying assignment exists." },
+    { "title": "Greedy extension with backtracking", "body": "Start from a short AP-free coloring and extend one position at a time. When stuck (both colors create a monochromatic k-AP), backtrack. Combine with look-ahead to prune unpromising branches." },
+    { "title": "Cyclic and algebraic constructions", "body": "Many strong colorings have algebraic structure (e.g., based on quadratic residues mod a prime). Search over primes p and residue-based coloring rules to generate long AP-free colorings." },
+    { "title": "Reinforcement learning", "body": "Train an RL agent to assign colors one position at a time, rewarding longer AP-free prefixes. The state space is the current partial coloring and the set of almost-monochromatic progressions." }
+  ],
+
+  "agentPrompt": "I want you to find a 2-coloring of {1,...,N} with no monochromatic arithmetic progression of length 7, for N as large as possible. The current record is N = 3703. A coloring is a binary array c[1..N] where each entry is 0 or 1. For it to be valid, there must be no positions a, a+d, a+2d, a+3d, a+4d, a+5d, a+6d (all in {1..N}) where all 7 values have the same color. Strategy: try algebraic constructions based on quadratic residues modulo a prime p. For a prime p, color position i as 0 if i mod p is a quadratic residue, 1 otherwise. Search over primes p near 3700 and beyond. Also try SAT-based search: encode the constraints as a SAT instance and use CaDiCaL or Kissat. Report the coloring as a JSON array of 0s and 1s.",
+
+  "references": [
+    { "text": "Van der Waerden, B. L. (1927). Beweis einer Baudetschen Vermutung. Nieuw Archief voor Wiskunde, 15, 212-216.", "url": null },
+    { "text": "Herwig, P. R., Heule, M. J. H., van Lambalgen, P. M. & van Maaren, H. (2007). A New Method to Construct Lower Bounds for Van der Waerden Numbers. Electronic J. Combinatorics, 14, R6.", "url": "https://www.combinatorics.org/ojs/index.php/eljc/article/view/v14i1r6" },
+    { "text": "Kouril, M. & Paul, J. L. (2008). The van der Waerden number W(2,6) is 1132. Experimental Mathematics, 17(1), 53-61.", "url": null },
+    { "text": "Gowers, W. T. (2001). A new proof of Szemeredi's theorem. Geometric and Functional Analysis, 11(3), 465-588.", "url": null },
+    { "text": "DeepMind Formal Conjectures. Van der Waerden numbers: exact values and bounds. Issue #2286.", "url": "https://github.com/google-deepmind/formal-conjectures/issues/2286" },
+    { "text": "OEIS A005346. Van der Waerden numbers W(2,n).", "url": "https://oeis.org/A005346" },
+    { "text": "Weisstein, E. W. van der Waerden Number. MathWorld.", "url": "https://mathworld.wolfram.com/vanderWaerdenNumber.html" }
+  ]
+}
