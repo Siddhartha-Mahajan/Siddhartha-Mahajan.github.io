@@ -33,13 +33,6 @@
       "subtitle": "Maximize live cells in a stable, connected Game of Life pattern inside an n x n box."
     },
     {
-      "id": "rna-inverse-folding",
-      "file": "rna-inverse-folding.json",
-      "title": "RNA Inverse Folding",
-      "domain": "Computational Biology - RNA Design",
-      "subtitle": "Design an RNA sequence that folds into a target structure. Verified by ViennaRNA in milliseconds."
-    },
-    {
       "id": "hp-protein-folding",
       "file": "hp-protein-folding.json",
       "title": "HP Protein Folding",
