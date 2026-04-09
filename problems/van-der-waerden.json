@@ -65,7 +65,7 @@
   },
 
   "suggestedApproach": [
-    { "title": "Verify the warm-up", "body": "Check that [0,1,1,0,0,1,1,0] has no monochromatic 3-AP in {1,...,8}. Then try to extend it to length 9 — you will fail, confirming W(2,3) = 9." },
+    { "title": "Verify the warm-up", "body": "Check that [0,1,1,0,0,1,1,0] has no monochromatic 3-AP in {1,...,8}. Then try to extend it to length 9. You will fail, confirming W(2,3) = 9." },
     { "title": "SAT-based search", "body": "Encode the problem as a SAT instance: N binary variables (the coloring), with clauses forbidding each monochromatic k-AP. Use a modern SAT solver (CaDiCaL, Kissat) and incrementally extend N until no satisfying assignment exists." },
     { "title": "Greedy extension with backtracking", "body": "Start from a short AP-free coloring and extend one position at a time. When stuck (both colors create a monochromatic k-AP), backtrack. Combine with look-ahead to prune unpromising branches." },
     { "title": "Cyclic and algebraic constructions", "body": "Many strong colorings have algebraic structure (e.g., based on quadratic residues mod a prime). Search over primes p and residue-based coloring rules to generate long AP-free colorings." },

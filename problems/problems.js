@@ -227,22 +227,27 @@ function renderHPLeaderboard(lb, collapsed) {
             : '<span class="status-open"><span class="status-dot"></span>Open</span>';
         const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
         const hidden = i >= maxVisible ? ' style="display:none" data-extra-row' : '';
+        const seq = esc(row.sequence || '');
+        const seqHTML = seq
+            ? `<code class="hp-seq" title="${seq}" style="font-size:0.7rem;word-break:break-all;line-height:1.3;display:block;max-width:320px;font-family:var(--font-mono, monospace);color:var(--color-text-secondary, #888)">${seq}</code>`
+            : '';
         return `
         <tr${hidden}>
             <td class="td-n"><div class="n-label">${esc(row.id)}</div>${noteHTML}</td>
             <td class="td-mod">${row.length}</td>
+            <td style="max-width:340px">${seqHTML}</td>
             <td class="td-best" style="font-weight:700">${row.best}</td>
             <td class="td-status">${optLabel}</td>
         </tr>`;
     }).join('');
 
     const showMore = (collapsed && lb.rows.length > maxVisible)
-        ? `<tr class="show-more-row"><td colspan="4" style="text-align:center;padding:var(--space-3)"><button class="show-more-btn">Show all ${lb.rows.length} rows</button></td></tr>`
+        ? `<tr class="show-more-row"><td colspan="5" style="text-align:center;padding:var(--space-3)"><button class="show-more-btn">Show all ${lb.rows.length} rows</button></td></tr>`
         : '';
 
     return `
         <table class="leaderboard" aria-label="Leaderboard">
-            <thead><tr><th>ID</th><th>Length</th><th>Best H-H</th><th>Optimal?</th></tr></thead>
+            <thead><tr><th>ID</th><th>Length</th><th>Sequence</th><th>Best H-H</th><th>Optimal?</th></tr></thead>
             <tbody>${rows}${showMore}</tbody>
         </table>`;
 }
