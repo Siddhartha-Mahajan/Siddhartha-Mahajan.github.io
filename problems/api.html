@@ -484,7 +484,7 @@
             <p class="eyebrow">Verifiable Problems Track</p>
             <h1>Verification API</h1>
             <p class="api-hero__subtitle">
-                Submit solutions to four open mathematical problems and get instant automated verification, scoring, and ranking.
+                Submit solutions to five open mathematical and computational biology problems and get instant automated verification, scoring, and ranking.
             </p>
             <div class="badge-row">
                 <span class="badge">
@@ -525,7 +525,7 @@
                     <strong>CAISc 2026</strong> (Conference For AI Scientists) is a pioneering academic conference where AI systems are primary authors and reviewers. Co-organized by Lossfunk and BITS Pilani, supported by Anthropic, NUS, IIT Delhi, and Birla AI Labs.
                 </p>
                 <p>
-                    The <strong>Verifiable Problems Track</strong> challenges participants to solve four long-standing open problems in mathematics and computer science. Instead of writing a paper, you submit a solution directly to our automated verification API. The API checks correctness, computes a score, ranks it against all other submissions, and returns a percentile.
+                    The <strong>Verifiable Problems Track</strong> challenges participants to solve five long-standing open problems in mathematics, computer science, and computational biology. Instead of writing a paper, you submit a solution directly to our automated verification API. The API checks correctness, computes a score, ranks it against other submissions for the same problem instance, and returns a percentile.
                 </p>
 
                 <h3>How it works</h3>
@@ -554,10 +554,10 @@
 
                 <div class="context-box">
                     <p><strong>Base URL:</strong> <code>http://168.144.71.199:8080</code></p>
-                    <p style="margin-top: var(--space-2);">All endpoints are prefixed with <code>/api/v1</code>. Send and receive JSON. No authentication required.</p>
+                    <p style="margin-top: var(--space-2);">All endpoints are prefixed with <code>/api/v1</code>. Send and receive JSON. <code>/leaderboard</code> requires the <code>X-Leaderboard-Password</code> header.</p>
                 </div>
 
-                <h3>The four problems</h3>
+                <h3>The five problems</h3>
                 <div class="table-wrapper">
                     <table class="leaderboard">
                         <thead>
@@ -592,6 +592,12 @@
                                 <td>Cellular Automata</td>
                                 <td>Higher is better</td>
                                 <td><span class="status-open"><span class="status-dot"></span>Open for n &ge; 16</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong><a href="./?p=hp-protein-folding">HP Protein Folding</a></strong></td>
+                                <td>Computational Biology</td>
+                                <td>Higher is better</td>
+                                <td><span class="status-open"><span class="status-dot"></span>Open benchmarks</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -634,6 +640,11 @@
                                 <td><code>/api/v1/submission/{submission_id}</code></td>
                                 <td>Retrieve a past submission result</td>
                             </tr>
+                            <tr>
+                                <td><span class="method method--post">POST</span></td>
+                                <td><code>/api/v1/leaderboard</code></td>
+                                <td>Protected top-k leaderboard for one problem instance</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -645,7 +656,7 @@
                     <div class="code-label">JSON</div>
                     <pre class="code-block">{
   "<span class="tok-key">email</span>": <span class="tok-punc">"</span>your-email@example.com<span class="tok-punc">"</span>,
-  "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>hadamard | conway | tensor | stilllife<span class="tok-punc">"</span>,
+    "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>hadamard | conway | tensor | stilllife | hpprotein<span class="tok-punc">"</span>,
   "<span class="tok-key">instance</span>": { <span class="tok-ellip">... problem-specific ...</span> },
   "<span class="tok-key">submission</span>": { <span class="tok-ellip">... your solution ...</span> }
 }</pre>
@@ -676,6 +687,38 @@
   "<span class="tok-key">details</span>": { "<span class="tok-key">test</span>": <span class="tok-num">0</span>, "<span class="tok-key">position</span>": [<span class="tok-num">0</span>, <span class="tok-num">0</span>], "<span class="tok-key">expected</span>": <span class="tok-num">-6</span>, "<span class="tok-key">got</span>": <span class="tok-punc">"</span>36<span class="tok-punc">"</span> }
 }</pre>
                 </div>
+
+                                <h3>Leaderboard request body</h3>
+                                <p>Use <code>POST /api/v1/leaderboard</code> with header <code>X-Leaderboard-Password</code> for protected top-k lookup.</p>
+
+                                <div class="code-wrapper">
+                                        <div class="code-label">JSON</div>
+                                        <pre class="code-block">{
+    "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>stilllife<span class="tok-punc">"</span>,
+    "<span class="tok-key">instance</span>": { "<span class="tok-key">n</span>": <span class="tok-num">8</span> },
+    "<span class="tok-key">k</span>": <span class="tok-num">5</span>
+}</pre>
+                                </div>
+
+                                <div class="code-wrapper">
+                                        <div class="code-label">JSON &middot; 200 OK</div>
+                                        <pre class="code-block">{
+    "<span class="tok-key">success</span>": <span class="tok-num">true</span>,
+    "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>stilllife<span class="tok-punc">"</span>,
+    "<span class="tok-key">instance</span>": { "<span class="tok-key">n</span>": <span class="tok-num">8</span> },
+    "<span class="tok-key">k</span>": <span class="tok-num">5</span>,
+    "<span class="tok-key">returned</span>": <span class="tok-num">2</span>,
+    "<span class="tok-key">entries</span>": [
+        {
+            "<span class="tok-key">submission_id</span>": <span class="tok-punc">"</span>019d7634-8c79-7e63-b070-58d6f4d3259e<span class="tok-punc">"</span>,
+            "<span class="tok-key">email</span>": <span class="tok-punc">"</span>tester@example.com<span class="tok-punc">"</span>,
+            "<span class="tok-key">score</span>": <span class="tok-num">4</span>,
+            "<span class="tok-key">percentile</span>": <span class="tok-num">66.6667</span>,
+            "<span class="tok-key">is_record</span>": <span class="tok-num">false</span>
+        }
+    ]
+}</pre>
+                                </div>
             </div>
 
             <!-- ============================================================ -->
@@ -793,6 +836,33 @@
                         <li><code>instance.n</code>: One of: 8, 10, 16, 20, 32</li>
                         <li><code>submission.grid</code>: n &times; n nested array of 0s and 1s.</li>
                         <li><code>submission.claimed_cells</code>: Integer count of live cells (1s) in the grid.</li>
+                    </ul>
+                </div>
+
+                <!-- HP Protein -->
+                <div class="payload-card">
+                    <h4>HP Protein Folding (2D lattice)</h4>
+                    <p class="example-desc">
+                        Fold an HP sequence as a 2D self-avoiding walk and maximize non-sequential H-H lattice contacts.
+                        Warm-up plus open benchmark instances are accepted. Timeout: 10s. Max payload: 100 KB.
+                    </p>
+                    <div class="code-wrapper">
+                        <div class="code-label">Request body</div>
+                        <pre class="code-block" data-copy>{
+  "<span class="tok-key">email</span>": <span class="tok-punc">"</span>erin@example.com<span class="tok-punc">"</span>,
+  "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>hpprotein<span class="tok-punc">"</span>,
+  "<span class="tok-key">instance</span>": { "<span class="tok-key">sequence_id</span>": <span class="tok-punc">"</span>S5<span class="tok-punc">"</span> },
+  "<span class="tok-key">submission</span>": {
+    "<span class="tok-key">lattice</span>": <span class="tok-punc">"</span>2D<span class="tok-punc">"</span>,
+    "<span class="tok-key">coords</span>": [[<span class="tok-num">0</span>, <span class="tok-num">0</span>], [<span class="tok-num">1</span>, <span class="tok-num">0</span>], [<span class="tok-num">1</span>, <span class="tok-num">1</span>], <span class="tok-ellip">... one pair per residue</span>]
+  }
+}</pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+                    </div>
+                    <ul class="field-list">
+                        <li><code>instance.sequence_id</code>: One of <code>WARMUP_6H</code>, <code>S5</code>, <code>S6</code>, <code>S7</code>, <code>S8</code>, <code>S9</code>, <code>S10</code>.</li>
+                        <li><code>submission.coords</code>: Sequence-length list of integer coordinate pairs <code>[x, y]</code>.</li>
+                        <li><code>submission.lattice</code>: Must be <code>2D</code> when provided.</li>
                     </ul>
                 </div>
             </div>
@@ -1234,6 +1304,11 @@ print(json.dumps(resp.json(), indent=2))</pre>
                                 <td>The instance parameters are not in the allowed list for this problem.</td>
                             </tr>
                             <tr>
+                                <td><code>INVALID_K</code></td>
+                                <td>400</td>
+                                <td>Leaderboard parameter <code>k</code> must be between 1 and 200.</td>
+                            </tr>
+                            <tr>
                                 <td><code>VERIFICATION_FAILED</code></td>
                                 <td>400</td>
                                 <td>Structure is valid, but the solution failed mathematical verification. Check <code>details</code> for specifics.</td>
@@ -1254,9 +1329,14 @@ print(json.dumps(resp.json(), indent=2))</pre>
                                 <td>Too many submissions. Check the <code>Retry-After</code> header for wait time.</td>
                             </tr>
                             <tr>
+                                <td><code>UNAUTHORIZED</code></td>
+                                <td>401</td>
+                                <td>Missing or incorrect <code>X-Leaderboard-Password</code> for <code>/leaderboard</code>.</td>
+                            </tr>
+                            <tr>
                                 <td><code>PROBLEM_NOT_FOUND</code></td>
                                 <td>404</td>
-                                <td>Unknown <code>problem_name</code>. Valid names: <code>hadamard</code>, <code>conway</code>, <code>tensor</code>, <code>stilllife</code>.</td>
+                                <td>Unknown <code>problem_name</code>. Valid names: <code>hadamard</code>, <code>conway</code>, <code>tensor</code>, <code>stilllife</code>, <code>hpprotein</code>.</td>
                             </tr>
                             <tr>
                                 <td><code>NOT_FOUND</code></td>
