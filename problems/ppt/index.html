@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verifiable Problems: Update + Challenge</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0c0c0f;--fg:#e8e4df;--fg-dim:#8a867f;--accent:#e05a3a;--accent2:#d4a853;--surface:#16161a;--surface2:#1e1e24;--border:#2a2a32;--serif:'Instrument Serif',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--mono:'JetBrains Mono',monospace}
+html{font-size:18px}body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow:hidden;height:100vh;width:100vw}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+.slide{position:absolute;top:0;left:0;width:100vw;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:4rem 8rem;opacity:0;transform:translateY(30px);transition:opacity .5s ease,transform .5s ease;pointer-events:none;overflow-y:auto}
+.slide.active{opacity:1;transform:translateY(0);pointer-events:all}
+h1{font-family:var(--serif);font-size:3.2rem;line-height:1.15;font-weight:400;margin-bottom:1rem}h1 em{font-style:italic;color:var(--accent)}
+h2{font-family:var(--serif);font-size:2.2rem;line-height:1.25;font-weight:400;margin-bottom:1.5rem}h2 em{font-style:italic;color:var(--accent)}
+h3{font-family:var(--sans);font-size:1.1rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:.75rem}
+p{margin-bottom:1rem;max-width:52rem;color:var(--fg-dim);font-size:.95rem}
+p.lead{font-size:1.15rem;color:var(--fg);max-width:48rem;line-height:1.7}
+strong{color:var(--fg);font-weight:700}.accent{color:var(--accent)}.accent2{color:var(--accent2)}.dim{color:var(--fg-dim)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:1.5rem}
+.cols-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;margin-top:1.5rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.8rem;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);opacity:0;transition:opacity .3s}.card:hover::before{opacity:1}
+.card h4{font-family:var(--serif);font-size:1.2rem;margin-bottom:.5rem;color:var(--fg)}
+.card p{font-size:.85rem;margin-bottom:.5rem}
+.card .tag{display:inline-block;font-size:.7rem;font-family:var(--mono);background:var(--surface2);color:var(--accent);padding:.2em .6em;border-radius:4px;margin-bottom:.5rem}
+.box{background:var(--surface);border-left:3px solid var(--accent);padding:1.5rem 2rem;border-radius:0 8px 8px 0;margin:1rem 0;max-width:48rem}.box p{margin-bottom:.5rem}
+.box-gold{border-left-color:var(--accent2)}
+.flow{display:flex;align-items:center;gap:1rem;margin:2rem 0;flex-wrap:wrap}
+.flow-step{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.8rem 1.4rem;font-size:.85rem;font-weight:500}
+.flow-step.highlight{border-color:var(--accent);color:var(--accent)}
+.flow-arrow{color:var(--fg-dim);font-size:1.2rem}
+.compare{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.85rem}
+.compare th{text-align:left;padding:.7rem 1rem;border-bottom:2px solid var(--accent);font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent)}
+.compare td{padding:.7rem 1rem;border-bottom:1px solid var(--border);vertical-align:top}
+.compare td:first-child{color:var(--fg);font-weight:500;width:12rem}
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--accent);z-index:100;transition:width .3s ease}
+.nav{position:fixed;bottom:2rem;right:3rem;display:flex;gap:.5rem;z-index:100}
+.nav button{background:var(--surface);border:1px solid var(--border);color:var(--fg-dim);width:2.5rem;height:2.5rem;border-radius:6px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.nav button:hover{border-color:var(--accent);color:var(--accent)}
+.slide-counter{position:fixed;bottom:2.3rem;left:3rem;font-family:var(--mono);font-size:.75rem;color:var(--fg-dim);z-index:100}
+.spaced-list{list-style:none;margin:1rem 0}.spaced-list li{padding:.6rem 0 .6rem 1.5rem;position:relative;font-size:.9rem;color:var(--fg-dim)}
+.spaced-list li::before{content:'\2192';position:absolute;left:0;color:var(--accent)}.spaced-list li strong{color:var(--fg)}
+.num-list{list-style:none;counter-reset:items;margin:1rem 0}
+.num-list li{counter-increment:items;padding:.8rem 0 .8rem 2.5rem;position:relative;font-size:.9rem;color:var(--fg-dim);border-bottom:1px solid var(--border)}
+.num-list li::before{content:counter(items);position:absolute;left:0;font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--accent)}
+.num-list li strong{color:var(--fg)}
+.title-slide{justify-content:center;align-items:flex-start}
+.title-slide h1{font-size:4rem;margin-bottom:.5rem}
+.title-slide .subtitle{font-family:var(--serif);font-size:1.4rem;color:var(--fg-dim);font-style:italic;margin-bottom:2rem}
+.title-slide .meta{font-family:var(--mono);font-size:.75rem;color:var(--fg-dim);letter-spacing:.05em}
+.title-slide .credit{font-family:var(--mono);font-size:.6rem;color:var(--border);letter-spacing:.03em;position:absolute;bottom:2.5rem;left:8rem}
+.slide-label{position:absolute;top:3rem;right:4rem;font-family:var(--mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--border)}
+.logo{height:2rem;filter:invert(1);opacity:.7;margin-bottom:1.5rem}
+pre{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.2rem 1.5rem;font-family:var(--mono);font-size:.72rem;color:var(--fg-dim);overflow-x:auto;line-height:1.5;margin:1rem 0;max-width:56rem}
+pre strong{color:var(--accent);font-weight:500}
+.problem-video{border-radius:10px;border:1px solid var(--border);width:100%;aspect-ratio:16/9;object-fit:contain;margin-bottom:1rem;background:#000}
+.problem-grid{display:grid;grid-template-columns:1fr 380px;gap:3rem;align-items:start;margin-top:.5rem}
+.problem-grid.no-img{grid-template-columns:1fr}
+@media(max-width:900px){.slide{padding:2rem}h1{font-size:2.2rem}h2{font-size:1.6rem}.cols,.cols-3{grid-template-columns:1fr;gap:1.5rem}.nav{bottom:1rem;right:1rem}.slide-counter{bottom:1.3rem;left:1rem}.title-slide h1{font-size:2.6rem}.problem-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<div class="slide-counter" id="counter"></div>
+<div class="nav"><button onclick="toggleFullscreen()" title="Fullscreen" id="fs-btn">&#x26F6;</button><button onclick="prev()">&#8592;</button><button onclick="next()">&#8594;</button></div>
+<div class="deck" id="deck">
+
+<!-- ===== SLIDE 1: TITLE ===== -->
+<div class="slide title-slide">
+<img src="../../assets/lossfunk-logo.jpg" class="logo" alt="Lossfunk">
+<h1>Verifiable Problems<br>Update + <em>Challenge</em></h1>
+<div class="subtitle">Researcher Sync, April 2026</div>
+<div class="meta">CAISc 2026 &middot; Lossfunk &times; BITS Pilani</div>
+<div class="credit">Slides template by Paras</div>
+</div>
+
+<!-- ===== SLIDE 2: CAISC CONTEXT ===== -->
+<div class="slide">
+<span class="slide-label">Context</span>
+<h2>CAISc 2026: Conference For <em>AI Scientists</em></h2>
+<p class="lead">AI systems as primary authors and reviewers. Co-organized by Lossfunk and BITS Pilani. Supported by Anthropic, NUS, IIT Delhi, Birla AI Labs.</p>
+<div class="cols">
+<div>
+<h3>Two tracks</h3>
+<ul class="spaced-list">
+<li><strong>Verifiable Problems</strong>: open problems with automated verification. Submit a solution, get a score instantly.</li>
+<li><strong>Open-Ended Problems</strong>: standard paper submissions reviewed by AI and human reviewers.</li>
+</ul>
+</div>
+<div>
+<h3>Timeline</h3>
+<ul class="spaced-list">
+<li><strong>April 15</strong>: Submissions open</li>
+<li><strong>May 15</strong>: Submission deadline</li>
+<li><strong>July 24-25</strong>: Conference at BITS Pilani</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- ===== SLIDE 3: THE TRACK ===== -->
+<div class="slide">
+<span class="slide-label">The Track</span>
+<h2>Verifiable Problems: <em>how it works</em></h2>
+<div class="flow">
+<div class="flow-step">Pick a problem</div><div class="flow-arrow">&rarr;</div>
+<div class="flow-step">Generate a solution</div><div class="flow-arrow">&rarr;</div>
+<div class="flow-step highlight">POST /submit</div><div class="flow-arrow">&rarr;</div>
+<div class="flow-step">Instant verification</div><div class="flow-arrow">&rarr;</div>
+<div class="flow-step">Score + percentile + leaderboard</div>
+</div>
+<div class="box" style="margin-top:1.5rem">
+<p><strong>5 curated problems</strong> across math and computational biology. All verifiers built and live. Deterministic, exact arithmetic. No human in the loop.</p>
+</div>
+</div>
+
+<!-- ===== SLIDE 4: PROBLEMS OVERVIEW TABLE ===== -->
+<div class="slide">
+<span class="slide-label">Overview</span>
+<h2>The <em>five</em> problems</h2>
+<table class="compare">
+<tr><th>Problem</th><th>Domain</th><th>Objective</th><th>Open Since</th></tr>
+<tr><td><strong>Hadamard Maximal Determinant</strong></td><td>Linear Algebra</td><td>Maximize |det(M)| for +1/-1 matrices</td><td>1893</td></tr>
+<tr><td><strong>Conway's 99-Graph</strong></td><td>Graph Theory</td><td>Build srg(99,14,1,2) or prove impossible</td><td>~1971</td></tr>
+<tr><td><strong>Matrix Multiplication</strong></td><td>Algebraic Complexity</td><td>Fewer multiplications via tensor decomposition</td><td>1969</td></tr>
+<tr><td><strong>Connected Still Life</strong></td><td>Cellular Automata</td><td>Maximize live cells in stable GoL pattern</td><td>~2000</td></tr>
+<tr><td><strong>HP Protein Folding</strong></td><td>Computational Biology</td><td>Maximize H-H contacts on 2D lattice</td><td>1985</td></tr>
+</table>
+</div>
+
+<!-- ===== SLIDE 5: HADAMARD ===== -->
+<div class="slide">
+<span class="slide-label">Problem 1</span>
+<h2>Hadamard <em>Maximal Determinant</em></h2>
+<div class="problem-grid">
+<div>
+<div class="tag" style="display:inline-block;font-size:.7rem;font-family:var(--mono);background:var(--surface2);color:var(--accent);padding:.2em .6em;border-radius:4px;margin-bottom:1rem">Math / Linear Algebra</div>
+<p class="lead">Build an n x n matrix of +1s and -1s that maximizes |det(M)|.</p>
+<ul class="spaced-list">
+<li><strong>Exact answers known</strong> for n &le; 22. For n &ge; 23, records are from 2003 (Orrick et al.), unchallenged for 20+ years.</li>
+<li><strong>Scoring:</strong> higher determinant is better, measured as ratio to theoretical upper bound.</li>
+<li><strong>Great for AI search.</strong> Hill-climbing, simulated annealing, evolutionary methods all apply.</li>
+</ul>
+<div class="box"><p>"Really good and can be attempted by anyone." <span class="dim">Ankan Pal, reviewer</span></p></div>
+</div>
+<div>
+<video src="../videos/HadamardScene.mp4" class="problem-video" controls muted playsinline preload="metadata"></video>
+</div>
+</div>
+</div>
+
+<!-- ===== SLIDE 6: CONWAY ===== -->
+<div class="slide">
+<span class="slide-label">Problem 2</span>
+<h2>Conway's <em>99-Graph</em></h2>
+<div class="problem-grid">
+<div>
+<div class="tag" style="display:inline-block;font-size:.7rem;font-family:var(--mono);background:var(--surface2);color:var(--accent);padding:.2em .6em;border-radius:4px;margin-bottom:1rem">Math / Graph Theory</div>
+<p class="lead">Build a strongly regular graph srg(99, 14, 1, 2) or prove it cannot exist.</p>
+<ul class="spaced-list">
+<li><strong>99 vertices</strong>, each with 14 neighbors. Adjacent pairs share 1 common neighbor, non-adjacent pairs share 2.</li>
+<li><strong>Open since ~1971.</strong> Conway offered a $1,000 prize. Never claimed. He died in 2020.</li>
+<li><strong>Partial solutions accepted,</strong> scored by % of 4,950 constraints satisfied. 100% = solved.</li>
+<li><strong>Binary search problem.</strong> Passes every known necessary condition but no one has found it.</li>
+</ul>
+</div>
+<div>
+<video src="../videos/ConwayScene.mp4" class="problem-video" controls muted playsinline preload="metadata"></video>
+</div>
+</div>
+</div>
+
+<!-- ===== SLIDE 7: TENSOR RANK ===== -->
+<div class="slide">
+<span class="slide-label">Problem 3</span>
+<h2>Matrix Multiplication <em>Tensor Rank</em></h2>
+<div class="problem-grid">
+<div>
+<div class="tag" style="display:inline-block;font-size:.7rem;font-family:var(--mono);background:var(--surface2);color:var(--accent);padding:.2em .6em;border-radius:4px;margin-bottom:1rem">Math / Algebraic Complexity</div>
+<p class="lead">Multiply two matrices using fewer scalar multiplications than the current record.</p>
+<ul class="spaced-list">
+<li><strong>Strassen (1969):</strong> 2x2 in 7 instead of 8. For 3x3, the record of 23 has stood since 1976.</li>
+<li><strong>DeepMind's AlphaTensor (2022)</strong> matched but didn't beat it over integers.</li>
+<li><strong>Scoring:</strong> lower multiplication count is better. Submit a tensor decomposition (U, V, W factors).</li>
+<li><strong>Rectangular cases</strong> (e.g., 2x3x4, 3x3x6) may be more tractable.</li>
+</ul>
+</div>
+<div>
+<video src="../videos/TensorRankScene.mp4" class="problem-video" controls muted playsinline preload="metadata"></video>
+</div>
+</div>
+</div>
+
+<!-- ===== SLIDE 8: STILL LIFE ===== -->
+<div class="slide">
+<span class="slide-label">Problem 4</span>
+<h2>Connected <em>Still Life</em></h2>
+<div class="problem-grid">
+<div>
+<div class="tag" style="display:inline-block;font-size:.7rem;font-family:var(--mono);background:var(--surface2);color:var(--accent);padding:.2em .6em;border-radius:4px;margin-bottom:1rem">Math / Cellular Automata (Game of Life)</div>
+<p class="lead">Maximize live cells in a stable, connected pattern inside an n x n grid.</p>
+<ul class="spaced-list">
+<li><strong>Still life</strong> = no cell changes on the next Game of Life step. Connected = all live cells reachable via 8-directional adjacency.</li>
+<li>For <strong>n &ge; 16</strong>, best-known patterns come from ad hoc searches and are likely suboptimal.</li>
+<li><strong>Scoring:</strong> more live cells is better. Density around 40-45% in practice (theoretical ceiling ~50%).</li>
+<li><strong>Visually intuitive.</strong> The website has an interactive "try it yourself" game.</li>
+</ul>
+</div>
+<div>
+<video src="../videos/StillLifeScene.mp4" class="problem-video" controls muted playsinline preload="metadata"></video>
+</div>
+</div>
+</div>
+
+<!-- ===== SLIDE 9: HP PROTEIN ===== -->
+<div class="slide">
+<span class="slide-label">Problem 5</span>
+<h2>HP <em>Protein Folding</em></h2>
+<div class="problem-grid no-img">
+<div>
+<div class="tag" style="display:inline-block;font-size:.7rem;font-family:var(--mono);background:var(--surface2);color:var(--accent);padding:.2em .6em;border-radius:4px;margin-bottom:1rem">Computational Biology / Protein Structure</div>
+<p class="lead">Fold an HP chain on a 2D lattice to maximize hydrophobic (H-H) contacts.</p>
+<div class="cols">
+<div>
+<ul class="spaced-list">
+<li><strong>Dill (1985) model:</strong> H = hydrophobic, P = polar. Chain is a self-avoiding walk on a square lattice.</li>
+<li><strong>Proven NP-hard</strong> (1998). Benchmark sequences from the 1990s-2000s may have suboptimal records.</li>
+<li><strong>Sequences S5-S10</strong> are the real open targets.</li>
+</ul>
+</div>
+<div>
+<div class="box box-gold"><p><strong>A biology problem.</strong> Different flavor from the math problems. Great for AI agents that can reason about spatial packing.</p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== SLIDE 10: FRONTEND ===== -->
+<div class="slide">
+<span class="slide-label">Frontend</span>
+<h2>The Problems <em>Website</em></h2>
+<p class="lead">Each problem page has: origin story, instance descriptions, scoring, how to submit, bounds, and references.</p>
+<div class="cols">
+<div>
+<h3>Features</h3>
+<ul class="spaced-list">
+<li><strong>Manim video animations</strong> for visual explanation of each problem</li>
+<li><strong>Interactive demos</strong> like the Still Life "try it yourself" game</li>
+<li><strong>Full API documentation</strong> with payloads and response formats</li>
+<li><strong>WIP problems</strong> page for upcoming additions (RNA, Sorting Networks, Ramsey, Van der Waerden, S-Box, Binary Linear Codes)</li>
+</ul>
+</div>
+<div>
+<div class="box">
+<p><strong>Problems page</strong></p>
+<p><a href="https://siddhartha-mahajan.github.io/problems/">siddhartha-mahajan.github.io/problems/</a></p>
+</div>
+<div class="box box-gold">
+<p><strong>API docs</strong></p>
+<p><a href="https://siddhartha-mahajan.github.io/problems/api.html">siddhartha-mahajan.github.io/problems/api.html</a></p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== SLIDE 11: BACKEND ===== -->
+<div class="slide">
+<span class="slide-label">Backend</span>
+<h2>The Verification <em>API</em></h2>
+<div class="cols">
+<div>
+<h3>Endpoints</h3>
+<ul class="spaced-list">
+<li><strong>POST /submit</strong>: submit a solution for verification</li>
+<li><strong>GET /submission/{id}</strong>: retrieve a past result</li>
+<li><strong>GET /problems/{name}/instances</strong>: list allowed instances</li>
+<li><strong>GET /health</strong>: health check</li>
+</ul>
+</div>
+<div>
+<h3>Stack</h3>
+<ul class="spaced-list">
+<li><strong>FastAPI + PostgreSQL</strong>, Dockerized deployment</li>
+<li><strong>Per-IP rate limiting</strong></li>
+<li><strong>Exact arithmetic.</strong> SymPy for Hadamard, exact rationals for Tensor, BFS for Still Life connectivity.</li>
+<li>Returns: <strong>score, percentile, is_record</strong></li>
+</ul>
+</div>
+</div>
+<div class="box" style="margin-top:1.5rem">
+<p><strong>Base URL:</strong> <code style="font-family:var(--mono);color:var(--accent);font-size:.85rem">http://168.144.71.199:8080/api/v1</code></p>
+</div>
+</div>
+
+<!-- ===== SLIDE 12: CURL EXAMPLE - HADAMARD ===== -->
+<div class="slide">
+<span class="slide-label">Example 1</span>
+<h2>Submit: <em>Hadamard</em></h2>
+<pre>curl -X POST http://168.144.71.199:8080/api/v1/submit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "you@lossfunk.com",
+    "problem_name": "<strong>hadamard</strong>",
+    "instance": {"n": 23},
+    "submission": {
+      "claimed_det": 2779447296000000,
+      "matrix": [[1, -1, 1, ...], ...]
+    }
+  }'</pre>
+<h3>Response</h3>
+<pre>{
+  "success": true,
+  "score": 2779447296000000,
+  "percentile": 50.0,
+  "is_record": false
+}</pre>
+</div>
+
+<!-- ===== SLIDE 13: CURL EXAMPLE - STILL LIFE ===== -->
+<div class="slide">
+<span class="slide-label">Example 2</span>
+<h2>Submit: <em>Still Life</em></h2>
+<pre>curl -X POST http://168.144.71.199:8080/api/v1/submit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "you@lossfunk.com",
+    "problem_name": "<strong>stilllife</strong>",
+    "instance": {"n": 8},
+    "submission": {
+      "claimed_cells": 28,
+      "grid": [[0,0,1,1,1,1,0,0], ...]
+    }
+  }'</pre>
+<p>Fields vary per problem. Full payload docs at the API page.</p>
+</div>
+
+<!-- ===== SLIDE 14: CURL EXAMPLE - HP PROTEIN ===== -->
+<div class="slide">
+<span class="slide-label">Example 3</span>
+<h2>Submit: <em>HP Protein Folding</em></h2>
+<pre>curl -X POST http://168.144.71.199:8080/api/v1/submit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "you@lossfunk.com",
+    "problem_name": "<strong>hpprotein</strong>",
+    "instance": {"sequence_id": "S5"},
+    "submission": {
+      "lattice": "2D",
+      "coords": [[0,0], [1,0], [1,1], ...]
+    }
+  }'</pre>
+<p>Self-avoiding walk on a 2D square lattice. Scored by H-H contacts.</p>
+</div>
+
+<!-- ===== SLIDE 15: THE CHALLENGE ===== -->
+<div class="slide">
+<span class="slide-label">Challenge</span>
+<h2>Internal Challenge: <em>₹25,000 in prizes</em></h2>
+<div class="cols">
+<div>
+<div class="box box-gold" style="margin-top:0">
+<p style="font-size:1.1rem;color:var(--fg)"><strong>₹5,000 per problem &times; 5 problems</strong></p>
+<p>Amazon vouchers, sponsored by Paras.</p>
+</div>
+<ul class="spaced-list" style="margin-top:1.5rem">
+<li><strong>Deadline: Monday, April 13 EOD</strong></li>
+<li>Best score per problem wins</li>
+<li>Any valid submission counts</li>
+</ul>
+</div>
+<div>
+<h3>Use whatever works</h3>
+<ul class="spaced-list">
+<li>Claude Code</li>
+<li>Codex / ChatGPT</li>
+<li>AlphaEvolve / OpenEvolve</li>
+<li>Manual search / custom solvers</li>
+<li>Anything else you can think of</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- ===== SLIDE 16: STEPS ===== -->
+<div class="slide">
+<span class="slide-label">How To</span>
+<h2>Steps to <em>participate</em></h2>
+<ol class="num-list">
+<li><strong>Pick a problem.</strong> Browse the problems page and find one that interests you.</li>
+<li><strong>Read the problem + API docs.</strong> Understand the format, constraints, and scoring.</li>
+<li><strong>Generate a candidate solution.</strong> Use an AI agent, write a solver, or try by hand.</li>
+<li><strong>Submit via API.</strong> POST /api/v1/submit with your JSON payload.</li>
+<li><strong>Get instant feedback.</strong> Score, percentile, is_record flag.</li>
+<li><strong>Iterate.</strong> Improve and resubmit (rate limited, so be deliberate).</li>
+<li><strong>Best score by Monday EOD</strong> wins ₹5,000 for that problem</li>
+</ol>
+</div>
+
+<!-- ===== SLIDE 17: LINKS ===== -->
+<div class="slide">
+<span class="slide-label">Links</span>
+<h2>Resources and <em>links</em></h2>
+<div class="cols">
+<div>
+<ul class="spaced-list">
+<li><strong>Problems page:</strong> <a href="https://siddhartha-mahajan.github.io/problems/">siddhartha-mahajan.github.io/problems/</a></li>
+<li><strong>API docs:</strong> <a href="https://siddhartha-mahajan.github.io/problems/api.html">siddhartha-mahajan.github.io/problems/api.html</a></li>
+<li><strong>API base:</strong> <code style="font-family:var(--mono);color:var(--accent);font-size:.85rem">http://168.144.71.199:8080/api/v1</code></li>
+</ul>
+</div>
+<div>
+<div class="box">
+<p><strong>Quick health check:</strong></p>
+<pre style="margin:.5rem 0;font-size:.75rem">curl http://168.144.71.199:8080/api/v1/health</pre>
+</div>
+<div class="box box-gold" style="margin-top:1rem">
+<p>Questions? Reach out to Siddhartha on Slack.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== SLIDE 18: CLOSING ===== -->
+<div class="slide title-slide">
+<img src="../../assets/lossfunk-logo.jpg" class="logo" alt="Lossfunk">
+<h1>Five problems.<br>Five prizes.<br><em>Go.</em></h1>
+<div class="subtitle">Deadline: Monday, April 13 EOD</div>
+</div>
+
+</div>
+<script>
+let current=0;const slides=document.querySelectorAll('.slide'),total=slides.length,progress=document.getElementById('progress'),counter=document.getElementById('counter');
+function showSlide(n){slides.forEach((s,i)=>{s.classList.remove('active');if(i===n)s.classList.add('active')});progress.style.width=((n/(total-1))*100)+'%';counter.textContent=(n+1)+' / '+total}
+function next(){if(current<total-1){current++;showSlide(current)}}
+function prev(){if(current>0){current--;showSlide(current)}}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='Enter'){e.preventDefault();next()}if(e.key==='ArrowLeft'||e.key==='Backspace'){e.preventDefault();prev()}});
+let touchStartX=0;document.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX});document.addEventListener('touchend',e=>{const diff=touchStartX-e.changedTouches[0].clientX;if(Math.abs(diff)>50){diff>0?next():prev()}});
+showSlide(0);
+function toggleFullscreen(){if(!document.fullscreenElement){document.documentElement.requestFullscreen().catch(()=>{})}else{document.exitFullscreen()}}
+document.addEventListener('fullscreenchange',()=>{document.getElementById('fs-btn').innerHTML=document.fullscreenElement?'&#x2716;':'&#x26F6;'});
+</script>
+</body>
+</html>
