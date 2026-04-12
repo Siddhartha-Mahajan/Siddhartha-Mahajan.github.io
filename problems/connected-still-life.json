@@ -21,7 +21,7 @@
       },
       {
         "name": "Density",
-        "description": "live_cells / n^2, expressed as a percentage. The theoretical ceiling is roughly 50% (Elkies, 1998). The connected constraint reduces achievable density further, with the best known results reaching around 30-40% for currently studied board sizes."
+        "description": "live_cells / n^2, expressed as a percentage. The theoretical ceiling is roughly 50% (Elkies, 1998). The connected constraint reduces achievable density further."
       },
       {
         "name": "New record",
@@ -39,7 +39,7 @@
     { "label": "Stability", "name": "Live cells: 2 or 3 neighbors", "formula": "Each live cell must have exactly 2 or 3 live neighbors to survive" },
     { "label": "Stability", "name": "Dead cells: not exactly 3", "formula": "No dead cell adjacent to the pattern may have exactly 3 live neighbors" },
     { "label": "Connectivity", "name": "8-connected", "formula": "All live cells reachable from each other via edge or corner adjacency" },
-    { "label": "Density", "name": "Upper bound ~1/2", "formula": "Elkies (1998). The connected constraint further reduces achievable density to roughly 30-40% for currently studied board sizes." }
+    { "label": "Density", "name": "Upper bound ~1/2", "formula": "Elkies (1998). The connected constraint further reduces achievable density." }
   ],
 
   "suggestedApproach": [
