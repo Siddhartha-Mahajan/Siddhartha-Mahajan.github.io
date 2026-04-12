@@ -31,7 +31,7 @@
     "note": "Submissions that match but do not beat the current record are still accepted and scored. Getting to 93% of the theoretical bound is meaningful even without setting a new record."
   },
 
-  "submissionExample": "{\n  \"n\": 23,\n  \"claimed_det\": 2779447296000001,\n  \"matrix\": [\n    [1, -1, 1, ...],\n    [-1, 1, 1, ...],\n    ...\n  ]\n}\n(The claimed_det shown above is illustrative. Your actual value must exceed the current record for your chosen n.)",
+  "submissionExample": "{\n  \"n\": 23,\n  \"claimed_det\": 2779447296000001,\n  \"matrix\": [\n    [1, -1, 1, ...],\n    [-1, 1, 1, ...],\n    ...\n  ]\n}\n(The claimed_det shown above is illustrative.",
 
   "verification": "We compute the exact integer determinant of your matrix using sympy (no floating point). The submission is accepted if the matrix is n x n, all entries are +1 or -1, and |det(M)| matches your claimed_det. It scores if |det(M)| is at or above the current record for that n.",
 
