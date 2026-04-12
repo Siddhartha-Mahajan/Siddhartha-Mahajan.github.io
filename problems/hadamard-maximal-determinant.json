@@ -8,9 +8,9 @@
     "reviewers": []
   },
 
-  "origin": "In 1893, Jacques Hadamard posed a fundamental question: given an n x n matrix whose entries are all +1 or -1, what is the largest possible value of its determinant? For small matrices (n up to 22), mathematicians have found exact answers, though it took over a century of effort. For n = 23 and beyond, no one knows the true maximum. The best values found so far come from computer searches by Orrick, Solomon, Dowdeswell, and Smith in 2003, using hill-climbing and simulated annealing. Most of those records have stood unchallenged for over 20 years.",
+  "origin": "In 1893, Jacques Hadamard posed an interesting question: given an n x n matrix whose entries are all +1 or -1, what is the largest possible value of its determinant? It took over a century of effort for finding exact answers for some small matrices (n up to 22). For n = 23 and beyond, much less is known. The best values found so far come from computer searches by Orrick, Solomon, Dowdeswell, and Smith in 2003, using hill-climbing and simulated annealing. Most of those records have stood unchallenged for over 20 years.",
 
-  "instance": "For any value of n from the records table below, construct an n x n matrix of +1s and -1s whose determinant (in absolute value) is larger than the current best known value for that n. For example, the record for n = 23 is |det| = 2,779,447,296,000,000. To claim a new record, submit a single matrix that beats this value. Each n is an independent challenge and you only need to improve one.",
+  "instance": "For any value of n from the records table below, construct an n x n matrix (M) consisting of only +1 and -1 such that the absolute value of the determinant (|det(M)|) is strictly larger than the current known maximum value for that particular n. For example, the record for n = 23 is |det(M)| = 2,779,447,296,000,000. To claim a new record, submit a single matrix that beats this value. Each n is an independent challenge and you only need to improve one.",
 
   "scoring": {
     "summary": "Each submission is scored on how close its determinant gets to the theoretical upper bound for the chosen n.",
@@ -31,14 +31,14 @@
     "note": "Submissions that match but do not beat the current record are still accepted and scored. Getting to 93% of the theoretical bound is meaningful even without setting a new record."
   },
 
-  "submissionExample": "{\n  \"n\": 23,\n  \"claimed_det\": 2779447296000001,\n  \"matrix\": [\n    [1, -1, 1, ...],\n    [-1, 1, 1, ...],\n    ...\n  ]\n}",
+  "submissionExample": "{\n  \"n\": 23,\n  \"claimed_det\": 2779447296000001,\n  \"matrix\": [\n    [1, -1, 1, ...],\n    [-1, 1, 1, ...],\n    ...\n  ]\n}\n(The claimed_det shown above is illustrative. Your actual value must exceed the current record for your chosen n.)",
 
   "verification": "We compute the exact integer determinant of your matrix using sympy (no floating point). The submission is accepted if the matrix is n x n, all entries are +1 or -1, and |det(M)| matches your claimed_det. It scores if |det(M)| is at or above the current record for that n.",
 
   "bounds": [
     { "label": "n mod 4 ≡ 0", "name": "Hadamard bound", "formula": "n^(n/2). Tight when a Hadamard matrix exists." },
-    { "label": "n mod 4 ≡ 1", "name": "Barba bound",  "formula": "((2n-1)/n)^(1/2) * (n-1)^((n-1)/2)" },
-    { "label": "n mod 4 ≡ 2", "name": "Ehlich-Wojtas bound", "formula": "(2n-2) * ((n-2)/2)^((n-2)/2)" },
+    { "label": "n mod 4 ≡ 1", "name": "Barba bound",  "formula": "(2n-1)^(1/2) * (n-1)^((n-1)/2). See Barba (1933)." },
+    { "label": "n mod 4 ≡ 2", "name": "Ehlich-Wojtas bound", "formula": "(2n-2) * (n-2)^((n-2)/2). See Ehlich (1964) and Wojtas (1964)." },
     { "label": "n mod 4 ≡ 3", "name": "Ehlich bound",  "formula": "Derived from eigenvalue analysis of M^T M. See Ehlich (1964)." }
   ],
 
@@ -113,9 +113,12 @@
   "references": [
     { "text": "Orrick, W. P., Solomon, B., Dowdeswell, R., & Smith, W. D. (2003). New lower bounds for the maximal determinant problem. arXiv preprint math/0304410.", "url": "https://arxiv.org/abs/math/0304410" },
     { "text": "Brent, R. P., Orrick, W. P., Osborn, J. H., & Zimmermann, P. (2011). Maximal determinants and saturated D-optimal designs of orders 19 and 37. arXiv preprint 1112.4160.", "url": "https://arxiv.org/abs/1112.4160" },
-    { "text": "Chasiotis, V., Kounias, S., & Farmakis, N. (2018). On the maximal determinant of {-1, +1} matrices of order 22. Discrete Mathematics, 341(6), 1679-1688.", "url": "https://doi.org/10.1016/j.disc.2017.12.003" },
-    { "text": "Ehlich, H. (1964). Determinantenabschatzungen fur binare Matrizen. Mathematische Zeitschrift, 83, 123-132.", "url": null },
-    { "text": "OEIS Foundation. Sequence A003433: Largest determinant of an n x n {0,1} matrix.", "url": "https://oeis.org/A003433" },
-    { "text": "Wikipedia contributors. Hadamard's maximal determinant problem. Wikipedia.", "url": "https://en.wikipedia.org/wiki/Hadamard%27s_maximal_determinant_problem" }
+    { "text": "Chasiotis, V., Kounias, S., & Farmakis, N. (2018). The D-optimal saturated designs of order 22. Discrete Mathematics, 341(2), 380-387.", "url": "https://doi.org/10.1016/j.disc.2017.09.005" },
+    { "text": "Ehlich, H. (1964). Determinantenabschatzungen fur binare Matrizen. Mathematische Zeitschrift, 83, 123-132.", "url": "https://doi.org/10.1007/BF01111249" },
+    { "text": "OEIS Foundation. Sequence A003433: Largest determinant of a (+1,-1) matrix of order n.", "url": "https://oeis.org/A003433" },
+    { "text": "Wikipedia contributors. Hadamard's maximal determinant problem. Wikipedia.", "url": "https://en.wikipedia.org/wiki/Hadamard%27s_maximal_determinant_problem" },
+    { "text": "Browne, P., Egan, R., Hegarty, F., & O Cathain, P. (2021). A survey of the Hadamard maximal determinant problem. arXiv preprint 2104.06756.", "url": "https://arxiv.org/abs/2104.06756" },
+    { "text": "Barba, G. (1933). Intorno al teorema di Hadamard sui determinanti a valore massimo. Giornale di Matematiche di Battaglini, 71, 70-86.", "url": null },
+    { "text": "Wojtas, M. (1964). On Hadamard's inequality for the determinants of order non-divisible by 4. Colloquium Mathematicum, 12, 73-83.", "url": null }
   ]
 }

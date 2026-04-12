@@ -8,9 +8,9 @@
     "reviewers": []
   },
 
-  "origin": "The maximum density of an unconstrained still life in Conway's Game of Life approaches 1/2. Requiring connectivity drops this because you cannot freely tile isolated stable pieces. For small n the optima are known exactly. For n >= 16, the best-known patterns come from ad hoc searches and are likely suboptimal. The density gap between connected and unconstrained still lifes widens as n grows, making larger boxes the more interesting targets. Elkies (1998) proved theoretical density bounds.",
+  "origin": "The maximum density of an unconstrained still life in Conway's Game of Life approaches 1/2. Requiring connectivity drops this because you cannot freely tile isolated stable pieces. For small n, good solutions are known. For n >= 16, the best-known patterns come from ad hoc searches and may be suboptimal. The density gap between connected and unconstrained still lifes widens as n grows, making larger boxes the more interesting targets. Elkies (1998) proved theoretical density bounds.",
 
-  "instance": "Conway's Game of Life is played on a grid of cells, where each cell is either alive (1) or dead (0). Every cell has 8 neighbors: the cells directly above, below, left, right, and on the four diagonals. At each time step, the grid updates simultaneously according to two rules: (1) a live cell survives if it has exactly 2 or 3 live neighbors, otherwise it dies; (2) a dead cell becomes alive if it has exactly 3 live neighbors, otherwise it stays dead. A still life is a pattern that does not change after a time step: every live cell has 2 or 3 live neighbors (so none die) and no dead cell has exactly 3 live neighbors (so none are born). A connected still life adds one more requirement: all live cells must form a single connected group, where connectivity is through the same 8 directions (horizontal, vertical, and diagonal). Your challenge: choose a box size n from the records table and find a connected still life fitting inside an n x n grid that has more live cells than the current record.",
+  "instance": "Conway's Game of Life is played on a grid of cells, where each cell is either alive (1) or dead (0). Every cell has 8 neighbors: the cells directly above, below, left, right, and on the four diagonals. At each time step, the grid updates simultaneously according to two rules: (1) a live cell survives if it has exactly 2 or 3 live neighbors, otherwise it dies; (2) a dead cell becomes alive if it has exactly 3 live neighbors, otherwise it stays dead. A still life is a pattern that does not change after a time step: every live cell has 2 or 3 live neighbors (so none die) and no dead cell has exactly 3 live neighbors (so none are born). A connected still life adds one more requirement: all live cells must form a single connected group, where connectivity is through the same 8 directions (horizontal, vertical, and diagonal). Your challenge: choose a box size n and find a connected still life fitting inside an n x n grid that has as many live cells as possible.",
 
   "scoring": {
     "summary": "Each submission is scored on the density of live cells achieved, relative to the theoretical ceiling.",
@@ -21,7 +21,7 @@
       },
       {
         "name": "Density",
-        "description": "live_cells / n^2, expressed as a percentage. The theoretical ceiling is roughly 50% (Elkies, 1998). The connected constraint reduces this to about 40-45% in practice."
+        "description": "live_cells / n^2, expressed as a percentage. The theoretical ceiling is roughly 50% (Elkies, 1998). The connected constraint reduces achievable density further, with the best known results reaching around 30-40% for currently studied board sizes."
       },
       {
         "name": "New record",
@@ -39,34 +39,24 @@
     { "label": "Stability", "name": "Live cells: 2 or 3 neighbors", "formula": "Each live cell must have exactly 2 or 3 live neighbors to survive" },
     { "label": "Stability", "name": "Dead cells: not exactly 3", "formula": "No dead cell adjacent to the pattern may have exactly 3 live neighbors" },
     { "label": "Connectivity", "name": "8-connected", "formula": "All live cells reachable from each other via edge or corner adjacency" },
-    { "label": "Density", "name": "Upper bound ~1/2", "formula": "Elkies (1998). The connected constraint further reduces achievable density to roughly 40-45%." }
+    { "label": "Density", "name": "Upper bound ~1/2", "formula": "Elkies (1998). The connected constraint further reduces achievable density to roughly 30-40% for currently studied board sizes." }
   ],
-
-  "leaderboard": {
-    "note": "Records for connected still lifes. Sources: LifeWiki, Eppstein. Some values for large n need independent verification.",
-    "rows": [
-      { "n": 8,  "best": 20,  "pct": 31.3, "note": "Likely optimal" },
-      { "n": 10, "best": 34,  "pct": 34.0, "note": "Verify against LifeWiki" },
-      { "n": 16, "best": 92,  "pct": 35.9, "note": "Open" },
-      { "n": 20, "best": 148, "pct": 37.0, "note": "Open" },
-      { "n": 32, "best": 390, "pct": 38.1, "note": "Open, likely improvable" }
-    ]
-  },
 
   "suggestedApproach": [
     { "title": "Start from known still lifes", "body": "Beehives, blocks, boats, loaves. Combine them into connected patterns. The hard part is making valid joins: most naive connections violate stability." },
     { "title": "Simulated annealing", "body": "Score = live cells minus penalty for stability violations. Flip cells to improve. When penalty reaches zero, check if it beats the record." },
     { "title": "SAT / MaxSAT", "body": "Encode stability and connectivity as boolean constraints. Maximize live cell count. Works well for n <= 20." },
-    { "title": "Target large n", "body": "n = 32 has density 38.1% against a theoretical ceiling near 50%. Largest gap, most room for improvement." }
+    { "title": "Target large n", "body": "Larger board sizes tend to have more room for improvement relative to the theoretical density ceiling." }
   ],
 
-  "agentPrompt": "I want you to find a connected still life in Conway's Game of Life that fits inside a 20x20 bounding box and has more than 148 live cells. A still life means: every live cell has exactly 2 or 3 live neighbors (so it survives), and no dead cell has exactly 3 live neighbors (so none are born). Connected means all live cells are reachable from each other via 8-adjacency (including diagonals). Use a combination of SAT encoding and simulated annealing. Output the grid as a JSON array of arrays (0s and 1s), 20 rows of 20 values each, and report the live cell count.",
+  "agentPrompt": "I want you to find a connected still life in Conway's Game of Life that fits inside a given n x n bounding box and maximizes the number of live cells. A still life means: every live cell has exactly 2 or 3 live neighbors (so it survives), and no dead cell has exactly 3 live neighbors (so none are born). Connected means all live cells are reachable from each other via 8-adjacency (including diagonals). Use a combination of SAT encoding and simulated annealing. Output the grid as a JSON array of arrays (0s and 1s), and report the live cell count.",
 
   "references": [
     { "text": "LifeWiki contributors. Still life. LifeWiki.", "url": "https://conwaylife.com/wiki/Still_life" },
-    { "text": "LifeWiki contributors. Maximum density still life. LifeWiki.", "url": "https://conwaylife.com/wiki/Maximum-density_still_life" },
+    { "text": "LifeWiki contributors. Density. LifeWiki.", "url": "https://conwaylife.com/wiki/Density" },
     { "text": "Catagolue. Crowdsourced census of Game of Life objects.", "url": "https://catagolue.hatsya.com" },
-    { "text": "Elkies, N. D. (1998). The still-life density problem and its generalizations. In Voronoi's Impact on Modern Science, Book 2.", "url": null },
-    { "text": "Eppstein, D. Computational experiments on still life density. 11011110.github.io.", "url": "https://11011110.github.io" }
+    { "text": "Elkies, N. D. (1998). The still-life density problem and its generalizations. In Voronoi's Impact on Modern Science, Book I (Vol. 21 of the Proc. Inst. Math. Nat. Acad. Sci. Ukraine).", "url": "https://arxiv.org/abs/math/9905194" },
+    { "text": "Chu, G., & Stuckey, P. J. (2012). A complete solution to the maximum density still life problem. Artificial Intelligence, 184-185, 1-16.", "url": "https://people.eng.unimelb.edu.au/pstuckey/papers/still-life.pdf" },
+    { "text": "ASP Competition 2013. Connected Maximum-density Still Life.", "url": "http://www.mat.unical.it/aspcomp2013/ConnectedMaximumDensityStillLife" }
   ]
 }
