@@ -5,7 +5,7 @@
 
   "attribution": {
     "authors": ["Siddhartha Mahajan (Lossfunk)"],
-    "reviewers": []
+    "reviewers": ["Dr. Ankan Pal (BITS Pilani)"]
   },
 
   "origin": "In 1969, Norman Biggs identified the parameter set srg(99, 14, 1, 2) as a plausible candidate for a strongly regular graph. By the mid-1970s, John Conway was actively working on the problem and later offered a $1,000 prize for its resolution. The parameters pass every known necessary condition (integrality, Krein, absolute bound), yet no one has built the graph or ruled it out. The graph cannot be vertex-transitive, which eliminates all standard algebraic constructions. If it exists, computational search may be essential, though theoretical progress continues through automorphism-group restrictions and other algebraic methods. Conway died in 2020; the prize was never claimed.",

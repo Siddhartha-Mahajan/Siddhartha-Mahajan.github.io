@@ -712,7 +712,7 @@ function renderCiteBlock(data) {
     const div = el('div', 'cite-block');
     div.innerHTML = `
         <h3>Cite This Problem</h3>
-        <div class="code-block cite-bibtex">${esc(authors)} (${year}). ${esc(title)}. Reviewed by ${esc(reviewers)}. CAISc 2026 Verifiable Problems Track. https://caisc2026.github.io/problems/?problem=${esc(data.id)}</div>`;
+        <div class="code-block cite-bibtex">Curated by ${esc(authors)} (${year}). ${esc(title)}. Reviewed by ${esc(reviewers)}. CAISc 2026 Verifiable Problems Track. https://caisc2026.github.io/problems/?problem=${esc(data.id)}</div>`;
     return div;
 }
 
