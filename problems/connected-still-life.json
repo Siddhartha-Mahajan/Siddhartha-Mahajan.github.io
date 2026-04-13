@@ -33,11 +33,11 @@
 
   "submissionExample": "{\n  \"n\": 20,\n  \"claimed_cells\": 149,\n  \"grid\": [\n    [0, 1, 1, 0, ...],\n    [1, 0, 0, 1, ...],\n    ...\n  ]\n}",
 
-  "verification": "We check: (1) the grid is n x n with entries 0 or 1, (2) every live cell has exactly 2 or 3 live neighbors (stability), (3) no dead cell has exactly 3 live neighbors (no births), (4) all live cells are 8-connected (BFS). The live cell count must match claimed_cells. O(n^2), runs in milliseconds.",
+  "verification": "We check: (1) the grid is n x n with entries 0 or 1, (2) every live cell has exactly 2 or 3 live neighbors (stability), (3) no dead cell in the box or its one-cell exterior ring has exactly 3 live neighbors (no births), (4) all live cells are 8-connected (BFS). The live cell count must match claimed_cells. O(n^2), runs in milliseconds.",
 
   "bounds": [
     { "label": "Stability", "name": "Live cells: 2 or 3 neighbors", "formula": "Each live cell must have exactly 2 or 3 live neighbors to survive" },
-    { "label": "Stability", "name": "Dead cells: not exactly 3", "formula": "No dead cell adjacent to the pattern may have exactly 3 live neighbors" },
+    { "label": "Stability", "name": "Dead cells: not exactly 3", "formula": "No dead cell in the box or one-cell exterior ring may have exactly 3 live neighbors" },
     { "label": "Connectivity", "name": "8-connected", "formula": "All live cells reachable from each other via edge or corner adjacency" },
     { "label": "Density", "name": "Upper bound ~1/2", "formula": "Elkies (1998). The connected constraint further reduces achievable density." }
   ],

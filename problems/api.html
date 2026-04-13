@@ -572,7 +572,7 @@
                             <tr>
                                 <td><strong><a href="./?p=hadamard-maximal-determinant">Hadamard Maximal Determinant</a></strong></td>
                                 <td>Linear Algebra</td>
-                                <td>Higher is better</td>
+                                <td>Higher is better (% of bound)</td>
                                 <td><span class="status-open"><span class="status-dot"></span>Open for n &ge; 23</span></td>
                             </tr>
                             <tr>
@@ -732,7 +732,8 @@
                     <h4>Hadamard Maximal Determinant</h4>
                     <p class="example-desc">
                         Find an n &times; n matrix of &plusmn;1 entries that maximizes |det(M)|.
-                        Verifier uses exact integer arithmetic (SymPy). Timeout: 60s. Max payload: 500 KB.
+                        Verifier uses exact integer arithmetic (SymPy), and returns score = 100 &times; |det(M)| / bound(n).
+                        Timeout: 60s. Max payload: 500 KB.
                     </p>
                     <div class="code-wrapper">
                         <div class="code-label">Request body</div>
@@ -816,7 +817,7 @@
                     <h4>Connected Still Life</h4>
                     <p class="example-desc">
                         Maximize live cells in a stable, connected Game of Life pattern inside an n &times; n bounding box.
-                        Verifier checks stability (no births/deaths) and 8-connectivity.
+                        Verifier checks stability (no births/deaths, including the one-cell exterior ring) and 8-connectivity.
                         Timeout: 10s. Max payload: 50 KB.
                     </p>
                     <div class="code-wrapper">
@@ -919,7 +920,7 @@
                 <!-- Hadamard n=23: Orrick record matrix -->
                 <div class="example-block">
                     <h4>Hadamard n=23: Record-Holding Matrix (Orrick et al. 2003)</h4>
-                    <p class="example-desc">The current best-known 23&times;23 &plusmn;1 matrix, with |det| = 2,779,447,296,000,000. This is the smallest open case of the Hadamard maximal determinant problem.</p>
+                    <p class="example-desc">The current best-known 23&times;23 &plusmn;1 matrix, with |det| = 2,779,447,296,000,000. This is the smallest open case of the Hadamard maximal determinant problem. Under bound-normalized scoring, this evaluates to 93.1983.</p>
                     <div class="code-wrapper">
                         <div class="code-label">curl</div>
                         <pre class="code-block" data-copy>curl -X POST http://168.144.71.199:8080/api/v1/submit \
@@ -965,7 +966,7 @@
   "<span class="tok-key">submission_id</span>": <span class="tok-punc">"</span>019d676e-78ac-75cd-9d17-b5fa93e13d46<span class="tok-punc">"</span>,
   "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>hadamard<span class="tok-punc">"</span>,
   "<span class="tok-key">instance</span>": { "<span class="tok-key">n</span>": <span class="tok-num">23</span> },
-  "<span class="tok-key">score</span>": <span class="tok-num">2779447296000000</span>,
+    "<span class="tok-key">score</span>": <span class="tok-num">93.1983</span>,
   "<span class="tok-key">percentile</span>": <span class="tok-num">60.0</span>,
   "<span class="tok-key">is_record</span>": <span class="tok-num">false</span>,
   "<span class="tok-key">message</span>": <span class="tok-punc">"</span>Verification passed<span class="tok-punc">"</span>
@@ -975,7 +976,7 @@
                 <!-- Hadamard n=29: random matrix -->
                 <div class="example-block">
                     <h4>Hadamard n=29: Random &plusmn;1 Matrix</h4>
-                    <p class="example-desc">A random 29&times;29 matrix of &plusmn;1 entries. Even a random matrix gets a valid score. The challenge is maximizing it. This one scores |det| = 1,093,127,158,890,496 vs. the record of 6,240,837,824,260,096.</p>
+                    <p class="example-desc">A random 29&times;29 matrix of &plusmn;1 entries. Even a random matrix gets a valid score. The challenge is maximizing it. This one has |det| = 1,093,127,158,890,496 and a normalized score of 0.0001.</p>
                     <div class="code-wrapper">
                         <div class="code-label">curl</div>
                         <pre class="code-block" data-copy>curl -X POST http://168.144.71.199:8080/api/v1/submit \
@@ -1027,7 +1028,7 @@
   "<span class="tok-key">submission_id</span>": <span class="tok-punc">"</span>019d676f-f470-7efd-9ccf-f0c1df902770<span class="tok-punc">"</span>,
   "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>hadamard<span class="tok-punc">"</span>,
   "<span class="tok-key">instance</span>": { "<span class="tok-key">n</span>": <span class="tok-num">29</span> },
-  "<span class="tok-key">score</span>": <span class="tok-num">1093127158890496</span>,
+    "<span class="tok-key">score</span>": <span class="tok-num">0.0001</span>,
   "<span class="tok-key">percentile</span>": <span class="tok-num">58.3333</span>,
   "<span class="tok-key">is_record</span>": <span class="tok-num">false</span>,
   "<span class="tok-key">message</span>": <span class="tok-punc">"</span>Verification passed<span class="tok-punc">"</span>
@@ -1174,7 +1175,7 @@ print(json.dumps(resp.json(), indent=2))</pre>
   "<span class="tok-key">problem_name</span>": <span class="tok-punc">"</span>hadamard<span class="tok-punc">"</span>,
   "<span class="tok-key">instance</span>": { "<span class="tok-key">n</span>": <span class="tok-num">23</span> },
   "<span class="tok-key">is_valid</span>": <span class="tok-num">true</span>,
-  "<span class="tok-key">score</span>": <span class="tok-num">2779447296000000</span>,
+    "<span class="tok-key">score</span>": <span class="tok-num">93.1983</span>,
   "<span class="tok-key">percentile</span>": <span class="tok-num">60.0</span>,
   "<span class="tok-key">is_record</span>": <span class="tok-num">false</span>
 }</pre>
