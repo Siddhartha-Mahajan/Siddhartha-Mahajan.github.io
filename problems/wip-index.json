@@ -12,13 +12,6 @@
       "subtitle": "Design an RNA sequence that folds into a target structure. Verified by ViennaRNA in milliseconds."
     },
     {
-      "id": "hp-protein-folding",
-      "file": "hp-protein-folding.json",
-      "title": "HP Protein Folding",
-      "domain": "Computational Biology - Protein Structure",
-      "subtitle": "Fold an HP chain on a 2D lattice to maximize hydrophobic contacts. NP-hard with open records since the 1990s."
-    },
-    {
       "id": "sorting-networks",
       "file": "sorting-networks.json",
       "title": "Minimal Sorting Networks",

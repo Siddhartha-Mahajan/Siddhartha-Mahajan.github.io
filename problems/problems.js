@@ -47,6 +47,10 @@ function el(tag, cls, html) {
     return e;
 }
 
+function getIndexPath() {
+    return (typeof window !== 'undefined' && window.__WIP_MODE) ? 'wip-index.json' : 'index.json';
+}
+
 /* ---------- Leaderboard type detection ---------- */
 
 function detectLeaderboardType(rows) {
@@ -219,41 +223,6 @@ function renderRNALeaderboard(lb) {
         </table>`;
 }
 
-function renderHPLeaderboard(lb, collapsed) {
-    const maxVisible = collapsed ? 6 : lb.rows.length;
-    const rows = lb.rows.map((row, i) => {
-        const optLabel = row.optimal
-            ? '<span class="status-solved" style="font-size:0.75rem">Proven</span>'
-            : '<span class="status-open"><span class="status-dot"></span>Open</span>';
-        const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
-        const hidden = i >= maxVisible ? ' style="display:none" data-extra-row' : '';
-        const seq = esc(row.sequence || '');
-        const seqHTML = seq
-            ? `<code class="hp-seq" title="${seq}" style="font-size:0.7rem;word-break:break-all;line-height:1.3;display:block;max-width:320px;font-family:var(--font-mono, monospace);color:var(--color-text-secondary, #888)">${seq}</code>`
-            : '';
-        return `
-        <tr${hidden}>
-            <td class="td-n"><div class="n-label">${esc(row.id)}</div>${noteHTML}</td>
-            <td class="td-mod">${row.length}</td>
-            <td style="max-width:340px">${seqHTML}</td>
-            <td class="td-best" style="font-weight:700">${row.best}</td>
-            <td class="td-status">${optLabel}</td>
-        </tr>`;
-    }).join('');
-
-    const showMore = (collapsed && lb.rows.length > maxVisible)
-        ? `<tr class="show-more-row"><td colspan="5" style="text-align:center;padding:var(--space-3)"><button class="show-more-btn">Show all ${lb.rows.length} rows</button></td></tr>`
-        : '';
-
-    return `
-        <table class="leaderboard" aria-label="Leaderboard">
-            <thead><tr><th>ID</th><th>Length</th><th>Sequence</th><th>Best H-H</th><th>Optimal?</th></tr></thead>
-            <tbody>${rows}${showMore}</tbody>
-        </table>`;
-}
-
-/* ---------- New leaderboard renderers (WIP problems) ---------- */
-
 function renderSortingLeaderboard(lb) {
     const rows = lb.rows.map(row => {
         const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
@@ -343,20 +312,53 @@ function renderSBoxLeaderboard(lb) {
 function renderCodesLeaderboard(lb) {
     const rows = lb.rows.map(row => {
         const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
-        const gap = row.bound - row.best_d;
+        const gap = (row.bound != null && row.best_d != null) ? row.bound - row.best_d : '-';
         return `
         <tr>
-            <td class="td-n"><div class="n-label">[${row.n}, ${row.k}]</div>${noteHTML}</td>
+            <td class="td-n"><div class="n-label">${row.n}</div>${noteHTML}</td>
+            <td class="td-mod">${row.k}</td>
             <td class="td-best" style="font-weight:700">${row.best_d}</td>
             <td class="td-mod">${row.bound}</td>
             <td class="td-mod">${gap}</td>
-            <td class="td-mod">${esc(row.age)}</td>
         </tr>`;
     }).join('');
     return `
         <table class="leaderboard" aria-label="Leaderboard">
-            <thead><tr><th>[n, k]</th><th>Best d</th><th>Upper Bound</th><th>Gap</th><th>Record Age</th></tr></thead>
+            <thead><tr><th>n</th><th>k</th><th>Best d</th><th>Bound</th><th>Gap</th></tr></thead>
             <tbody>${rows}</tbody>
+        </table>`;
+}
+
+function renderHPLeaderboard(lb, collapsed) {
+    const maxVisible = collapsed ? 6 : lb.rows.length;
+    const rows = lb.rows.map((row, i) => {
+        const optLabel = row.optimal
+            ? '<span class="status-solved" style="font-size:0.75rem">Proven</span>'
+            : '<span class="status-open"><span class="status-dot"></span>Open</span>';
+        const noteHTML = row.note ? `<span class="row-note">${esc(row.note)}</span>` : '';
+        const hidden = i >= maxVisible ? ' style="display:none" data-extra-row' : '';
+        const seq = esc(row.sequence || '');
+        const seqHTML = seq
+            ? `<code class="hp-seq" title="${seq}" style="font-size:0.7rem;word-break:break-all;line-height:1.3;display:block;max-width:320px;font-family:var(--font-mono, monospace);color:var(--color-text-secondary, #888)">${seq}</code>`
+            : '';
+        return `
+        <tr${hidden}>
+            <td class="td-n"><div class="n-label">${esc(row.id)}</div>${noteHTML}</td>
+            <td class="td-mod">${row.length}</td>
+            <td style="max-width:340px">${seqHTML}</td>
+            <td class="td-best" style="font-weight:700">${row.best}</td>
+            <td class="td-status">${optLabel}</td>
+        </tr>`;
+    }).join('');
+
+    const showMore = (collapsed && lb.rows.length > maxVisible)
+        ? `<tr class="show-more-row"><td colspan="5" style="text-align:center;padding:var(--space-3)"><button class="show-more-btn">Show all ${lb.rows.length} rows</button></td></tr>`
+        : '';
+
+    return `
+        <table class="leaderboard" aria-label="Leaderboard">
+            <thead><tr><th>ID</th><th>Length</th><th>Sequence</th><th>Best H-H</th><th>Optimal?</th></tr></thead>
+            <tbody>${rows}${showMore}</tbody>
         </table>`;
 }
 
@@ -402,30 +404,54 @@ function renderLeaderboard(lb, collapsed) {
 
 /* ---------- Section renderers ---------- */
 
+function renderPersonCard(person) {
+    if (typeof person === 'string') return `<span class="attribution-names">${esc(person)}</span>`;
+    let socialHtml = '';
+    if (person.linkedin || person.scholar) {
+        socialHtml = '<div class="attribution-card__social">';
+        if (person.linkedin) socialHtml += `<a href="${esc(person.linkedin)}" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>`;
+        if (person.scholar) socialHtml += `<a href="${esc(person.scholar)}" target="_blank" rel="noopener" aria-label="Google Scholar"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>`;
+        socialHtml += '</div>';
+    }
+    return `<div class="attribution-card">
+        ${person.photo ? `<img src="${esc(person.photo)}" alt="${esc(person.name)}" class="attribution-card__photo">` : ''}
+        <div class="attribution-card__info">
+            <span class="attribution-card__name">${esc(person.name)}</span>
+            <div class="attribution-card__meta">
+                ${person.institution ? `<span class="attribution-card__institution">${esc(person.institution)}</span>` : ''}
+                ${socialHtml}
+            </div>
+        </div>
+    </div>`;
+}
+
 function renderAttribution(data) {
     const attr = data.attribution;
     if (!attr) return null;
-    const reviewers = (attr.reviewers && attr.reviewers.length > 0)
-        ? attr.reviewers.join(', ')
-        : 'CAISc 2026 Program Committee';
+
     const div = el('div', 'attribution-block');
-    div.innerHTML = `
-        <div class="attribution-row">
-            <span class="attribution-label">Reviewed by</span>
-            <span class="attribution-names">${esc(reviewers)}</span>
-        </div>`;
+    const people = [];
+    if (attr.authors) attr.authors.forEach(a => people.push(a));
+    if (attr.reviewers) attr.reviewers.forEach(r => people.push(r));
+    if (people.length === 0) people.push('CAISc 2026 Program Committee');
+
+    const cards = people.map(p => renderPersonCard(p)).join('');
+    div.innerHTML = `<div class="attribution-row">
+        <span class="tag tag--domain">Curated and Reviewed By</span>
+        <div class="attribution-people">${cards}</div>
+    </div>`;
     return div;
 }
 
 function renderSubmitCTA() {
     const div = el('div', 'submit-cta');
     div.innerHTML = `
-        <span class="btn btn--disabled">
+        <a href="https://openreview.net/group?id=CAISc/2026" class="btn btn--secondary" target="_blank" rel="noopener">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right:5px">
-                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
             </svg>
-            Submit (opens April 15, 2026)
-        </span>`;
+            Submit on OpenReview
+        </a>`;
     return div;
 }
 
@@ -603,6 +629,313 @@ function renderGameOfLifeWidget() {
     return wrap;
 }
 
+/* ---------- Sorting Network Playground ---------- */
+
+function renderSortingNetworkWidget() {
+    const KNOWN_OPTIMAL = {
+        4: [[1,2],[3,4],[1,3],[2,4],[2,3]],
+        5: [[1,2],[4,5],[1,4],[2,5],[2,4],[3,5],[1,3],[2,3],[4,5]],
+        6: [[1,2],[3,4],[5,6],[1,3],[2,5],[4,6],[1,4],[2,3],[5,6],[2,4],[3,5],[3,4]]
+    };
+
+    let n = 4;
+    let comps = KNOWN_OPTIMAL[4].map(c => [...c]);
+    let animating = false;
+    let animTimer = null;
+
+    // Layout constants
+    const PAD_L = 30, PAD_R = 30, PAD_T = 30, PAD_B = 40;
+    const WIRE_GAP = 30, COMP_GAP = 28, DOT_R = 4;
+
+    function layers(network, nw) {
+        const used = new Array(nw + 1).fill(0);
+        const result = [];
+        for (const [a, b] of network) {
+            const layer = Math.max(used[a], used[b]);
+            result.push(layer);
+            used[a] = layer + 1;
+            used[b] = layer + 1;
+        }
+        return result;
+    }
+
+    function canvasSize() {
+        const ly = layers(comps, n);
+        const depth = ly.length > 0 ? Math.max(...ly) + 1 : 1;
+        const w = PAD_L + Math.max(depth, 4) * COMP_GAP + PAD_R + 40;
+        const h = PAD_T + (n - 1) * WIRE_GAP + PAD_B;
+        return { w, h, depth };
+    }
+
+    function networkRightEdge(layerAssignments) {
+        const depth = layerAssignments.length > 0 ? Math.max(...layerAssignments) + 1 : 1;
+        const displayDepth = Math.max(depth, 4);
+        return PAD_L + displayDepth * COMP_GAP + 20;
+    }
+
+    function getColor(v) {
+        return getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+    }
+
+    function draw(highlight) {
+        const { w, h } = canvasSize();
+        canvas.width = w; canvas.height = h;
+        const ctx = canvas.getContext('2d');
+
+        const wire = getColor('--text-tertiary') || '#888';
+        const comp = getColor('--accent') || '#6c63ff';
+        const bg = getColor('--bg-primary') || '#fff';
+        const swapColor = '#e74c3c';
+        const noSwapColor = '#2ecc71';
+
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, w, h);
+
+        // Wire labels
+        ctx.fillStyle = getColor('--text-secondary') || '#aaa';
+        ctx.font = '11px Inter, system-ui, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        for (let i = 1; i <= n; i++) {
+            const y = PAD_T + (i - 1) * WIRE_GAP;
+            ctx.fillText(String(i), PAD_L - 8, y);
+        }
+
+        // Wires
+        const ly = layers(comps, n);
+        const rightEdge = networkRightEdge(ly);
+        ctx.strokeStyle = wire;
+        ctx.lineWidth = 1.5;
+        for (let i = 1; i <= n; i++) {
+            const y = PAD_T + (i - 1) * WIRE_GAP;
+            ctx.beginPath(); ctx.moveTo(PAD_L, y); ctx.lineTo(rightEdge, y); ctx.stroke();
+        }
+
+        // Comparators
+        for (let ci = 0; ci < comps.length; ci++) {
+            const [a, b] = comps[ci];
+            const layer = ly[ci];
+            const x = PAD_L + (layer + 0.5) * COMP_GAP;
+            const ya = PAD_T + (a - 1) * WIRE_GAP;
+            const yb = PAD_T + (b - 1) * WIRE_GAP;
+
+            let color = comp;
+            if (highlight && highlight.idx === ci) {
+                color = highlight.swapped ? swapColor : noSwapColor;
+            }
+
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2.5;
+            ctx.beginPath(); ctx.moveTo(x, ya); ctx.lineTo(x, yb); ctx.stroke();
+
+            ctx.fillStyle = color;
+            ctx.beginPath(); ctx.arc(x, ya, DOT_R, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.arc(x, yb, DOT_R, 0, Math.PI * 2); ctx.fill();
+        }
+
+        // Draw animated values on wires if present
+        if (highlight && highlight.values) {
+            ctx.font = 'bold 11px JetBrains Mono, monospace';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            const x = highlight.idx >= 0
+                ? PAD_L + (ly[highlight.idx] + 1) * COMP_GAP + 8
+                : PAD_L - 2;
+            for (let i = 0; i < highlight.values.length; i++) {
+                const y = PAD_T + i * WIRE_GAP;
+                ctx.fillStyle = highlight.values[i] ? (getColor('--accent') || '#6c63ff') : (getColor('--text-tertiary') || '#888');
+                ctx.fillText(String(highlight.values[i]), x, y);
+            }
+        }
+    }
+
+    function verify() {
+        const total = 1 << n;
+        let pass = 0;
+        for (let mask = 0; mask < total; mask++) {
+            const arr = [];
+            for (let i = 0; i < n; i++) arr.push((mask >> i) & 1);
+            for (const [a, b] of comps) {
+                const ai = a - 1, bi = b - 1;
+                if (arr[ai] > arr[bi]) { const t = arr[ai]; arr[ai] = arr[bi]; arr[bi] = t; }
+            }
+            let sorted = true;
+            for (let i = 0; i + 1 < n; i++) { if (arr[i] > arr[i + 1]) { sorted = false; break; } }
+            if (sorted) pass++;
+        }
+        return { pass, total };
+    }
+
+    function updateStatus() {
+        const { pass, total } = verify();
+        const valid = pass === total;
+        status.innerHTML = `<strong>${comps.length}</strong> comparators, depth <strong>${comps.length > 0 ? Math.max(...layers(comps, n)) + 1 : 0}</strong> | Sorts <strong>${pass}/${total}</strong> inputs${valid ? ' <span style="color:#2ecc71">&#10003; Valid network!</span>' : ''}`;
+    }
+
+    // Click handling: add/remove comparators
+    function handleCanvasClick(e) {
+        if (animating) return;
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+
+        const ly = layers(comps, n);
+        const rightEdge = networkRightEdge(ly);
+        // Check if clicking on an existing comparator to remove it
+        for (let ci = 0; ci < comps.length; ci++) {
+            const [a, b] = comps[ci];
+            const x = PAD_L + (ly[ci] + 0.5) * COMP_GAP;
+            const ya = PAD_T + (a - 1) * WIRE_GAP;
+            const yb = PAD_T + (b - 1) * WIRE_GAP;
+            if (Math.abs(mx - x) < 8 && my >= Math.min(ya, yb) - 6 && my <= Math.max(ya, yb) + 6) {
+                comps.splice(ci, 1);
+                draw(); updateStatus();
+                return;
+            }
+        }
+
+        // Otherwise: find two closest wires to add a comparator at the end
+        const wireIdx = Math.round((my - PAD_T) / WIRE_GAP);
+        if (wireIdx < 0 || wireIdx >= n) return;
+
+        // Store first wire
+        if (canvas._firstWire == null) {
+            canvas._firstWire = wireIdx + 1;
+            canvas.style.cursor = 'pointer';
+            // Highlight the selected wire
+            draw();
+            const ctx = canvas.getContext('2d');
+            const y = PAD_T + wireIdx * WIRE_GAP;
+            ctx.strokeStyle = getColor('--accent') || '#6c63ff';
+            ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(PAD_L, y); ctx.lineTo(rightEdge, y); ctx.stroke();
+            return;
+        }
+
+        const second = wireIdx + 1;
+        const first = canvas._firstWire;
+        canvas._firstWire = null;
+        canvas.style.cursor = 'crosshair';
+
+        if (first !== second) {
+            const a = Math.min(first, second), b = Math.max(first, second);
+            comps.push([a, b]);
+        }
+        draw(); updateStatus();
+    }
+
+    function animateInput() {
+        if (animating) { stopAnim(); return; }
+        // Pick a random input
+        const mask = Math.floor(Math.random() * (1 << n));
+        const vals = [];
+        for (let i = 0; i < n; i++) vals.push((mask >> i) & 1);
+
+        animating = true;
+        animBtn.textContent = 'Stop';
+        animBtn.classList.add('gol-btn--active');
+        let step = -1;
+
+        function tick() {
+            if (step >= comps.length) {
+                // Final state
+                let sorted = true;
+                for (let i = 0; i + 1 < n; i++) { if (vals[i] > vals[i + 1]) { sorted = false; break; } }
+                status.innerHTML = `Result: [${vals.join(', ')}] ${sorted ? '<span style="color:#2ecc71">Sorted!</span>' : '<span style="color:#e74c3c">Not sorted</span>'}`;
+                stopAnim();
+                return;
+            }
+
+            if (step >= 0) {
+                const [a, b] = comps[step];
+                const ai = a - 1, bi = b - 1;
+                const swapped = vals[ai] > vals[bi];
+                if (swapped) { const t = vals[ai]; vals[ai] = vals[bi]; vals[bi] = t; }
+                draw({ idx: step, swapped, values: vals });
+            } else {
+                draw({ idx: -1, swapped: false, values: vals });
+            }
+            step++;
+            animTimer = setTimeout(tick, 400);
+        }
+        tick();
+    }
+
+    function stopAnim() {
+        animating = false;
+        clearTimeout(animTimer);
+        animBtn.textContent = 'Animate';
+        animBtn.classList.remove('gol-btn--active');
+    }
+
+    // Build DOM
+    const wrap = el('div', 'section-block warmup-block sn-widget');
+    const heading = el('h3', null, 'Try It: Sorting Network');
+    const desc = el('p', null);
+    desc.style.cssText = 'font-size:0.9rem;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-4)';
+    desc.innerHTML = 'A sorting network is a fixed sequence of compare-and-swap operations (vertical bars) connecting horizontal wires. Each comparator looks at two wires and swaps their values if they are out of order. A network is valid when it correctly sorts <em>every</em> possible input. The challenge is to find the fewest comparators that still guarantee correctness for all 2<sup>n</sup> inputs.'
+        + '<br><br>Click two wires to add a comparator. Click an existing one to remove it. <strong>Animate</strong> sends a random binary input through the network step by step (green = no swap needed, red = swap). <strong>Verify</strong> tests all 2<sup>n</sup> inputs and reports how many are sorted correctly.';
+
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'border:1px solid var(--border);border-radius:6px;cursor:crosshair;display:block;margin:0 auto var(--space-4)';
+    canvas.addEventListener('click', handleCanvasClick);
+
+    // n selector
+    const nSel = el('div', 'sn-n-selector');
+    nSel.style.cssText = 'display:flex;gap:8px;justify-content:center;align-items:center;margin-bottom:var(--space-4)';
+    const nLabel = el('span', null, 'Wires:');
+    nLabel.style.cssText = 'font-size:var(--text-sm);color:var(--text-secondary);font-weight:500';
+    nSel.appendChild(nLabel);
+    for (const nVal of [4, 5, 6]) {
+        const btn = el('button', 'gol-btn', String(nVal));
+        if (nVal === n) btn.classList.add('gol-btn--active');
+        btn.addEventListener('click', () => {
+            if (animating) stopAnim();
+            n = nVal;
+            comps = KNOWN_OPTIMAL[nVal].map(c => [...c]);
+            nSel.querySelectorAll('button').forEach(b => b.classList.remove('gol-btn--active'));
+            btn.classList.add('gol-btn--active');
+            canvas._firstWire = null;
+            draw(); updateStatus();
+        });
+        nSel.appendChild(btn);
+    }
+
+    const controls = el('div', 'gol-controls');
+    const animBtn = el('button', 'gol-btn', 'Animate');
+    const verifyBtn = el('button', 'gol-btn', 'Verify');
+    const resetBtn = el('button', 'gol-btn', 'Reset');
+    const clearBtn = el('button', 'gol-btn', 'Clear');
+
+    animBtn.addEventListener('click', animateInput);
+    verifyBtn.addEventListener('click', () => { if (!animating) updateStatus(); });
+    resetBtn.addEventListener('click', () => {
+        if (animating) stopAnim();
+        comps = KNOWN_OPTIMAL[n].map(c => [...c]);
+        canvas._firstWire = null;
+        draw(); updateStatus();
+    });
+    clearBtn.addEventListener('click', () => {
+        if (animating) stopAnim();
+        comps = [];
+        canvas._firstWire = null;
+        draw(); updateStatus();
+    });
+
+    controls.append(animBtn, verifyBtn, resetBtn, clearBtn);
+
+    const status = el('div', 'gol-status');
+
+    wrap.append(heading, desc, nSel, canvas, controls, status);
+
+    // Theme change redraw
+    const obs = new MutationObserver(() => { if (!animating) draw(); });
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    setTimeout(() => { draw(); updateStatus(); }, 0);
+    return wrap;
+}
+
 function renderSubmissionBlock(data) {
     const div = el('div', 'section-block');
     div.innerHTML = `
@@ -666,7 +999,10 @@ function renderApproachSection(data) {
             <div style="margin-top:var(--space-6)">
                 <h4 style="margin-bottom:var(--space-3);font-size:var(--text-base)">AI Agent Instructions</h4>
                 <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:var(--space-3);line-height:1.5">
-                    Click the button below to get a complete prompt you can paste into your AI agent. It includes the problem description, constraints, references, and task instructions.
+                    Click the button below to get a complete prompt you can paste into your AI agent. It includes the problem description, constraints, references, and task instructions.${
+                    ['hadamard-maximal-determinant', 'matrix-multiplication-tensor-rank', 'hp-protein-folding'].includes(data.id)
+                    ? ' <strong>Note:</strong> This prompt targets a specific instance. Refer to the leaderboard above to try a different one.'
+                    : ''}
                 </p>
                 <button class="copy-agent-btn">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right:5px">
@@ -702,9 +1038,11 @@ function renderReferences(refs) {
 function renderCiteBlock(data) {
     const attr = data.attribution;
     if (!attr) return null;
-    const authors = attr.authors ? attr.authors.join(', ') : 'CAISc 2026';
+    const authors = attr.authors
+        ? attr.authors.map(a => typeof a === 'string' ? a : a.name).join(', ')
+        : 'CAISc 2026';
     const reviewers = (attr.reviewers && attr.reviewers.length > 0)
-        ? attr.reviewers.join(', ')
+        ? attr.reviewers.map(r => typeof r === 'string' ? r : r.name).join(', ')
         : 'CAISc 2026 Program Committee';
     const year = '2026';
     const title = data.title;
@@ -712,7 +1050,7 @@ function renderCiteBlock(data) {
     const div = el('div', 'cite-block');
     div.innerHTML = `
         <h3>Cite This Problem</h3>
-        <div class="code-block cite-bibtex">Curated by ${esc(authors)} (${year}). ${esc(title)}. Reviewed by ${esc(reviewers)}. CAISc 2026 Verifiable Problems Track. https://caisc2026.github.io/problems/?problem=${esc(data.id)}</div>`;
+        <div class="code-block cite-bibtex">Curated by ${esc(authors)} (${year}). ${esc(title)}. Reviewed by ${esc(reviewers)}. CAISc 2026 Verifiable Problems Track. https://caisc2026.github.io/verifiable-problems/?problem=${esc(data.id)}</div>`;
     return div;
 }
 
@@ -852,6 +1190,12 @@ async function renderDetail(container, meta, showBack) {
         if (golWidget) problemCard.appendChild(golWidget);
     }
 
+    // Interactive Sorting Network widget (sorting-networks only)
+    // if (data.id === 'sorting-networks') {
+    //     const snWidget = renderSortingNetworkWidget();
+    //     if (snWidget) problemCard.appendChild(snWidget);
+    // }
+
     // Collapsible "Additional Context" with origin + video
     const videoEl = renderVideo(data.id);
     if (data.origin || videoEl) {
@@ -910,12 +1254,12 @@ async function renderDetail(container, meta, showBack) {
     // Submit button at bottom of this section
     const submitBtnWrap = el('div', 'submit-cta-section');
     submitBtnWrap.innerHTML = `
-        <span class="btn btn--disabled">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+        <a href="https://openreview.net/group?id=CAISc/2026" class="btn btn--secondary" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="margin-right:5px">
+                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
             </svg>
-            Submit (opens April 15, 2026)
-        </span>`;
+            Submit on OpenReview
+        </a>`;
     submitCard.appendChild(submitBtnWrap);
 
     section.appendChild(submitCard);
@@ -977,7 +1321,7 @@ async function renderDetail(container, meta, showBack) {
 
 async function renderIndex(container) {
     let index;
-    try { index = await fetchJSON('index.json'); }
+    try { index = await fetchJSON(getIndexPath()); }
     catch (e) { showError(container, e.message); return; }
 
     // Show hero on index view
@@ -1009,7 +1353,7 @@ async function init() {
     const problemId = params.get('problem');
 
     let index;
-    try { index = await fetchJSON('index.json'); }
+    try { index = await fetchJSON(getIndexPath()); }
     catch (e) { showError(container, e.message); return; }
 
     if (problemId) {

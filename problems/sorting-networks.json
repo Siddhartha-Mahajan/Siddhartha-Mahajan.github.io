@@ -4,31 +4,39 @@
   "domain": "Algorithms - Circuit Design",
 
   "attribution": {
-    "authors": ["Siddhartha Mahajan (Lossfunk)"],
+    "authors": [
+      {
+        "name": "Siddhartha Mahajan",
+        "institution": "Lossfunk",
+        "photo": "../assets/steering_committee_pictures/siddhartha_m_pic.jpeg",
+        "linkedin": "https://www.linkedin.com/in/siddharthamahajan03/",
+        "scholar": "https://scholar.google.com/citations?user=G7iQK4sAAAAJ&hl=en"
+      }
+    ],
     "reviewers": []
   },
 
-  "origin": "Sorting networks are hardware-friendly sorting algorithms: a fixed sequence of compare-and-swap operations on wires that sorts any input. Unlike general-purpose sorting algorithms, the sequence of comparisons does not depend on the data. Finding the smallest network (fewest comparators) that sorts n inputs is a fundamental open problem in computer science, dating back to the 1960s. Knuth devoted an entire section of The Art of Computer Programming to it. For n <= 12, optimal sizes are known via exhaustive SAT-based proofs. For n = 13-16, recent SAT work has narrowed gaps. For n = 17, the best known network uses 71 comparators, with a lower bound of 63. This gap has remained open for years despite significant computational effort. Any improvement would be a publishable result in algorithms and combinatorial optimization.",
+  "origin": "Sorting networks are fixed sequences of compare-and-swap operations that sort any input regardless of the data. Finding the smallest network (fewest comparators) for n inputs is a long-standing open problem going back to the 1960s. Knuth devoted an entire section of The Art of Computer Programming to it. For n up to 12, optimal sizes have been proven by SAT solvers and formal verification. For n = 13 through 20 and beyond, gaps remain between the best known constructions and the proven lower bounds. Improving any of these records, even by a single comparator, would be a publishable result.",
 
-  "instance": "A sorting network on n = 17 wires is an ordered list of comparator pairs (i, j) with 1 <= i < j <= 17. Each comparator examines wires i and j and swaps their values if they are out of order. A network is valid if, for every possible input permutation, the output is sorted. By the 0-1 principle (Knuth, 1973), it suffices to check all 2^17 = 131,072 binary input strings: if a network sorts all binary inputs, it sorts all inputs. Your challenge: find a valid sorting network for 17 inputs that uses fewer than 71 comparators (the current best known size), or fewer than 10 layers of parallel comparators (the current best known depth).",
+  "instance": "A sorting network on n wires is an ordered list of comparator pairs (i, j) with 1 <= i < j <= n. Each comparator examines wires i and j and swaps their values if out of order. A network is valid if it correctly sorts every possible input. By the 0-1 principle (Knuth, 1973), it suffices to check all 2^n binary input strings. For any n >= 13 where the best known size exceeds the proven lower bound, find a valid sorting network that uses fewer comparators than the current record. Depth is tracked as a secondary metric. See the leaderboard below for specific gaps at each n.",
 
   "scoring": {
-    "summary": "Primary metric is the number of comparators (size). Secondary metric is the number of parallel layers (depth). Both should be minimized.",
+    "summary": "Primary metric is comparator count (size). Lower is better. Depth is a secondary metric for tie-breaking and Pareto tracking.",
     "metrics": [
       {
         "name": "Comparator count (size)",
-        "description": "The total number of comparator pairs in the network. This is the primary score. Lower is better. The current record for n=17 is 71."
+        "description": "Total number of comparator pairs in the network. Lower is better. Beating the current best known size at any n is the goal."
       },
       {
         "name": "Depth",
-        "description": "The number of parallel layers when non-conflicting comparators are grouped. Lower depth means faster parallel execution. The current best for n=17 is 10."
+        "description": "Number of parallel layers when non-conflicting comparators are grouped. Lower depth means faster parallel execution. At some n values, optimal depth is known even when optimal size is not."
       },
       {
         "name": "Correctness fraction",
-        "description": "For partial-credit: the fraction of the 131,072 binary inputs that the network sorts correctly. Must be 100% for a valid submission, but partial scores track progress."
+        "description": "Fraction of the 2^n binary inputs the network sorts correctly. Must be 100% for a valid submission. Partial scores track progress."
       }
     ],
-    "note": "Networks that sort all inputs are the primary target. Even a 70-comparator valid network would beat a record that has stood for years."
+    "note": "Any valid network that beats the current best known size at any n >= 13 would be a new record."
   },
 
   "warmup": {
@@ -38,52 +46,54 @@
     "n": 4
   },
 
-  "submissionExample": "{\n  \"n\": 17,\n  \"comparators\": [\n    [1, 2], [3, 4], [5, 6], [7, 8],\n    ...\n  ]\n}",
+  "submissionExample": "{\n  \"n\": 16,\n  \"comparators\": [\n    [1, 2], [3, 4], [5, 6], [7, 8],\n    ...\n  ]\n}",
 
-  "verification": "For each submission: (1) Check that all comparator pairs (i,j) satisfy 1 <= i < j <= 17, (2) Simulate the network on all 2^17 = 131,072 binary input strings using the 0-1 principle, (3) For each input, apply comparators in order (swap if out of order) and check the output is non-decreasing. If all inputs produce sorted output, the network is valid. (4) Count comparators for size, compute greedy layering for depth. Runs in under 1 second on a single CPU core.",
+  "verification": "For each submission: (1) Check that all comparator pairs (i,j) satisfy 1 <= i < j <= n, (2) Simulate the network on all 2^n binary input strings using the 0-1 principle, (3) For each input, apply comparators in order (swap if out of order) and check the output is non-decreasing. If all inputs produce sorted output, the network is valid. (4) Count comparators for size, compute greedy layering for depth. Full verification runs in seconds for n up to 20.",
 
   "bounds": [
-    { "label": "Lower bound", "name": "S(17) >= 60", "formula": "From the Van Voorhis recurrence applied to S(12)=39. The gap between 60 and 71 is wide open." },
-    { "label": "Upper bound", "name": "S(17) <= 71", "formula": "Best known construction from Valsalam-Miikkulainen and later optimizations. Any network with 70 or fewer comparators would beat this record." },
     { "label": "0-1 principle", "name": "Binary test is sufficient", "formula": "A network sorts all inputs over any totally ordered set if and only if it sorts all 2^n binary strings (Knuth, TAOCP Vol. 3, 1973)." },
-    { "label": "Depth", "name": "D(17) = 10 (proven optimal)", "formula": "Ehlers and Muller (2015, arXiv:1501.06946) proved no 9-layer network for 17 inputs exists. A depth-10 network was found in 2014 (arXiv:1410.2736). Depth is settled; size is the open question." },
-    { "label": "Known optima", "name": "S(n) known for n <= 12", "formula": "Proven via SAT and formal verification: S(1)=0, S(2)=1, S(3)=3, S(4)=5, S(5)=9, S(6)=12, S(7)=16, S(8)=19. S(9)=25, S(10)=29 (Codish et al., 2014). S(11)=35, S(12)=39 (Harder, 2020, verified in Isabelle/HOL)." }
+    { "label": "Known optima", "name": "S(n) proven for n <= 12", "formula": "S(1)=0, S(2)=1, S(3)=3, S(4)=5, S(5)=9, S(6)=12, S(7)=16, S(8)=19, S(9)=25, S(10)=29 (Codish et al., 2014), S(11)=35, S(12)=39 (Harder, 2020, verified in Isabelle/HOL)." },
+    { "label": "Open gaps", "name": "n = 13 through 20+", "formula": "For each of these sizes, the best known construction exceeds the proven lower bound. The leaderboard shows the current gap at each n. Closing any gap by even one comparator is a new result." },
+    { "label": "Depth bounds", "name": "Optimal depth known for some n", "formula": "Ehlers and Muller proved optimal depths for several values of n (e.g., D(17)=10). At those sizes, depth is settled and size is the remaining open question." }
   ],
 
   "leaderboard": {
-    "note": "Best known sorting network sizes and depths. Sources: Dobbelaere's tables, Codish et al., Ehlers & Muller.",
+    "note": "Best known size-depth trade-offs from Dobbelaere's maintained table (accessed 2026-04-20; table update 2025-11-07), with foundational proofs from Codish et al., Bundala et al., Ehlers & Muller, and Harder.",
     "rows": [
       { "n": 4,  "size": 5,  "depth": 3,  "optimal_size": true,  "optimal_depth": true,  "note": "Floyd & Knuth, 1960s" },
       { "n": 8,  "size": 19, "depth": 6,  "optimal_size": true,  "optimal_depth": true,  "note": "Floyd & Knuth, 1960s" },
-      { "n": 10, "size": 29, "depth": 7,  "optimal_size": true,  "optimal_depth": true,  "note": "Codish et al., 2014" },
-      { "n": 12, "size": 39, "depth": 8,  "optimal_size": true,  "optimal_depth": true,  "note": "Harder, 2020 (Isabelle/HOL)" },
-      { "n": 13, "size": 45, "depth": 9,  "optimal_size": false, "optimal_depth": true,  "note": "Size bounds: 43-45" },
-      { "n": 14, "size": 51, "depth": 9,  "optimal_size": false, "optimal_depth": true,  "note": "Size bounds: 47-51" },
-      { "n": 15, "size": 56, "depth": 9,  "optimal_size": false, "optimal_depth": true,  "note": "Size bounds: 51-56" },
-      { "n": 16, "size": 60, "depth": 9,  "optimal_size": false, "optimal_depth": true,  "note": "Size bounds: 55-60" },
-      { "n": 17, "size": 71, "depth": 10, "optimal_size": false, "optimal_depth": true,  "note": "TARGET: Size bounds 60-71" },
-      { "n": 18, "size": 77, "depth": 11, "optimal_size": false, "optimal_depth": false, "note": "Size bounds: 68-77" },
-      { "n": 20, "size": 91, "depth": 11, "optimal_size": false, "optimal_depth": false, "note": "Size bounds: 78-91" }
+      { "n": 10, "size": 29, "depth": 8,  "optimal_size": true,  "optimal_depth": false, "note": "Size-optimal pair; depth-optimal pair is (31,7)." },
+      { "n": 12, "size": 39, "depth": 9,  "optimal_size": true,  "optimal_depth": false, "note": "Size-optimal pair; depth-optimal pair is (40,8)." },
+      { "n": 13, "size": 45, "depth": 10, "optimal_size": false, "optimal_depth": false, "note": "Size bounds: 44-45; depth-optimal pair is (46,9)." },
+      { "n": 14, "size": 51, "depth": 10, "optimal_size": false, "optimal_depth": false, "note": "Size bounds: 48-51; depth-optimal pair is (52,9)." },
+      { "n": 15, "size": 56, "depth": 10, "optimal_size": false, "optimal_depth": false, "note": "Size bounds: 53-56; depth-optimal pair is (57,9)." },
+      { "n": 16, "size": 60, "depth": 10, "optimal_size": false, "optimal_depth": false, "note": "Size bounds: 57-60; depth-optimal pair is (61,9)." },
+      { "n": 17, "size": 71, "depth": 12, "optimal_size": false, "optimal_depth": false, "note": "Size bounds: 63-71; depth-optimal pair is (74,10)." },
+      { "n": 18, "size": 77, "depth": 12, "optimal_size": false, "optimal_depth": false, "note": "Size bounds: 68-77; depth-optimal pair is (78,11)." },
+      { "n": 20, "size": 91, "depth": 12, "optimal_size": false, "optimal_depth": false, "note": "Size bounds: 78-91; depth-optimal pair is (93,11)." }
     ]
   },
 
   "suggestedApproach": [
-    { "title": "Verify the 4-input warm-up", "body": "Write code to simulate the 5-comparator network on all 16 binary inputs. Confirm it sorts every one. This builds the core verification loop you will need for n=17." },
-    { "title": "SAT encoding", "body": "Encode the sorting network problem as a Boolean satisfiability instance: variables for which comparators to include, clauses enforcing that all binary inputs are sorted. Use symmetry-breaking constraints to reduce the search space." },
-    { "title": "Start from known good networks", "body": "Download the best known 71-comparator network from Dobbelaere's tables. Try removing one comparator at a time and see if the result still sorts all inputs. This rarely works but builds intuition for which comparators are essential." },
-    { "title": "Evolutionary search with local optimization", "body": "Generate random networks slightly larger than needed, verify them, then try to remove redundant comparators. Crossover and mutation over network structures. Valsalam and Miikkulainen used this approach successfully." },
-    { "title": "Prefix optimization", "body": "Fix the first few layers (which are often well-understood) and search only for the remaining layers. Ehlers and Muller used this strategy to find depth-10 networks for n=17." }
+    { "title": "Verify the 4-input warm-up", "body": "Write code to simulate the 5-comparator network on all 16 binary inputs. Confirm it sorts every one. This gives you the core verification loop for any n." },
+    { "title": "Pick a target n", "body": "Check the leaderboard for where the gap between the best known size and lower bound is largest. Larger gaps mean more room for improvement. n = 13-16 are more computationally tractable; n = 17-20 have bigger gaps but harder search spaces." },
+    { "title": "SAT encoding", "body": "Encode the problem as a Boolean satisfiability instance with variables for which comparators to include and clauses enforcing all binary inputs are sorted. Symmetry-breaking constraints reduce the search space substantially." },
+    { "title": "Start from known good networks", "body": "Download the current best network for your target n from Dobbelaere's tables. Try removing one comparator at a time and checking if the result still sorts all inputs. This rarely works directly but builds intuition for which comparators are essential." },
+    { "title": "Evolutionary search with local optimization", "body": "Generate random networks slightly larger than needed, verify them, then try to remove redundant comparators. Valsalam and Miikkulainen used crossover and mutation over network structures to find good results." },
+    { "title": "Prefix optimization", "body": "Fix the first few layers (which tend to be well-understood) and search only over the remaining layers. Ehlers and Muller used this to find depth-optimal networks." }
   ],
 
-  "agentPrompt": "I want you to find a sorting network for 17 inputs that uses fewer than 71 comparators. A sorting network is an ordered list of comparator pairs (i,j) where each comparator swaps wires i and j if they are out of order. By the 0-1 principle, you only need to verify that the network sorts all 2^17 = 131,072 binary strings. Strategy: Start with the known best 71-comparator network and try to optimize it by removing or rearranging comparators. Alternatively, use a SAT-based approach: encode the problem as Boolean constraints and search for solutions with fewer comparators. Report the comparator list as a JSON array of [i,j] pairs (1-indexed).",
+  "agentPrompt": "Find a sorting network that beats a current record. A sorting network is an ordered list of comparator pairs (i,j) where each comparator swaps wires i and j if out of order. By the 0-1 principle, you only need to verify all 2^n binary strings. Pick any n from 13 to 20 where the best known size has not been proven optimal (see the leaderboard for current gaps). Start from the best known network for your chosen n (available at Dobbelaere's table) and try to remove or rearrange comparators. A SAT-based approach also works well: encode the constraints and search for solutions with fewer comparators. Report the result as JSON with fields n and comparators (array of [i,j] pairs, 1-indexed).",
 
   "references": [
     { "text": "Knuth, D. E. (1973). The Art of Computer Programming, Volume 3: Sorting and Searching. Addison-Wesley. Section 5.3.4: Networks for Sorting.", "url": null },
-    { "text": "Dobbelaere, B. List of sorting networks (maintained online). Smallest and fastest sorting networks for a given number of inputs.", "url": "https://bertdobbelaere.github.io/sorting_networks.html" },
+    { "text": "Dobbelaere, B. List of sorting networks (maintained online). Smallest and fastest sorting networks for a given number of inputs. Accessed 2026-04-20; page update 2025-11-07.", "url": "https://bertdobbelaere.github.io/sorting_networks.html" },
     { "text": "Ehlers, T. & Muller, M. (2014). Faster Sorting Networks for 17, 19 and 20 Inputs. arXiv:1410.2736.", "url": "https://arxiv.org/abs/1410.2736" },
-    { "text": "Valsalam, V. & Miikkulainen, R. (2013). Utilizing Symmetry and Evolutionary Search to Minimize Sorting Networks. JMLR 14, 303-331.", "url": "https://www.cs.utexas.edu/~ai-lab/pubs/valsalam.utcstr11.pdf" },
-    { "text": "Codish, M., Cruz-Filipe, L., Frank, M. & Schneider-Kamp, P. (2016). Sorting networks: to the end and back again. JCSS, 91, 2-17.", "url": null },
-    { "text": "Bundala, D. & Zavodny, J. (2014). Optimal Sorting Networks. Language and Automata Theory and Applications (LATA), 236-247.", "url": null },
+    { "text": "Ehlers, T. & Muller, M. (2015). New Bounds on Optimal Sorting Networks. arXiv:1501.06946.", "url": "https://arxiv.org/abs/1501.06946" },
+    { "text": "Valsalam, V. & Miikkulainen, R. (2013). Utilizing Symmetry and Evolutionary Search to Minimize Sorting Networks. Journal of Machine Learning Research, 14, 303-331.", "url": "https://jmlr.org/papers/v14/valsalam13a.html" },
+    { "text": "Codish, M., Cruz-Filipe, L., Frank, M. & Schneider-Kamp, P. (2019). Sorting networks: To the end and back again. Journal of Computer and System Sciences, 104, 184-201.", "url": "https://doi.org/10.1016/j.jcss.2016.04.004" },
+    { "text": "Bundala, D. & Zavodny, J. (2014). Optimal Sorting Networks. In Language and Automata Theory and Applications (LATA), 236-247.", "url": "https://doi.org/10.1007/978-3-319-04921-2_19" },
+    { "text": "Bundala, D., Codish, M., Cruz-Filipe, L., Schneider-Kamp, P. & Zavodny, J. (2017). Optimal-depth sorting networks. Journal of Computer and System Sciences, 83(2), 342-353.", "url": "https://doi.org/10.1016/j.jcss.2016.09.004" },
     { "text": "Harder, J. (2020). An Answer to the Bose-Nelson Sorting Problem for 11 and 12 Channels. arXiv:2012.04400.", "url": "https://arxiv.org/abs/2012.04400" }
   ]
 }
