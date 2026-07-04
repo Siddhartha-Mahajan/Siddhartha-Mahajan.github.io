@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="450" viewBox="0 0 660 450" role="img" aria-labelledby="title desc">
+<title id="title">n=7: OEIS exact twelve-circle construction</title>
+<desc id="desc">Exact coordinate construction from Martin Fuller's OEIS illustration for A003829, redrawn with the twelve unit circles visible.</desc>
+<rect width="660" height="450" fill="#fbf8f1"/>
+<text x="24" y="32" font-family="Georgia,serif" font-size="22" fill="#252321">n=7: exact twelve-circle construction</text>
+<text x="24" y="55" font-family="system-ui,sans-serif" font-size="12" fill="#6f6a62">coordinates from the OEIS/Martin Fuller illustration of A003829</text>
+<rect x="24" y="78" width="612" height="294" fill="#fffdf8" stroke="#d9d0c2"/>
+<defs>
+  <clipPath id="plotclip"><rect x="24" y="78" width="612" height="294"/></clipPath>
+  <g id="point"><circle r="0.052" fill="#252321" stroke="#fbf8f1" stroke-width="0.016"/></g>
+  <g id="center">
+    <circle r="0.038" fill="#fffdf8" stroke="#2f69b2" stroke-width="0.016"/>
+    <path d="M -0.06,0 L 0.06,0 M 0,-0.06 L 0,0.06" stroke="#2f69b2" stroke-width="0.012"/>
+  </g>
+</defs>
+<g clip-path="url(#plotclip)">
+<g transform="translate(286.2 225) scale(72 -72)" fill="none">
+  <path d="M -1,0 L 1.8,0 M 0,-1 L 0,1" stroke="#c7beb1" stroke-width="0.018"/>
+  <g stroke="#8c6b2f" stroke-width="0.018" opacity="0.56">
+    <circle cx="-0.3333333" cy="0.9428090" r="1"/>
+    <circle cx="-0.3333333" cy="-0.9428090" r="1"/>
+    <circle cx="0.3333333" cy="0.9428090" r="1"/>
+    <circle cx="0.3333333" cy="-0.9428090" r="1"/>
+    <circle cx="0.2152504" cy="0.4714045" r="1"/>
+    <circle cx="0.2152504" cy="-0.4714045" r="1"/>
+    <circle cx="0.8819171" cy="0.4714045" r="1"/>
+    <circle cx="0.8819171" cy="-0.4714045" r="1"/>
+    <circle cx="1.5485838" cy="0.4714045" r="1"/>
+    <circle cx="1.5485838" cy="-0.4714045" r="1"/>
+    <circle cx="-0.3333333" cy="0" r="1"/>
+    <circle cx="0.3333333" cy="0" r="1"/>
+  </g>
+  <g>
+    <use href="#center" transform="translate(-0.3333333 0.9428090)"/>
+    <use href="#center" transform="translate(-0.3333333 -0.9428090)"/>
+    <use href="#center" transform="translate(0.3333333 0.9428090)"/>
+    <use href="#center" transform="translate(0.3333333 -0.9428090)"/>
+    <use href="#center" transform="translate(0.2152504 0.4714045)"/>
+    <use href="#center" transform="translate(0.2152504 -0.4714045)"/>
+    <use href="#center" transform="translate(0.8819171 0.4714045)"/>
+    <use href="#center" transform="translate(0.8819171 -0.4714045)"/>
+    <use href="#center" transform="translate(1.5485838 0.4714045)"/>
+    <use href="#center" transform="translate(1.5485838 -0.4714045)"/>
+    <use href="#center" transform="translate(-0.3333333 0)"/>
+    <use href="#center" transform="translate(0.3333333 0)"/>
+  </g>
+  <g>
+    <use href="#point" transform="translate(-0.6666667 0)"/>
+    <use href="#point" transform="translate(0 0)"/>
+    <use href="#point" transform="translate(0.5485838 0.4714045)"/>
+    <use href="#point" transform="translate(0.5485838 -0.4714045)"/>
+    <use href="#point" transform="translate(0.6666667 0)"/>
+    <use href="#point" transform="translate(1.2152504 0.4714045)"/>
+    <use href="#point" transform="translate(1.2152504 -0.4714045)"/>
+  </g>
+</g>
+</g>
+<text x="36" y="397" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" fill="#6f6a62">Points: (-2/3,0), (0,0), ((sqrt(7)-1)/3, +/-sqrt(2)/3),</text>
+<text x="36" y="416" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" fill="#6f6a62">(2/3,0), ((sqrt(7)+1)/3, +/-sqrt(2)/3)</text>
+<text x="36" y="437" font-family="system-ui,sans-serif" font-size="12" fill="#6f6a62">All twelve unit-circle centers are taken from the OEIS SVG.</text>
+</svg>

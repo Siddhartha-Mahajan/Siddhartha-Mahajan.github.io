@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nine Points in the Unit-Circle Problem</title>
+<meta name="description" content="A self-contained mathematical-blog visualisation of the n=9 value of OEIS A003829 and its connection with Erdős Problem 104.">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<img class="lossfunk-mark" src="assets/images/lossfunk-no-bg.png" alt="Lossfunk">
+<header class="site-header">
+  <div class="topline">Erdős Problem 104 / OEIS A003829</div>
+  <div class="title-row">
+    <h1>Nine points in the unit-circle problem</h1>
+  </div>
+  <p class="byline">Siddhartha Mahajan and Paras Chopra</p>
+  <p class="lead">Erdős Problem 104 asks how many unit circles can be forced by a finite set of points in the plane. OEIS A003829 records the exact small values for the version where each counted circle must pass through at least three of the chosen points.</p>
+  <p class="lead">This page gives the ninth value: an explicit nine-point construction reaches <code>20</code> counted circles, and a finite exact certificate rules out <code>21</code>, <code>22</code>, and <code>23</code>.</p>
+  <p class="result-line"><span>Result:</span> For nine points in the Euclidean plane, <code>a(9)=20</code>.</p>
+  <nav class="article-nav" aria-label="Article sections">
+    <a href="#problem">problem</a>
+    <a href="#small-cases">small cases</a>
+    <a href="#construction">construction</a>
+    <a href="#upper-bound">upper bound</a>
+    <a href="#finite-certificates">finite certificates</a>
+    <a href="#lower-certificate">lower certificate</a>
+    <a href="#discovery">how found</a>
+    <a href="assets/manuscript/a003829_final_manuscript.pdf">manuscript PDF</a>
+    <a href="#references">references</a>
+  </nav>
+  <figure class="hero-figure">
+    <div class="figure-frame"><img src="assets/figures/n9_all.svg" alt="Certified nine-point construction with counted unit circles"></div>
+    <figcaption>Certified nine-point construction. Each displayed circle is incident with exactly three labelled points.</figcaption>
+  </figure>
+</header>
+
+<main>
+<section id="problem">
+  <h2>The problem</h2>
+  <p class="lead">Given a finite set <code>P</code> of <code>n</code> points in the Euclidean plane, count the distinct unit circles that contain at least three points of <code>P</code>. Let <code>a(n)</code> be the maximum possible count.</p>
+  <div class="formula">a(n)=max<sub>|P|=n</sub> |&#123; unit circles C : |C∩P| ≥ 3 &#125;|.</div>
+  <p>The classical table begins <code>a(3),…,a(8)=1,4,4,8,12,16</code>. The construction below attains <code>20</code> for <code>n=9</code>. The upper-bound certificate proves that <code>21</code>, <code>22</code>, and <code>23</code> cannot occur; the elementary bound already rules out every larger number. The two halves meet at <code>20</code>.</p>
+</section>
+
+<section id="small-cases">
+  <h2>Smaller cases, before nine</h2>
+  <p class="lead">The first six known values help explain what is being counted. For <code>n=3,4,5,6</code> the panels are drawn from explicit coordinate constructions. For <code>n=7</code>, the panel replots the exact coordinates displayed in the OEIS/Martin Fuller illustration. For <code>n=8</code>, the value is <code>16</code>, but we could not find a public illustration or coordinate source to replot.</p>
+  <div class="case-grid">
+
+    <article class="case">
+      <img src="assets/figures/n3.svg" alt="Visualization for n=3, a(3)=1">
+      <h3>n=3, a(3)=1</h3>
+      <p>An equilateral triple on a unit circle gives the only possible counted circle.</p>
+    </article>
+
+    <article class="case">
+      <img src="assets/figures/n4.svg" alt="Visualization for n=4, a(4)=4">
+      <h3>n=4, a(4)=4</h3>
+      <p>The centre of an equilateral triangle plus the three vertices gives four unit circles.</p>
+    </article>
+
+    <article class="case">
+      <img src="assets/figures/n5.svg" alt="Visualization for n=5, a(5)=4">
+      <h3>n=5, a(5)=4</h3>
+      <p>The fifth point can be placed generically, without creating any new counted unit circle.</p>
+    </article>
+
+    <article class="case">
+      <img src="assets/figures/n6.svg" alt="Visualization for n=6, a(6)=8">
+      <h3>n=6, a(6)=8</h3>
+      <p>A pair-sum construction from four unit vectors realizes the classical value eight.</p>
+    </article>
+
+    <article class="case">
+      <img src="assets/figures/n7.svg" alt="Visualization for n=7, a(7)=12">
+      <h3>n=7, a(7)=12</h3>
+      <p>Exact coordinate construction from the OEIS/Martin Fuller illustration; exactness is Harborth–Mengersen.</p>
+    </article>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>n</th><th class="num">a(n)</th><th>provenance used here</th></tr></thead>
+      <tbody>
+        <tr><td>3,4,5,6</td><td class="num">1,4,4,8</td><td>Small explicit constructions, matching the classical table.</td></tr>
+        <tr><td>7</td><td class="num">12</td><td>Harborth–Mengersen exact value; OEIS links Martin Fuller’s visual illustration of <code>a(3)</code> through <code>a(7)</code>.</td></tr>
+        <tr><td>8</td><td class="num">16</td><td>Recorded in OEIS A003829; no public illustration or coordinate source was found for this page.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="construction">
+  <h2>The twenty-circle construction</h2>
+  <p class="lead">The certified nine-point pattern is all-triple: every counted circle contains exactly three of the nine points. The twenty intended triples are</p>
+  <div class="triples">012 · 037 · 038 · 046 · 047 · 056 · 058 · 136 · 137 · 146 · 148 · 157 · 158 · 236 · 238 · 247 · 248 · 256 · 257 · 345</div>
+  <p>Partition the labels as <code>A=&#123;0,1,2&#125;</code>, <code>B=&#123;3,4,5&#125;</code>, and <code>C=&#123;6,7,8&#125;</code>. The pattern consists of the two internal triples <code>012</code> and <code>345</code>, together with all cross triples from <code>A×B×C</code> except the nine triples whose three within-block indices sum to <code>0 mod 3</code>. This places the construction in the all-triple <code>20T,s=6</code> deficiency layer.</p>
+  <div class="interactive">
+    <div id="selected-circle-title" class="selected-circle-title">Circle 01: triple 012</div>
+    <img id="selected-circle-image" src="assets/figures/n9_01.svg" alt="Highlighted circle 01">
+    <div class="circle-buttons" aria-label="Select a certified circle">
+      <button type="button" data-circle-button>01</button>
+<button type="button" data-circle-button>02</button>
+<button type="button" data-circle-button>03</button>
+<button type="button" data-circle-button>04</button>
+<button type="button" data-circle-button>05</button>
+<button type="button" data-circle-button>06</button>
+<button type="button" data-circle-button>07</button>
+<button type="button" data-circle-button>08</button>
+<button type="button" data-circle-button>09</button>
+<button type="button" data-circle-button>10</button>
+<button type="button" data-circle-button>11</button>
+<button type="button" data-circle-button>12</button>
+<button type="button" data-circle-button>13</button>
+<button type="button" data-circle-button>14</button>
+<button type="button" data-circle-button>15</button>
+<button type="button" data-circle-button>16</button>
+<button type="button" data-circle-button>17</button>
+<button type="button" data-circle-button>18</button>
+<button type="button" data-circle-button>19</button>
+<button type="button" data-circle-button>20</button>
+    </div>
+    <p class="small">The buttons switch between the twenty certified unit circles. The inactive circles are left faintly visible to keep the full arrangement in view.</p>
+  </div>
+  <h3>Approximate coordinates</h3>
+  <p>These decimals are for orientation only. The exact construction is not defined by these decimals; it is defined by a rational polynomial system and a rational interval certificate.</p>
+  <div class="table-wrap">
+    <table class="coords"><thead><tr><th>point</th><th>x</th><th>y</th></tr></thead><tbody>
+<tr><td>0</td><td>0.0000000000000000</td><td>0.0000000000000000</td></tr>
+<tr><td>1</td><td>1.0978941215225699</td><td>0.0000000000000000</td></tr>
+<tr><td>2</td><td>-0.4505445972749385</td><td>-0.8677385486715592</td></tr>
+<tr><td>3</td><td>0.2071734593478844</td><td>0.6025968098608510</td></tr>
+<tr><td>4</td><td>0.4412929999324647</td><td>-0.4821327244762682</td></tr>
+<tr><td>5</td><td>-0.0011169350327177</td><td>-0.9882026340561421</td></tr>
+<tr><td>6</td><td>0.3923352634888004</td><td>-1.3742531016840638</td></tr>
+<tr><td>7</td><td>0.1250000000000000</td><td>1.0065145530125046</td></tr>
+<tr><td>8</td><td>0.1300142607588310</td><td>-0.5000000000000000</td></tr>
+    </tbody></table>
+  </div>
+</section>
+
+<section id="upper-bound">
+  <h2>Why the answer cannot be larger</h2>
+  <p class="lead">The proof that <code>a(9)≤20</code> has a simple outer shell and an exact finite core. The outer shell says that a nine-point configuration cannot have more than <code>23</code> counted unit circles. The finite core then eliminates <code>23</code>, <code>22</code>, and <code>21</code>.</p>
+
+  <h3>The pair-slot bound</h3>
+  <p>Let <code>C</code> be a counted circle, and let <code>s(C)</code> be the number of selected points on it. A circle with <code>s(C)</code> selected points uses <code>binom(s(C),2)</code> unordered point-pairs. A fixed pair of points can lie on at most two unit circles: geometrically, the two possible centers are the two intersections of the unit circles centered at the two points. Therefore</p>
+  <div class="formula">Σ<sub>C</sub> binom(s(C),2) ≤ 2 binom(n,2).</div>
+  <p>For <code>n=9</code>, the right-hand side is <code>2·binom(9,2)=72</code>. Since every counted circle has at least three points, every counted circle uses at least three pair-slots. The raw estimate gives <code>m≤24</code>.</p>
+
+  <h3>The one-slot improvement</h3>
+  <p>Pinchasi’s Gallai–Sylvester theorem for pairwise-intersecting unit circles improves this by one pair-slot for every <code>n≥5</code>:</p>
+  <div class="formula">a(n) ≤ floor((n(n−1)−1)/3).</div>
+  <p>For <code>n=9</code> this gives <code>a(9)≤floor((72−1)/3)=23</code>. Hence no number above <code>23</code> needs a separate certificate. To prove <code>a(9)≤20</code>, it remains only to rule out <code>m=23</code>, <code>m=22</code>, and <code>m=21</code>.</p>
+
+  <div class="certificate-box proof-summary">
+  <h3>Upper-bound route</h3>
+  <ol class="plain-steps">
+    <li><strong>Bound first.</strong> Pair-slot counting plus Pinchasi reduces the infinite geometric question to three finite targets: <code>21</code>, <code>22</code>, and <code>23</code>.</li>
+    <li><strong>Encode incidences.</strong> A hypothetical target configuration is replaced by a hypergraph on labels <code>0,…,8</code>. A triple-circle is written <code>T</code>, a four-point circle <code>Q</code>, and a five-point circle <code>R<sub>5</sub></code>.</li>
+    <li><strong>Enumerate only feasible templates.</strong> The search keeps only templates that respect pair capacities, parity of deficiencies, all known local caps <code>a(3),…,a(8)</code>, and the four-point closure lemma.</li>
+    <li><strong>Ask whether the template can live in the plane.</strong> Reflection equations, affine Gram forms, and rank-two conditions translate metric realizability into exact rational algebra.</li>
+    <li><strong>Eliminate terminal leftovers.</strong> A terminal template is removed if it is linearly impossible, forces two labelled points to coincide, has no positive semidefinite rank-two Gram form, or forces an extra point onto an intended all-triple circle.</li>
+  </ol>
+  </div>
+</section>
+
+<section id="finite-certificates">
+  <h2>The finite-certificate machinery</h2>
+  <p class="lead">The upper-bound certificate does not search over coordinates. It searches over finite incidence templates, and only then applies exact algebraic tests to decide whether a surviving template could possibly be realized by points and unit circles in the plane.</p>
+
+  <h3>1. Hypergraphs and pair deficiencies</h3>
+  <p>For an all-triple profile, write <code>codeg(i,j)</code> for the number of intended triples containing pair <code>ij</code>, and define</p>
+  <div class="formula">δ<sub>ij</sub> = 2 − codeg(i,j).</div>
+  <p>The number <code>δ<sub>ij</sub></code> is the unused capacity of pair <code>ij</code>. Since there are <code>72</code> possible pair-slots on nine points and each triple uses three slots,</p>
+  <div class="formula">Σ<sub>i&lt;j</sub> δ<sub>ij</sub> = 72 − 3m.</div>
+  <p>At every vertex <code>i</code>, the weighted deficiency degree is even:</p>
+  <div class="formula">Σ<sub>j≠i</sub>δ<sub>ij</sub> = 16 − 2 deg(i).</div>
+  <p>Mixed profiles use the same accounting, but a four-point circle <code>Q</code> uses all six internal pairs of its four support points, and a five-point circle <code>R<sub>5</sub></code> uses all ten internal pairs of its five support points.</p>
+
+  <h3>2. Local caps</h3>
+  <p>Every subset <code>S</code> of the nine labels must induce no more circles than are possible on <code>|S|</code> points. Thus every induced subtemplate of size <code>3,4,5,6,7,8</code> is capped by <code>1,4,4,8,12,16</code>. This matters because many formal pair-capacity patterns already contain, for example, too many circles on seven of the labels.</p>
+
+  <h3>3. Four-point closure</h3>
+  <p>If four points <code>A,B,C,D</code> have unit circles through three of the four triples, then the fourth triple also lies on a unit circle. A quick proof: translate <code>A</code> to the origin. Let the centers of <code>ABC</code>, <code>ABD</code>, and <code>ACD</code> be <code>x,y,z</code>. Reflection across the midpoints gives <code>B=x+y</code>, <code>C=x+z</code>, and <code>D=y+z</code>. Then <code>B,C,D</code> lie on the unit circle centered at <code>x+y+z</code>.</p>
+
+  <h3>4. Reflection equations</h3>
+  <p>Suppose two counted unit circles <code>B</code> and <code>B′</code> share the point-pair <code>i,j</code>. Their centers are the two unit-circle centers through that same pair, so they are mirror images across the midpoint of <code>p<sub>i</sub>p<sub>j</sub></code>. Therefore</p>
+  <div class="formula">c<sub>B</sub> + c<sub>B′</sub> = p<sub>i</sub> + p<sub>j</sub>.</div>
+  <p>These are linear equations, one scalar coordinate at a time. Constants always form a one-dimensional solution space; a non-collinear planar realization needs scalar solution-space dimension at least three and must not force any original point labels to coincide.</p>
+
+  <h3>5. Affine Gram forms and rank two</h3>
+  <p>After quotienting by constants, the remaining scalar solution space is an affine coordinate skeleton. A Euclidean planar realization is equivalent to a positive semidefinite Gram form <code>G</code> of rank at most two. For each intended incidence <code>p<sub>i</sub>∈B</code>, the unit-radius condition becomes a linear equation in the entries of <code>G</code>:</p>
+  <div class="formula">(c<sub>B</sub>−p<sub>i</sub>)<sup>T</sup> G (c<sub>B</sub>−p<sub>i</sub>) = 1.</div>
+  <p>If the linear Gram system is inconsistent, the incidence template cannot be geometric. If it leaves a family, the certificate imposes rank at most two by exact <code>3×3</code> minor equations. Terminal branches are then eliminated by exact ideal infeasibility, point collisions, or forced extra incidences.</p>
+
+  <h3>6. Forced extra incidences</h3>
+  <p>For an all-triple profile, a template is supposed to contain only triple-circles. If the algebra proves that some outside point <code>v∉B</code> must satisfy</p>
+  <div class="formula">||c<sub>B</sub>−p<sub>v</sub>||² − 1 ≡ 0</div>
+  <p>on every Gram solution, then the alleged triple-circle actually has a fourth point. That template is discarded from the all-triple case. This is how the last residual <code>m=21</code> orbits disappear.</p>
+
+  <div class="certificate-box">
+    <h3>Finite elimination ledger</h3>
+    <p>The following table is the high-level certificate summary used to turn the machinery above into the upper bound <code>a(9)≤20</code>.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>target</th><th>case split</th><th>exact terminal outcome</th></tr></thead>
+        <tbody>
+          <tr><td><code>m=23</code></td><td>All triples only. Total deficiency is <code>3</code>; parity forces the deficiency graph to be a triangle. Adding that missing triangle gives a twofold triple system on nine points.</td><td>All one-block deletions from the <code>36</code> non-isomorphic <code>TTS(9)</code> templates are checked. Terminal counts: <code>536</code> nonsimple, <code>163</code> nullity <code>1</code>, <code>107</code> nullity <code>2</code>, <code>50</code> nullity <code>3</code> with point collision, <code>8</code> nullity <code>4</code> with point collision, and <code>0</code> geometric survivors.</td></tr>
+          <tr><td><code>m=22</code></td><td>Only <code>22T</code> and <code>21T+Q</code> are pair-slot compatible.</td><td>For <code>21T+Q</code>, the two weighted deficiency cases have zero survivors after local-cap, closure, and reflection tests. For <code>22T</code>, the missing-pair graph reduces to a six-cycle, two triangles sharing a vertex, or two disjoint triangles; all rank-two geometric survivor counts are zero.</td></tr>
+          <tr><td><code>m=21</code></td><td>Profiles: <code>21T</code>, <code>20T+Q</code>, <code>19T+2Q</code>, and <code>20T+R<sub>5</sub></code>.</td><td>The mixed profiles are eliminated first: the <code>R<sub>5</sub></code> binary feasibility system is infeasible; the two-quad cases die by reflection rank; the one-quad case reaches <code>116</code> reflection survivors and zero rank-two Gram survivors. The all-triple <code>21T</code> case starts from <code>74</code> weighted classes and <code>1,698,371</code> completions; after local caps, closure, reflection, Gram tests, rank-two minors, and forced-extra-incidence identities, every final family has <code>0</code> survivors.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p>Consequently, any nine-point configuration with at least <code>21</code> counted unit circles would have to appear in this finite search, but every possible incidence template is certified impossible. Therefore <code>a(9)≤20</code>.</p>
+</section>
+
+<section id="lower-certificate">
+  <h2>The lower certificate: exactly twenty</h2>
+  <p class="lead">The construction must also be certified as a real Euclidean configuration with no hidden extra counted circles. The lower certificate does this with exact rational interval arithmetic.</p>
+
+  <h3>Polynomial system</h3>
+  <p>The reflection equations reduce the twenty centers and nine points to a rational linear parametrization. With variables</p>
+  <div class="formula">ξ=(X<sub>0</sub>,…,X<sub>9</sub>,Y<sub>0</sub>,…,Y<sub>9</sub>)∈R<sup>20</sup>,</div>
+  <p>the certificate stores a rational matrix whose first nine rows define the points and whose next twenty rows define the intended centers. The sixty intended point-center incidences reduce, up to sign, to fifteen rational displacement rows <code>r<sub>1</sub>,…,r<sub>15</sub></code>. The fifteen unit equations are</p>
+  <div class="formula">(r<sub>ν</sub>·X)² + (r<sub>ν</sub>·Y)² = 1, &nbsp; ν=1,…,15.</div>
+  <p>Five gauge equations remove translation, rotation, and scale choices: <code>Z<sub>0</sub><sup>x</sup>=0</code>, <code>Z<sub>0</sub><sup>y</sup>=0</code>, <code>Z<sub>1</sub><sup>y</sup>=0</code>, <code>Z<sub>7</sub><sup>x</sup>=1/8</code>, and <code>Z<sub>8</sub><sup>y</sup>=−1/2</code>. Altogether this is a square system of twenty rational polynomial equations in twenty real variables.</p>
+
+  <h3>Krawczyk root isolation</h3>
+  <p>Let <code>F:R<sup>20</sup>→R<sup>20</sup></code> be this polynomial map. The certificate stores a rational center <code>c</code>, a rational approximate inverse <code>C</code>, and the interval box</p>
+  <div class="formula">X = c + [−2<sup>−180</sup>, 2<sup>−180</sup>]<sup>20</sup>.</div>
+  <p>Using exact rational interval arithmetic, the verifier evaluates</p>
+  <div class="formula">K(c,X)=c−C F(c)+(I−C J(X))(X−c)</div>
+  <p>and proves <code>K(c,X)</code> lies strictly inside the interior of <code>X</code>. It also proves the contraction bound</p>
+  <div class="formula">||I−C J(X)||<sub>∞</sub> &lt; 2.13 · 10<sup>−52</sup> &lt; 1.</div>
+  <p>Therefore the polynomial system has a unique real zero in the box. This supplies the real points and centers used by the construction.</p>
+
+  <h3>What is certified after the root exists</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>claim</th><th>certified check</th></tr></thead>
+      <tbody>
+        <tr><td>All intended incidences have unit distance.</td><td>Every intended center-point difference is exactly one of the fifteen unit rows, up to sign.</td></tr>
+        <tr><td>The nine labelled points are distinct.</td><td>The interval proof gives <code>min ||P<sub>i</sub>−P<sub>j</sub>||² &gt; 0.09721369299616801</code>.</td></tr>
+        <tr><td>The twenty counted circles are distinct.</td><td>The interval proof gives <code>min ||Q<sub>a</sub>−Q<sub>b</sub>||² &gt; 0.0051978623108992735</code>.</td></tr>
+        <tr><td>No intended triple-circle has a fourth point.</td><td>For nonincident center-point pairs, <code>| ||Q<sub>j</sub>−P<sub>i</sub>||²−1 | &gt; 0.06577095439165559</code>.</td></tr>
+        <tr><td>No unlisted triple lies on a unit circle.</td><td>For every non-listed triple <code>i,j,k</code>, the point-only unit-circumradius polynomial excludes zero. The weakest certified bound is for triple <code>458</code>: <code>|Φ<sub>458</sub>| &gt; 0.07832522266666986</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The polynomial used for the last row is</p>
+  <div class="formula">Φ<sub>ijk</sub>=||P<sub>j</sub>−P<sub>k</sub>||² ||P<sub>i</sub>−P<sub>k</sub>||² ||P<sub>i</sub>−P<sub>j</sub>||² − 4 cross(P<sub>i</sub>,P<sub>j</sub>,P<sub>k</sub>)².</div>
+  <p>For a non-collinear triple, <code>Φ<sub>ijk</sub>=0</code> is equivalent to circumradius one. There are <code>binom(9,3)=84</code> triples in total. Twenty are listed. The remaining <code>64</code> are all interval-excluded. Hence the construction has exactly twenty counted unit circles, not merely at least twenty.</p>
+</section>
+
+<section id="discovery">
+  <h2>How the construction was found</h2>
+  <p class="lead">The twenty-circle configuration was found through the same incidence-template search that powers the upper-bound certificate, not by tuning the visible drawing.</p>
+  <p>The project first had a certified nine-point construction with nineteen counted circles. The upper-bound search then narrowed the remaining possible twenty-circle cases. The successful candidate appeared in the all-triple <code>20T,s=6</code> deficiency layer.</p>
+  <div class="certificate-box">
+    <h3>Search trail</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>stage</th><th>what happened</th></tr></thead>
+        <tbody>
+          <tr><td>frontier</td><td>The manuscript records <code>266</code> weighted deficiency classes in the <code>20T,s=6</code> layer.</td></tr>
+          <tr><td>filters</td><td>Closure, reflection, nullity, affine-Gram, and forced-extra-incidence tests reduced the terminal pipeline to <code>46</code> affine-Gram residual cases.</td></tr>
+          <tr><td>hit</td><td>Those residuals were concentrated in classes <code>9,10,87,88,140,239,262</code>; class <code>140</code> gave the isolated rank-two realization.</td></tr>
+          <tr><td>normalisation</td><td>The candidate note records the rational gauge choices <code>x7=1/8</code> and <code>y8=-1/2</code>, which produced the clean coordinates used here.</td></tr>
+          <tr><td>certificate</td><td>The numerical candidate was replaced by a rational polynomial system and a Krawczyk isolating box, giving the formal lower certificate.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p>The candidate note’s high-precision recount found exactly twenty distinct unit circles across all <code>binom(9,3)=84</code> triples, with no near-collisions and no near-extra circle. At that stage it was still only a numerical discovery. The final proof is the interval certificate above: it isolates a real root and proves the non-listed triples stay away from unit circumradius.</p>
+</section>
+
+<section id="extensions">
+  <h2>Two immediate extensions</h2>
+  <p>The nine-point construction also gives lower bounds for the next two values. If <code>A,B,C</code> lie on a unit circle centered at <code>Q</code>, put</p>
+  <div class="formula">D=A+B+C−2Q.</div>
+  <p>Then <code>ABD</code>, <code>ACD</code>, and <code>BCD</code> lie on unit circles with centers <code>A+B−Q</code>, <code>A+C−Q</code>, and <code>B+C−Q</code>. Completing the certified <code>012</code> circle gives <code>a(10)≥23</code>. Completing both <code>012</code> and <code>345</code> gives <code>a(11)≥26</code>.</p>
+  <h3>Selected further bounds</h3>
+  <p>The manuscript also records certified lower bounds from exact square- and triangular-lattice checks, together with the general Pinchasi upper bound used here.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>n</th><th class="num">lower bound</th><th class="num">upper bound</th><th>source</th></tr></thead>
+      <tbody>
+        <tr><td>10</td><td class="num">23</td><td class="num">29</td><td>one completion of the certified nine-point construction</td></tr>
+        <tr><td>11</td><td class="num">26</td><td class="num">36</td><td>two completions of the certified nine-point construction</td></tr>
+        <tr><td>13</td><td class="num">29</td><td class="num">51</td><td>exact triangular-lattice certificate</td></tr>
+        <tr><td>16</td><td class="num">40</td><td class="num">79</td><td>exact triangular-lattice certificate</td></tr>
+        <tr><td>20</td><td class="num">54</td><td class="num">126</td><td>exact triangular-lattice certificate</td></tr>
+        <tr><td>25</td><td class="num">74</td><td class="num">199</td><td>exact square-lattice certificate</td></tr>
+        <tr><td>40</td><td class="num">164</td><td class="num">519</td><td>exact triangular-lattice certificate</td></tr>
+        <tr><td>80</td><td class="num">462</td><td class="num">2106</td><td>exact triangular-lattice certificate</td></tr>
+        <tr><td>120</td><td class="num">715</td><td class="num">4759</td><td>exact triangular-lattice certificate</td></tr>
+        <tr><td>169</td><td class="num">1350</td><td class="num">9463</td><td>exact triangular-lattice certificate</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="references">
+  <h2>References and sources</h2>
+  <ol class="ref-list">
+    <li>N. J. A. Sloane, <a href="https://oeis.org/A003829">OEIS A003829</a>, “Maximal number of unit circles through n points in plane, each circle containing 3 of the points.” Includes the sequence <code>1,4,4,8,12,16</code>, the small-value table, and the Martin Fuller illustration link.</li>
+    <li>OEIS, <a href="https://oeis.org/A003829/a003829.svg">Martin Fuller illustration of <code>a(3)</code> through <code>a(7)</code></a>. Used for the exact coordinate panel shown here for <code>n=7</code>.</li>
+    <li>Heiko Harborth and Ingrid Mengersen, “Point sets with many unit circles,” <em>Discrete Mathematics</em> 60 (1986), 193–197. This is the cited source for the exact small values through <code>n=7</code>.</li>
+    <li>H. T. Croft, K. J. Falconer, and R. K. Guy, <em>Unsolved Problems in Geometry</em>, Springer, 1991, Problem F9. This records the classical small table including <code>f(8)=16</code> and asks for the next values.</li>
+    <li>R. Pinchasi, “The Gallai–Sylvester theorem for pairwise-intersecting unit circles,” <em>Discrete &amp; Computational Geometry</em> 28 (2002), 607–624. Used for the one-slot improvement <code>a(n)≤floor((n(n−1)−1)/3)</code>.</li>
+    <li>P. Erdős and G. Purdy, “Extremal problems in combinatorial geometry,” in <em>Handbook of Combinatorics</em>, North-Holland, 1995.</li>
+    <li>G. Elekes, “N-point configurations with many unit circles,” manuscript / example cited in the Erdős problem literature.</li>
+    <li>Thomas Bloom, <a href="https://www.erdosproblems.com/104">Erdős Problems, Problem 104</a>, current online formulation of the asymptotic unit-circle problem.</li>
+  </ol>
+</section>
+
+<section id="acknowledgements" class="ack">
+  <h2>Acknowledgements</h2>
+  <p>ChatGPT 5.5 Pro and Codex were used in finding the construction, writing the manuscript, and organising it as a blog.</p>
+</section>
+</main>
+
+<footer class="site-footer"></footer>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

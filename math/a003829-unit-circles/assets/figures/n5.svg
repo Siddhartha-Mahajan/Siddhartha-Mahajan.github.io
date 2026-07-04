@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="450" viewBox="0 0 660 450" role="img" aria-labelledby="title desc">
+<title id="title">n=5: four circles</title>
+<desc id="desc">a(5)=4; the fifth point may be placed generically</desc>
+<rect width="660" height="450" fill="#fbf8f1"/>
+<text x="24" y="32" font-family="Georgia,serif" font-size="22" fill="#252321">n=5: four circles</text>
+<text x="24" y="55" font-family="system-ui,sans-serif" font-size="12" fill="#6f6a62">a(5)=4; the fifth point may be placed generically</text>
+<circle cx="290.011" cy="202.381" r="90.476" fill="none" stroke="#7b8da1" stroke-width="1.25" opacity="0.55"/>
+<circle cx="211.656" cy="157.143" r="90.476" fill="none" stroke="#7b8da1" stroke-width="1.25" opacity="0.55"/>
+<circle cx="368.365" cy="157.143" r="90.476" fill="none" stroke="#7b8da1" stroke-width="1.25" opacity="0.55"/>
+<circle cx="290.011" cy="292.857" r="90.476" fill="none" stroke="#7b8da1" stroke-width="1.25" opacity="0.55"/>
+<path d="M286.01,202.38 L294.01,202.38 M290.01,198.38 L290.01,206.38" stroke="#8c6b2f" stroke-width="1" opacity="0.75"/>
+<path d="M207.66,157.14 L215.66,157.14 M211.66,153.14 L211.66,161.14" stroke="#8c6b2f" stroke-width="1" opacity="0.75"/>
+<path d="M364.37,157.14 L372.37,157.14 M368.37,153.14 L368.37,161.14" stroke="#8c6b2f" stroke-width="1" opacity="0.75"/>
+<path d="M286.01,292.86 L294.01,292.86 M290.01,288.86 L290.01,296.86" stroke="#8c6b2f" stroke-width="1" opacity="0.75"/>
+<circle cx="290.011" cy="202.381" r="5.4" fill="#252321"/>
+<circle cx="290.011" cy="202.381" r="8.5" fill="none" stroke="#fbf8f1" stroke-width="2.5" opacity="0.9"/>
+<text x="299.011" y="195.381" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#252321">0</text>
+<circle cx="290.011" cy="111.905" r="5.4" fill="#252321"/>
+<circle cx="290.011" cy="111.905" r="8.5" fill="none" stroke="#fbf8f1" stroke-width="2.5" opacity="0.9"/>
+<text x="299.011" y="104.905" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#252321">1</text>
+<circle cx="211.656" cy="247.619" r="5.4" fill="#252321"/>
+<circle cx="211.656" cy="247.619" r="8.5" fill="none" stroke="#fbf8f1" stroke-width="2.5" opacity="0.9"/>
+<text x="220.656" y="240.619" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#252321">2</text>
+<circle cx="368.365" cy="247.619" r="5.4" fill="#252321"/>
+<circle cx="368.365" cy="247.619" r="8.5" fill="none" stroke="#fbf8f1" stroke-width="2.5" opacity="0.9"/>
+<text x="377.365" y="240.619" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#252321">3</text>
+<circle cx="538.820" cy="161.667" r="5.4" fill="#252321"/>
+<circle cx="538.820" cy="161.667" r="8.5" fill="none" stroke="#fbf8f1" stroke-width="2.5" opacity="0.9"/>
+<text x="547.820" y="154.667" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#252321">4</text>
+</svg>

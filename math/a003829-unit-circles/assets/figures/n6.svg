@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="450" viewBox="0 0 660 450" role="img" aria-labelledby="title desc">
+<title id="title">n=6: eight circles</title>
+<desc id="desc">a(6)=8; one standard model uses pair-sums of four unit vectors</desc>
+<rect width="660" height="450" fill="#fbf8f1"/>
+<text x="24" y="32" font-family="Georgia,serif" font-size="22" fill="#252321">n=6: eight circles</text>
+<text x="24" y="55" font-family="system-ui,sans-serif" font-size="12" fill="#6f6a62">a(6)=8; one standard model uses pair-sums of four unit vectors</text>
+<circle cx="388.146" cy="226.113" r="78.284" fill="none" stroke="#7b8da1" stroke-width="1.25" opacity="0.55"/>
+<circle cx="325.948" cy="157.995" r="78.284" fill="none" stroke="#7b8da1" stroke-width="1.25" opacity="0.55"/>
+<circle cx="232.537" cy="225.989" r="78.284" fill="none" stroke="#7b8da1" stroke-width="1.25" opacity="0.55"/>
+<circle cx="334.038" cy="309.316" r="78.284" fill="none" stroke="#7b8da1" stroke-width="1.25" opacity="0.55"/>
+<circle cx="271.854" cy="223.887" r="78.284" fill="none" stroke="#7b8da1" stroke-width="1.25" opacity="0.55"/>
+<circle cx="334.052" cy="292.005" r="78.284" fill="none" stroke="#7b8da1" stroke-width="1.25" opacity="0.55"/>
+<circle cx="427.463" cy="224.011" r="78.284" fill="none" stroke="#7b8da1" stroke-width="1.25" opacity="0.55"/>
+<circle cx="325.962" cy="140.684" r="78.284" fill="none" stroke="#7b8da1" stroke-width="1.25" opacity="0.55"/>
+<path d="M384.15,226.11 L392.15,226.11 M388.15,222.11 L388.15,230.11" stroke="#8c6b2f" stroke-width="1" opacity="0.75"/>
+<path d="M321.95,158.00 L329.95,158.00 M325.95,154.00 L325.95,162.00" stroke="#8c6b2f" stroke-width="1" opacity="0.75"/>
+<path d="M228.54,225.99 L236.54,225.99 M232.54,221.99 L232.54,229.99" stroke="#8c6b2f" stroke-width="1" opacity="0.75"/>
+<path d="M330.04,309.32 L338.04,309.32 M334.04,305.32 L334.04,313.32" stroke="#8c6b2f" stroke-width="1" opacity="0.75"/>
+<path d="M267.85,223.89 L275.85,223.89 M271.85,219.89 L271.85,227.89" stroke="#8c6b2f" stroke-width="1" opacity="0.75"/>
+<path d="M330.05,292.00 L338.05,292.00 M334.05,288.00 L334.05,296.00" stroke="#8c6b2f" stroke-width="1" opacity="0.75"/>
+<path d="M423.46,224.01 L431.46,224.01 M427.46,220.01 L427.46,228.01" stroke="#8c6b2f" stroke-width="1" opacity="0.75"/>
+<path d="M321.96,140.68 L329.96,140.68 M325.96,136.68 L325.96,144.68" stroke="#8c6b2f" stroke-width="1" opacity="0.75"/>
+<circle cx="403.760" cy="149.402" r="5.4" fill="#252321"/>
+<circle cx="403.760" cy="149.402" r="8.5" fill="none" stroke="#fbf8f1" stroke-width="2.5" opacity="0.9"/>
+<text x="412.760" y="142.402" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#252321">0</text>
+<circle cx="310.348" cy="217.395" r="5.4" fill="#252321"/>
+<circle cx="310.348" cy="217.395" r="8.5" fill="none" stroke="#fbf8f1" stroke-width="2.5" opacity="0.9"/>
+<text x="319.348" y="210.395" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#252321">1</text>
+<circle cx="411.849" cy="300.722" r="5.4" fill="#252321"/>
+<circle cx="411.849" cy="300.722" r="8.5" fill="none" stroke="#fbf8f1" stroke-width="2.5" opacity="0.9"/>
+<text x="420.849" y="293.722" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#252321">2</text>
+<circle cx="248.151" cy="149.278" r="5.4" fill="#252321"/>
+<circle cx="248.151" cy="149.278" r="8.5" fill="none" stroke="#fbf8f1" stroke-width="2.5" opacity="0.9"/>
+<text x="257.151" y="142.278" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#252321">3</text>
+<circle cx="349.652" cy="232.605" r="5.4" fill="#252321"/>
+<circle cx="349.652" cy="232.605" r="8.5" fill="none" stroke="#fbf8f1" stroke-width="2.5" opacity="0.9"/>
+<text x="358.652" y="225.605" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#252321">4</text>
+<circle cx="256.240" cy="300.598" r="5.4" fill="#252321"/>
+<circle cx="256.240" cy="300.598" r="8.5" fill="none" stroke="#fbf8f1" stroke-width="2.5" opacity="0.9"/>
+<text x="265.240" y="293.598" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#252321">5</text>
+</svg>
