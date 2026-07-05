@@ -45,7 +45,7 @@
 
 <section id="small-cases">
   <h2>Smaller cases, before nine</h2>
-  <p class="lead">The first six known values help explain what is being counted. For <code>n=3,4,5,6</code> the panels are drawn from explicit coordinate constructions. For <code>n=7</code>, the panel replots the exact coordinates displayed in the OEIS/Martin Fuller illustration. For <code>n=8</code>, the value is <code>16</code>, but we could not find a public illustration or coordinate source to replot.</p>
+  <p class="lead">The first six known values help explain what is being counted. For <code>n=3,4,5,6</code> the panels are drawn from explicit coordinate constructions. For <code>n=7</code>, the panel replots the exact coordinates displayed in the OEIS/Martin Fuller illustration. For <code>n=8</code>, the value is <code>16</code>; we could not find a publicly available coordinate source or illustration for that construction, so the panel below shows the exact reconstruction we obtained.</p>
   <div class="case-grid">
 
     <article class="case">
@@ -77,6 +77,12 @@
       <h3>n=7, a(7)=12</h3>
       <p>Exact coordinate construction from the OEIS/Martin Fuller illustration; exactness is Harborth–Mengersen.</p>
     </article>
+
+    <article class="case">
+      <img src="assets/figures/n8_16_original_base.svg" alt="Reconstructed visualization for n=8, a(8)=16">
+      <h3>n=8, a(8)=16</h3>
+      <p>Our reconstruction keeps the Harborth base points <code>(-2/3,0)</code>, <code>(0,0)</code>, and <code>(2/3,0)</code>, then splits the old tangent four-point circle into two counted triples.</p>
+    </article>
   </div>
   <div class="table-wrap">
     <table>
@@ -84,9 +90,17 @@
       <tbody>
         <tr><td>3,4,5,6</td><td class="num">1,4,4,8</td><td>Small explicit constructions, matching the classical table.</td></tr>
         <tr><td>7</td><td class="num">12</td><td>Harborth–Mengersen exact value; OEIS links Martin Fuller’s visual illustration of <code>a(3)</code> through <code>a(7)</code>.</td></tr>
-        <tr><td>8</td><td class="num">16</td><td>Recorded in OEIS A003829; no public illustration or coordinate source was found for this page.</td></tr>
+        <tr><td>8</td><td class="num">16</td><td>Recorded in OEIS A003829 and Croft–Falconer–Guy; no public coordinates or illustration were found, so we give our exact reconstruction.</td></tr>
       </tbody>
     </table>
+  </div>
+  <figure class="wide-figure">
+    <div class="figure-frame"><img src="assets/figures/n8_16_original_base.svg" alt="Reconstructed eight-point construction with sixteen unit circles"></div>
+    <figcaption>Reconstructed <code>n=8</code> construction with sixteen unit circles. The construction uses a quadratic parameter <code>R=5/17+4√13/51</code> and keeps the original Harborth base points <code>A,F,G</code>.</figcaption>
+  </figure>
+  <div class="note">
+    <strong>How this reconstruction was found.</strong>
+    We started from the Harborth–Mengersen seven-point configuration and the known eight-point extension that gives fifteen counted circles. In that extension one circle contains four of the points; moving along the same unit-circle intersection pattern splits that four-point circle into two three-point circles. A rational-parameter search found the simple specialization <code>a=2/3</code>, where the closure polynomial factors as <code>(R−1)(153R²−90R+1)</code>; the non-tangent root above gives the displayed sixteen-circle construction.
   </div>
 </section>
 
