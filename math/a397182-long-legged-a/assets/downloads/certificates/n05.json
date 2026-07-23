@@ -1,0 +1,47 @@
+{
+  "description": "Exact rational colored-K2,3 construction proving a(5)=87.",
+  "parameterization": "Each shape has apex p, positive radius r, and rational unit leg directions u,v. Its rays are p+t*u and p+t*v for t>0; its crossbar is p+r*u+t*(v-u) for 0<t<r.",
+  "partition": [[1, 2], [3, 4, 5]],
+  "shapes": [
+    {
+      "apex": ["0", "0"],
+      "radius": "1",
+      "u": ["486715/1257997", "-1160028/1257997"],
+      "v": ["486715/1257997", "1160028/1257997"]
+    },
+    {
+      "apex": ["-14055/55852", "55699/81761"],
+      "radius": "42644/62485",
+      "u": ["89473/241825", "-224664/241825"],
+      "v": ["358336/382985", "135177/382985"]
+    },
+    {
+      "apex": ["33339/95084", "98807/92908"],
+      "radius": "11999/82129",
+      "u": ["876/47965", "-47957/47965"],
+      "v": ["373023/1501025", "-1453936/1501025"]
+    },
+    {
+      "apex": ["13347/37972", "51569/50761"],
+      "radius": "5947/59294",
+      "u": ["22753/71425", "-67704/71425"],
+      "v": ["433021/1226821", "-1147860/1226821"]
+    },
+    {
+      "apex": ["15268/43481", "98967/95593"],
+      "radius": "7951/66910",
+      "u": ["210743/791785", "-763224/791785"],
+      "v": ["415173/1378445", "-1314436/1378445"]
+    }
+  ],
+  "claimed_pair_crossing_matrix": [
+    [0, 7, 8, 8, 8],
+    [7, 0, 8, 8, 8],
+    [8, 8, 0, 7, 7],
+    [8, 8, 7, 0, 7],
+    [8, 8, 7, 7, 0]
+  ],
+  "claimed_total_crossings": 76,
+  "claimed_regions": 87,
+  "conclusion": "This exact colored-K2,3 construction has 76 distinct proper crossings and 87 regions. Together with the unconditional upper bound, it proves a(5)=87."
+}

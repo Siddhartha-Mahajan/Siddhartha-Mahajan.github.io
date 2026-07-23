@@ -1,0 +1,28 @@
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{1}
+
+\bibitem{CKS2026}
+David O.~H. Cutler, Jonas Karlsson, and Neil J.~A. Sloane, \emph{Cutting a
+  pancake with an exotic knife}, arXiv:2511.15864v4 [math.CO], 2026, 18 July
+  2026.
+
+\bibitem{MahajanChopra2026}
+Siddhartha Mahajan and Paras Chopra, \emph{A two-graph refinement of
+  {Paulsen}'s lollipop bounds}, arXiv:2606.06064v1 [math.CO], 2026, 4 June
+  2026.
+
+\bibitem{Mantel1907}
+Willem Mantel, \emph{Problem 28}, Wiskundige Opgaven \textbf{10} (1907),
+  60--61.
+
+\bibitem{OEISA397182}
+{OEIS Foundation Inc.}, \emph{{The On-Line Encyclopedia of Integer Sequences},
+  {A397182}}, \url{https://oeis.org/A397182}, 2026, Accessed 23 July 2026.
+
+\end{thebibliography}

@@ -1,0 +1,103 @@
+{
+  "parameterization": "unit direction = ((1-t^2)/(1+t^2), 2t/(1+t^2))",
+  "shapes": [
+    {
+      "x": {
+        "numerator": 0,
+        "denominator": 1
+      },
+      "y": {
+        "numerator": 0,
+        "denominator": 1
+      },
+      "radius": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "half_angle_t1": {
+        "numerator": -879694,
+        "denominator": 862845
+      },
+      "half_angle_t2": {
+        "numerator": -862845,
+        "denominator": 879694
+      }
+    },
+    {
+      "x": {
+        "numerator": -41446,
+        "denominator": 980493
+      },
+      "y": {
+        "numerator": 31,
+        "denominator": 889885
+      },
+      "radius": {
+        "numerator": 597095,
+        "denominator": 596886
+      },
+      "half_angle_t1": {
+        "numerator": -947448,
+        "denominator": 977015
+      },
+      "half_angle_t2": {
+        "numerator": -604935,
+        "denominator": 642347
+      }
+    },
+    {
+      "x": {
+        "numerator": -27843,
+        "denominator": 674081
+      },
+      "y": {
+        "numerator": -549756,
+        "denominator": 644491
+      },
+      "radius": {
+        "numerator": 216513,
+        "denominator": 858455
+      },
+      "half_angle_t1": {
+        "numerator": -227278,
+        "denominator": 298351
+      },
+      "half_angle_t2": {
+        "numerator": 790441,
+        "denominator": 836738
+      }
+    },
+    {
+      "x": {
+        "numerator": -19502,
+        "denominator": 504151
+      },
+      "y": {
+        "numerator": -876793,
+        "denominator": 895670
+      },
+      "radius": {
+        "numerator": 68037,
+        "denominator": 922325
+      },
+      "half_angle_t1": {
+        "numerator": -76115,
+        "denominator": 261656
+      },
+      "half_angle_t2": {
+        "numerator": 73292,
+        "denominator": 76603
+      }
+    }
+  ],
+  "pair_count_multiset": [
+    7,
+    7,
+    8,
+    8,
+    8,
+    8
+  ],
+  "crossings": 46,
+  "regions": 55
+}

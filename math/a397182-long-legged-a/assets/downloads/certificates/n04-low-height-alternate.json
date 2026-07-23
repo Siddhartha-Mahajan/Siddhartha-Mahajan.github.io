@@ -1,0 +1,103 @@
+{
+  "parameterization": "unit direction = ((1-t^2)/(1+t^2), 2t/(1+t^2))",
+  "shapes": [
+    {
+      "x": {
+        "numerator": 0,
+        "denominator": 1
+      },
+      "y": {
+        "numerator": 0,
+        "denominator": 1
+      },
+      "radius": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "half_angle_t1": {
+        "numerator": -3,
+        "denominator": 100
+      },
+      "half_angle_t2": {
+        "numerator": 3,
+        "denominator": 100
+      }
+    },
+    {
+      "x": {
+        "numerator": -47,
+        "denominator": 200
+      },
+      "y": {
+        "numerator": -141,
+        "denominator": 1000
+      },
+      "radius": {
+        "numerator": 1241,
+        "denominator": 1000
+      },
+      "half_angle_t1": {
+        "numerator": 4,
+        "denominator": 125
+      },
+      "half_angle_t2": {
+        "numerator": 43,
+        "denominator": 500
+      }
+    },
+    {
+      "x": {
+        "numerator": 689,
+        "denominator": 200
+      },
+      "y": {
+        "numerator": 413,
+        "denominator": 250
+      },
+      "radius": {
+        "numerator": 1573,
+        "denominator": 500
+      },
+      "half_angle_t1": {
+        "numerator": -3301,
+        "denominator": 1000
+      },
+      "half_angle_t2": {
+        "numerator": -21,
+        "denominator": 250
+      }
+    },
+    {
+      "x": {
+        "numerator": 1223,
+        "denominator": 1000
+      },
+      "y": {
+        "numerator": 941,
+        "denominator": 1000
+      },
+      "radius": {
+        "numerator": 519,
+        "denominator": 500
+      },
+      "half_angle_t1": {
+        "numerator": -1263,
+        "denominator": 1000
+      },
+      "half_angle_t2": {
+        "numerator": -7,
+        "denominator": 200
+      }
+    }
+  ],
+  "pair_count_multiset": [
+    7,
+    7,
+    8,
+    8,
+    8,
+    8
+  ],
+  "crossings": 46,
+  "regions": 55
+}

@@ -1,0 +1,857 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{aliascnt}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc}
+\usepackage[numbers,sort&compress]{natbib}
+
+\allowdisplaybreaks
+\setlist{nosep,leftmargin=*}
+\newtheorem{theorem}{Theorem}[section]
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}[proposition]{Proposition}
+\aliascntresetthe{proposition}
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+\theoremstyle{definition}
+\newaliascnt{definition}{theorem}
+\newtheorem{definition}[definition]{Definition}
+\aliascntresetthe{definition}
+\newaliascnt{remark}{theorem}
+\newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={The Exact Region Formula for Arrangements of Constrained Long-Legged A's},
+  pdfauthor={Siddhartha Mahajan and Paras Chopra},
+  pdfsubject={Exact extremal region count for constrained long-legged A arrangements},
+  pdfkeywords={plane arrangements, extremal graph theory, Mantel's theorem, OEIS A397182}
+}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\crefname{theorem}{theorem}{theorems}
+\crefname{proposition}{proposition}{propositions}
+\crefname{lemma}{lemma}{lemmas}
+\crefname{corollary}{corollary}{corollaries}
+\crefname{remark}{remark}{remarks}
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\evec}{\mathbf e}
+\newcommand{\B}{\mathcal B}
+\newcommand{\eps}{\varepsilon}
+\DeclareMathOperator{\detm}{det}
+
+\title[Constrained long-legged A arrangements]{The Exact Region Formula for Arrangements of Constrained Long-Legged A's}
+
+\author{Siddhartha Mahajan}
+\address{Research Fellow, Lossfunk}
+\email{siddharthamahajan03@gmail.com}
+
+\author{Paras Chopra}
+\address{Lossfunk}
+\email{paras@lossfunk.com}
+
+\date{23 July 2026}
+\subjclass[2020]{Primary 05C10; Secondary 52C30, 05C35}
+\keywords{plane arrangements, extremal graph theory, Mantel's theorem, geometric construction, OEIS A397182}
+
+\begin{document}
+
+\begin{abstract}
+A constrained long-legged A consists of two rays with a common apex and a
+crossbar joining points at equal distance from that apex.  Let $a(n)$ be the
+maximum number of regions into which $n$ such objects divide the plane.
+Cutler, Karlsson, and Sloane established that two constrained A's meet at most
+eight times and that three of them cannot be pairwise eight-crossing.  The
+graph of eight-crossing pairs is therefore triangle-free, and Mantel's
+theorem gives
+\[
+ a(n)\le 7\binom n2+\left\lfloor\frac{n^2}{4}\right\rfloor+2n+1.
+\]
+We construct matching arrangements for every $n$.  The construction splits
+the objects into a narrow family and a wide nested fan.  Every cross-family
+pair has eight proper intersections, while every same-family pair has at
+least seven.  Three elementary blow-ups, together with one cubic Taylor
+calculation for the narrow family, verify all required component incidences.
+Because these inequalities are strict, a generic rational perturbation
+preserves them.  Consequently, for every $n\ge0$,
+\[
+ \boxed{\displaystyle
+ a(n)=7\binom n2+\left\lfloor\frac{n^2}{4}\right\rfloor+2n+1
+     =\left\lfloor\frac{15n^2-6n+4}{4}\right\rfloor.}
+\]
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+A constrained long-legged A is the union of two rays issuing from one apex
+and a crossbar whose endpoints lie at equal distance from the apex.  The
+region-maximization problem for these objects was introduced by Cutler,
+Karlsson, and Sloane in their study of planar cuts by exotic knives
+\cite{CKS2026}; the resulting sequence is OEIS A397182
+\cite{OEISA397182}.  The equality of the two leg lengths is a metric
+condition, so affine deformations that trivialize many line-arrangement
+problems are unavailable here.
+
+Let $a(n)$ denote the largest number of connected components of the
+complement of a union of $n$ constrained A's.  The first values found in
+\cite{CKS2026} are
+\[
+ a(0),a(1),a(2),a(3)=1,3,13,30.
+\]
+The main result of this paper determines the sequence completely.
+
+\begin{theorem}\label{thm:main}
+For every integer $n\ge0$,
+\begin{equation}\label{eq:mainformula}
+ a(n)=7\binom n2+\left\lfloor\frac{n^2}{4}\right\rfloor+2n+1
+ =\left\lfloor\frac{15n^2-6n+4}{4}\right\rfloor.
+\end{equation}
+\end{theorem}
+
+The upper bound is an extremal-graph argument.  Join two objects when they
+meet eight times.  The three-object result of \cite{CKS2026} makes this
+graph triangle-free, so Mantel's theorem bounds the number of eight-pairs.
+Equality forces a balanced complete bipartite graph of eight-pairs and seven
+crossings on every remaining pair.
+
+The lower construction realizes exactly that colored graph.  For prescribed
+part sizes $p,q$, we build $p$ narrow A's and $q$ wide A's.  The geometry is
+organized around two points, $O=(0,0)$ and $C=(1,0)$, and is read on three
+scales.  Near $O$, the narrow legs form a regular fan.  Near $C$, the narrow
+crossbars become a short vertical stack and the high legs and crossbars of
+the wide family become a nested fan.  Near the wide apices, a second blow-up
+orders the low legs.  These limits establish seven incidences on every
+same-family pair and eight on every cross-family pair.  The only limiting
+incidences that land at component endpoints are two narrow bar--leg hits;
+a third-order expansion places both strictly inside the bars.
+
+The proof is entirely analytic.  Exact rational certificates through
+$n=16$, which arose during discovery, are included as supplementary checks
+but are not used in the proof of \cref{thm:main}.  Colored extremal graphs
+also play a central role in the related published lollipop-bounds paper
+\cite{MahajanChopra2026}.
+
+\section{The geometric model and the upper bound}
+
+\subsection{Constrained A's and proper crossings}
+
+For an angle $\phi$, write
+\[
+ \evec(\phi)=(\cos\phi,\sin\phi).
+\]
+Given an apex $P\in\R^2$, a radius $r>0$, and two distinct unit vectors
+$u,v$, define
+\begin{equation}\label{eq:Adef}
+ A(P,r;u,v)=
+ \{P+tu:t\ge0\}\cup\{P+tv:t\ge0\}
+ \cup[P+ru,P+rv].
+\end{equation}
+The first two components are the legs and the last is the crossbar.  We
+always label the legs so that $\detm(u,v)>0$; their counterclockwise angular
+separation then lies in $(0,\pi)$.
+
+An intersection of components belonging to different A's is \emph{proper}
+when it lies strictly past the apex on every participating leg and strictly
+inside every participating crossbar.  An arrangement is \emph{generic} if
+supporting lines of components from different A's are nonparallel, every
+actual cross-shape component intersection is proper, no vertex lies on a
+foreign component, and no point lies on components from three or more
+A's.  It is enough to maximize over generic arrangements: transverse proper
+crossings persist under perturbation, while a local generic resolution of a
+parallelism, vertex incidence, or multiple crossing weakly increases the
+number of complementary regions.  We will construct an open set with the
+desired pairwise incidences and then choose a generic point in that set.
+
+\subsection{The region identity}
+
+\begin{proposition}\label{prop:regions}
+A generic arrangement of $n$ constrained A's with $I$ finite crossings has
+\[
+ F=I+2n+1
+\]
+complementary regions.
+\end{proposition}
+
+\begin{proof}
+Compactify the plane by one point at infinity.  One constrained A becomes a
+connected graph with four vertices (the apex, the two crossbar endpoints,
+and infinity) and five edges, hence first Betti number two.  The union of
+$n$ disjoint A's with their points at infinity identified has first Betti
+number $2n$.  Each proper transverse crossing identifies two interior
+points of distinct arcs and increases the first Betti number by one.  Thus
+the compactified union has first Betti number $2n+I$.  Euler's formula on
+the sphere gives $F=(2n+I)+1$.
+\end{proof}
+
+\subsection{The eight-crossing graph}
+
+We use the following two geometric facts established in \cite[Sec.~13.2]{CKS2026}.
+
+\begin{proposition}[Cutler--Karlsson--Sloane]\label{prop:localfacts}
+Two constrained long-legged A's have at most eight proper finite
+intersections.  Moreover, no three constrained A's are pairwise
+ eight-crossing.
+\end{proposition}
+
+For a generic arrangement, let $G_8$ be the graph whose vertices are the A's
+and whose edges are the pairs with eight crossings.  By
+\cref{prop:localfacts}, $G_8$ is triangle-free.
+
+\begin{theorem}[Universal upper bound]\label{thm:upper}
+For every $n\ge0$,
+\begin{equation}\label{eq:upper}
+ a(n)\le 7\binom n2+\left\lfloor\frac{n^2}{4}\right\rfloor+2n+1.
+\end{equation}
+If equality holds, the eight-crossing graph is a balanced complete bipartite
+graph and every nonedge corresponds to a seven-crossing pair.
+\end{theorem}
+
+\begin{proof}
+Let $e=e(G_8)$.  Every edge contributes at most eight crossings and every
+nonedge at most seven, so
+\[
+ I\le 8e+7\left(\binom n2-e\right)=7\binom n2+e.
+\]
+Mantel's theorem \cite{Mantel1907} gives
+$e\le\lfloor n^2/4\rfloor$.  Combining this inequality with
+\cref{prop:regions} proves \eqref{eq:upper}.  Equality requires equality in
+every step.  The equality case of Mantel's theorem is the balanced complete
+bipartite graph, and every nonedge must contribute seven crossings.
+\end{proof}
+
+It remains to realize the equality pattern for arbitrary part sizes.
+
+\section{A stability principle for component incidences}
+
+We will repeatedly inspect a family of components after an affine rescaling
+that depends on a small parameter $\eps>0$.  The following elementary
+observation formalizes the limiting arguments.
+
+\begin{lemma}[Blow-up stability]\label{lem:stability}
+Let two supporting lines and their directed component domains depend
+continuously on $\eps>0$.  Suppose that after an invertible affine change of
+coordinates they converge, as $\eps\to0^+$, to two nonparallel lines whose
+intersection lies in the relative interior of both limiting domains.  Then,
+for all sufficiently small $\eps>0$, the original components have a proper
+intersection.
+\end{lemma}
+
+\begin{proof}
+The intersection parameters of two nonparallel lines are continuous
+rational functions of their origins and directions.  At the limiting
+configuration both parameters satisfy strict domain inequalities.  Those
+inequalities therefore persist for all sufficiently small $\eps$.
+\end{proof}
+
+All asymptotics below are taken with the finite integers $p,q$ fixed.  Thus
+an $O(\eps^r)$ estimate is uniform over every index occurring in the
+construction, and finitely many smallness requirements can be met by one
+choice of $\eps$.
+
+For two A's, order the components as (first leg, second leg, crossbar) and
+write a $3\times3$ $0$--$1$ matrix for their proper component incidences.
+Our construction will establish the following entrywise lower bounds:
+\begin{equation}\label{eq:targetmasks}
+ M_{NN}=\begin{pmatrix}1&1&0\\1&1&0\\1&1&1\end{pmatrix},\qquad
+ M_{NW}=\begin{pmatrix}1&1&1\\1&1&1\\0&1&1\end{pmatrix},\qquad
+ M_{WW}=\begin{pmatrix}1&1&1\\0&1&1\\0&1&1\end{pmatrix}.
+\end{equation}
+They contain respectively seven, eight, and seven required incidences.  A
+zero in \eqref{eq:targetmasks} means only that no incidence is required
+there.
+
+\section{The two-family construction}
+
+Fix integers $p,q\ge1$ and put $m=\max\{p,q\}$.  Let
+\[
+ O=(0,0),\qquad C=(1,0),\qquad h=\frac32.
+\]
+We define $p$ narrow A's $N_1,\ldots,N_p$ and $q$ wide A's
+$W_1,\ldots,W_q$, depending on a sufficiently small parameter $\eps>0$.
+
+\subsection{The narrow family}
+
+For $1\le i\le p$, set
+\[
+ a_i=3i,
+ \qquad \alpha_i=a_i\eps,
+ \qquad r_i=\cos\alpha_i,
+ \qquad P_i=C-r_i\evec(\alpha_i).
+\]
+The two leg directions of $N_i$ are
+\[
+ d_i^- =\evec(\alpha_i-\eps),
+ \qquad
+ d_i^+ =\evec(\alpha_i+\eps),
+\]
+and the crossbar joins $P_i+r_i d_i^-$ to $P_i+r_i d_i^+$.
+For small $\eps$, $r_i>0$ and this is a constrained A.
+
+It is useful to write its crossbar in centered form.  Define
+\[
+ n_i=\evec(\alpha_i+\tfrac\pi2),\qquad
+ M_i=C-r_i(1-\cos\eps)\evec(\alpha_i),\qquad
+ s_i=r_i\sin\eps.
+\]
+Then the crossbar is
+\begin{equation}\label{eq:narrowbar}
+ \B_i=\{M_i+t n_i:-s_i\le t\le s_i\}.
+\end{equation}
+Its supporting line has the particularly simple equation
+\begin{equation}\label{eq:narrowbarline}
+ \evec(\alpha_i)\mathbin\cdot X=\cos\alpha_i\cos\eps.
+\end{equation}
+
+\subsection{The wide family}
+
+For $1\le j\le q$, put
+\begin{equation}\label{eq:wideparameters}
+ q_j=4^{-j},\qquad
+ \theta_j=2\arctan q_j,\qquad
+ D_j=q_j^{-1}=4^j,
+ \qquad L_j=4m+j,
+ \qquad \lambda_j=L_j\eps.
+\end{equation}
+The low and high leg directions are
+\begin{equation}\label{eq:widedirections}
+ \ell_j=\evec(\lambda_j),
+ \qquad
+ u_j=\evec(\pi-\theta_j+\lambda_j).
+\end{equation}
+Place the high crossbar endpoint at
+\[
+ H_j=C+\eps(-D_j,h)
+\]
+and define
+\begin{equation}\label{eq:wideradius}
+ R_j=\frac{1+h\eps}{\sin(\theta_j-\lambda_j)},
+ \qquad
+ Q_j=H_j-R_j u_j.
+\end{equation}
+Then $(Q_j)_y=-1$.  The wide A $W_j$ has apex $Q_j$, common leg length
+$R_j$, low leg direction $\ell_j$, and high leg direction $u_j$.  Its low
+crossbar endpoint is
+\[
+ K_j=Q_j+R_j\ell_j.
+\]
+For small $\eps$, $0<\lambda_j<\theta_j$, so $R_j>0$ and the two directions
+in \eqref{eq:widedirections} are distinct with positive orientation.
+
+At $\eps=0$ the relevant apex and endpoint abscissae are
+\begin{equation}\label{eq:AB}
+ A_j=1+\cot\theta_j
+     =1+\frac{D_j-q_j}{2},
+ \qquad
+ B_j=1+\cot\frac{\theta_j}{2}=1+D_j.
+\end{equation}
+Indeed,
+\begin{equation}\label{eq:widelimits}
+ Q_j\longrightarrow(A_j,-1),\qquad
+ K_j\longrightarrow(B_j,-1),\qquad
+ H_j\longrightarrow C.
+\end{equation}
+
+\begin{figure}[t]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[x=0.88cm,y=0.88cm,>=Latex,font=\small]
+  % left panel: C blow-up
+  \begin{scope}[shift={(0,0)}]
+    \draw[->] (-4.6,0)--(4.3,0) node[right] {$X$};
+    \draw[->] (0,-2.7)--(0,3.0) node[above] {$Y$};
+    \draw[very thick] (0,-1)--(0,1);
+    \draw[densely dashed] (-4.4,1)--(4.0,1) node[right] {$N_i^+$};
+    \draw[densely dashed] (-4.4,-1)--(4.0,-1) node[right] {$N_i^-$};
+    \coordinate (H1) at (-1.1,1.5);
+    \coordinate (H2) at (-2.5,1.5);
+    \fill (H1) circle (1.2pt) node[above] {$(-D_j,h)$};
+    \fill (H2) circle (1.2pt);
+    \draw[thick] ($(H1)+(-2.0,1.2)$)--($(H1)+(4.0,-2.4)$);
+    \draw[thick] ($(H1)+(-2.0,0.55)$)--($(H1)+(4.0,-1.1)$);
+    \draw[thick] ($(H2)+(-1.4,0.45)$)--($(H2)+(5.0,-1.6)$);
+    \draw[thick] ($(H2)+(-1.4,0.20)$)--($(H2)+(5.0,-0.72)$);
+    \node[align=center] at (0,-3.35) {(a) blow-up at $C$: narrow bar/legs\\and the nested high/bar fan};
+  \end{scope}
+  % right panel: y=-1 blow-up
+  \begin{scope}[shift={(11.4,0)}]
+    \draw[->] (-0.3,0)--(7.6,0) node[right] {$x$};
+    \draw[->] (0,-0.3)--(0,3.0) node[above] {$Y$};
+    \draw[thick] (0.7,0)--(6.5,2.7);
+    \draw[thick] (2.2,0)--(6.6,2.7);
+    \draw[very thick] (2.2,0)--(2.2,2.1);
+    \draw[very thick] (4.8,0)--(4.8,2.5);
+    \node[below] at (0.7,0) {$A_j$};
+    \node[below] at (2.2,0) {$A_k$};
+    \node[below] at (4.8,0) {$B_k$};
+    \node[align=center] at (3.7,-3.35) {(b) blow-up at $y=-1$: low legs\\meet the next apex and low endpoint};
+  \end{scope}
+\end{tikzpicture}%
+}
+\caption{The two limiting charts used for narrow--wide and wide--wide
+incidences.  The drawing is schematic; only the strict order and slope
+relations are used.}
+\label{fig:blowups}
+\end{figure}
+
+\section{Verification of the three pair types}
+
+\subsection{Narrow--narrow pairs}
+
+\begin{lemma}\label{lem:NN}
+For $1\le i<k\le p$ and all sufficiently small $\eps>0$, the component
+incidence matrix of $(N_i,N_k)$ contains $M_{NN}$ from
+\eqref{eq:targetmasks}.  In particular, the pair has at least seven proper
+intersections.
+\end{lemma}
+
+\begin{proof}
+Write $a=a_i$, $b=a_k$, so $b-a\ge3$.
+First apply the blow-up $(x,y)\mapsto(x,y/\eps)$ near $O$.  The leg of $N_i$
+with sign $\sigma\in\{-1,+1\}$ converges to the directed line
+\begin{equation}\label{eq:narrowleglimit}
+ Y=-a+(a+\sigma)x,\qquad x>0.
+\end{equation}
+For signs $\sigma,\tau$, the limiting intersection of the corresponding
+legs of $N_i,N_k$ has
+\[
+ x=\frac{b-a}{b-a+\tau-\sigma}>0,
+\]
+because the denominator is at least $(b-a)-2\ge1$.  By
+\cref{lem:stability}, all four leg--leg intersections are proper.
+
+Next consider the intersection of $\B_i$ with the $\tau$-leg of $N_k$.  Put
+$A=a\eps$, $B=b\eps$ and write the point on the bar as $M_i+t n_i$.  Direct
+line intersection gives a ray parameter
+\begin{equation}\label{eq:ttau}
+ \rho_\tau=
+ \frac{\cos A(\cos\eps-1)+\cos B\cos(B-A)}
+      {\cos(B-A+\tau\eps)}
+ =1+O(\eps^2)
+\end{equation}
+and bar coordinate
+\begin{equation}\label{eq:qtau}
+ t_\tau=-\cos B\sin(B-A)
+       +\rho_\tau\sin(B-A+\tau\eps).
+\end{equation}
+Taylor expansion at $\eps=0$ yields
+\begin{align}
+ t_{-}+s_i
+   &=\frac{(b-a)(2a+1)}{2}\eps^3+O(\eps^5),
+ &s_i-t_{-}&=2\eps+O(\eps^3),\label{eq:minusbar}\\
+ s_i-t_{+}
+   &=\frac{(b-a)(2a-1)}{2}\eps^3+O(\eps^5),
+ &t_{+}+s_i&=2\eps+O(\eps^3).\label{eq:plusbar}
+\end{align}
+Here $a=3i\ge3$, so all four displayed quantities are positive for small
+$\eps$.  Together with \eqref{eq:ttau}, this proves that $\B_i$ meets both
+legs of $N_k$ properly.
+
+Finally, by \eqref{eq:narrowbarline}, every narrow crossbar supporting line
+passes through
+\[
+ X_\eps=(\cos\eps,0).
+\]
+Its coordinate on $\B_i$ is
+\[
+ n_i\mathbin\cdot(X_\eps-M_i)
+ =\sin(a\eps)(1-\cos\eps)=O(\eps^3),
+\]
+whereas $s_i=\eps+O(\eps^3)$.  Hence $X_\eps$ lies strictly inside both
+$\B_i$ and $\B_k$ for small $\eps$.  We have obtained the seven entries of
+$M_{NN}$.
+\end{proof}
+
+\begin{remark}\label{rem:concurrence}
+The unperturbed narrow crossbars are concurrent at $X_\eps$.  This is a
+convenient feature of the proof, not a claimed general-position
+configuration.  The concurrence will be removed in \cref{sec:perturbation}
+without changing any of the strict incidences above.
+\end{remark}
+
+\subsection{Narrow--wide pairs}
+
+\begin{lemma}\label{lem:NW}
+For $1\le i\le p$ and $1\le j\le q$, and all sufficiently small
+$\eps>0$, the component incidence matrix of $(N_i,W_j)$ contains $M_{NW}$
+from \eqref{eq:targetmasks}.  Thus the pair has eight proper intersections.
+\end{lemma}
+
+\begin{proof}
+Set $a=a_i$, $L=L_j$, $D=D_j$, and abbreviate
+\begin{equation}\label{eq:muv}
+ \mu=\tan\theta_j=\frac{2q_j}{1-q_j^2},
+ \qquad
+ \nu=\tan\frac{\theta_j}{2}=q_j.
+\end{equation}
+We first meet the wide low leg.  The determinant of its direction with the
+$\sigma$-leg of $N_i$ is
+\[
+ \sin\bigl((L-a-\sigma)\eps\bigr),
+\]
+and
+\[
+ L-a-\sigma\ge(4m+1)-(3m+1)=m>0.
+\]
+If $r_\sigma$ and $s_\sigma$ are the two ray parameters at their
+intersection, the determinant formula for two lines gives
+\begin{equation}\label{eq:farparameters}
+ \eps r_\sigma\longrightarrow\frac1{L-a-\sigma},
+ \qquad
+ \eps s_\sigma\longrightarrow\frac1{L-a-\sigma}.
+\end{equation}
+Both are positive, so each narrow leg meets the wide low leg properly.
+
+The remaining six required incidences are visible in the blow-up at $C$,
+\[
+ (X,Y)=\left(\frac{x-1}{\eps},\frac y\eps\right).
+\]
+The two narrow legs tend to $Y=-1$ and $Y=1$, while $\B_i$ tends to the open
+vertical segment $X=0$, $-1<Y<1$.  The high leg and crossbar of $W_j$ tend
+to
+\begin{align}
+ \mathcal H_j&:Y-h=-\mu(X+D),\label{eq:highlimit}\\
+ \mathcal C_j&:Y-h=-\nu(X+D),\qquad X>-D,\label{eq:barlimit}
+\end{align}
+respectively.  The inequality in \eqref{eq:barlimit} is the limiting
+interior direction from the high endpoint toward the low endpoint.
+
+For a narrow leg $Y=\sigma$, its intersection with \eqref{eq:barlimit}
+satisfies
+\[
+ X+D=\frac{h-\sigma}{\nu}>0
+\]
+because $h=3/2>1$.  Hence both narrow legs meet the wide bar in its
+interior.  In this chart the apex of the high ray escapes to infinity along
+$\mathcal H_j$ in the direction opposite the ray.  Consequently every fixed
+finite point of $\mathcal H_j$, including its intersections with the two
+narrow legs, lies in the ray's interior for small $\eps$.
+
+At $X=0$, the limiting heights of the narrow-bar intersections are
+\begin{equation}\label{eq:narrowwideheights}
+ h-D\mu=h-\frac{2}{1-q_j^2},
+ \qquad
+ h-D\nu=h-1=\frac12.
+\end{equation}
+Since $0<q_j\le1/4$,
+\[
+ -\frac{19}{30}
+ =\frac32-\frac{32}{15}
+ \le h-D\mu< -\frac12,
+\]
+so both values in \eqref{eq:narrowwideheights} lie strictly between $-1$
+and $1$.  The second intersection also has $X+D=D>0$, placing it inside the
+wide bar.  By \cref{lem:stability}, the narrow bar meets both the wide high
+leg and the wide bar properly.  Together with \eqref{eq:farparameters},
+these are exactly the eight required entries of $M_{NW}$.
+\end{proof}
+
+\subsection{Wide--wide pairs}
+
+\begin{lemma}\label{lem:WW}
+For $1\le j<k\le q$ and all sufficiently small $\eps>0$, the component
+incidence matrix of $(W_j,W_k)$ contains $M_{WW}$ from
+\eqref{eq:targetmasks}.  In particular, the pair has at least seven proper
+intersections.
+\end{lemma}
+
+\begin{proof}
+Write
+\[
+ \mu_r=\tan\theta_r=\frac{2q_r}{1-q_r^2},
+ \qquad \nu_r=q_r
+ \qquad(r=j,k).
+\]
+Because $q_k\le q_j/4$ and $q_j\le1/4$,
+\begin{equation}\label{eq:slopechain}
+ \mu_j>\nu_j>\mu_k>\nu_k>0.
+\end{equation}
+Indeed, only the middle inequality needs comment, and
+\[
+ \mu_k\le\frac{q_j/2}{1-q_j^2/16}<q_j=\nu_j.
+\]
+
+In the blow-up at $C$, each high leg or crossbar of $W_r$ has a limiting
+line through $(-D_r,h)$ of slope $-s$, where $s$ is respectively $\mu_r$ or
+$\nu_r$.  Consider one such line for $r=j$ with slope $-s$ and one for
+$r=k$ with slope $-t$.  By \eqref{eq:slopechain}, $s>t$.  If their
+intersection has displacements
+\[
+ U_j=X+D_j,
+ \qquad U_k=X+D_k,
+\]
+then, with $\Delta=D_k-D_j>0$,
+\begin{equation}\label{eq:fanintersection}
+ U_j=\frac{t\Delta}{s-t}>0,
+ \qquad
+ U_k=\frac{s\Delta}{s-t}>0.
+\end{equation}
+Whenever one of the two components is a crossbar, the corresponding
+positive displacement places the intersection strictly beyond its high
+endpoint toward its low endpoint.  The displacement is finite in the
+blow-up, whereas the other endpoint escapes to infinity, so it is strictly
+inside the bar.  The apex of a high leg escapes to infinity along its limiting line in
+the direction opposite the ray, so every fixed finite point on that line is
+in the ray's interior for small $\eps$.  Thus
+\eqref{eq:fanintersection} proves the four high/bar incidences
+\[
+ (\text{high},\text{high}),\quad
+ (\text{high},\text{bar}),\quad
+ (\text{bar},\text{high}),\quad
+ (\text{bar},\text{bar}).
+\]
+
+It remains to show that the low leg of $W_j$ meets all three components of
+$W_k$.  Use the second blow-up
+\[
+ (x,Y)=\left(x,\frac{y+1}{\eps}\right).
+\]
+By \eqref{eq:AB}--\eqref{eq:widelimits}, the low leg of $W_r$ tends to
+\begin{equation}\label{eq:lowlimit}
+ Y=L_r(x-A_r),\qquad x>A_r.
+\end{equation}
+The portion of the high ray of $W_k$ at height $O(\eps)$ tends to the
+vertical half-line
+\[
+ x=A_k,\qquad Y>0.
+\]
+The low endpoint of the $k$th crossbar has the more precise limit
+\begin{equation}\label{eq:lowendpointheight}
+ \left(B_k,\kappa_k\right),
+ \qquad
+ \kappa_k=\frac{L_k}{\sin\theta_k}
+          =\frac{L_k(D_k+q_k)}{2},
+\end{equation}
+because $((K_k)_y+1)/\eps=R_k\sin\lambda_k/\eps\to
+L_k/\sin\theta_k$.  The portion of the crossbar near that endpoint tends
+to the vertical half-line $x=B_k$, $Y>\kappa_k$.
+
+Since $j<k$, we have $A_j<A_k<B_k$ and $L_j<L_k$.  The limiting
+intersections of the $j$th low leg with the $k$th high leg and crossbar are
+respectively
+\begin{equation}\label{eq:lowverticalhits}
+ (A_k,L_j(A_k-A_j)),
+ \qquad
+ (B_k,L_j(B_k-A_j)).
+\end{equation}
+The first has positive height and is forward of the $j$th apex.  For the
+second, note that $k\ge2$, $D_j\le D_k/4$, $q_k^2\le1/256$, and
+\[
+ \frac{L_k}{L_j}
+ =1+\frac{k-j}{4m+j}<\frac54.
+\]
+Therefore
+\begin{align*}
+ B_k-A_j
+ &=D_k-\frac{D_j}{2}+\frac{q_j}{2}
+   \ge\frac{7D_k}{8},\\
+ \frac{\kappa_k}{L_j}
+ &=\frac{L_k}{L_j}\,\frac{D_k+q_k}{2}
+ <\frac54\cdot\frac{257}{256}\cdot\frac{D_k}{2}
+ <\frac{7D_k}{8}.
+\end{align*}
+Thus $L_j(B_k-A_j)>\kappa_k$, so the second point in
+\eqref{eq:lowverticalhits} lies strictly inside the limiting crossbar.
+Both incidences are therefore proper for small $\eps$.
+
+Finally, the two limiting low lines in \eqref{eq:lowlimit} meet at
+\begin{equation}\label{eq:lowlowx}
+ x_*=
+ \frac{L_kA_k-L_jA_j}{L_k-L_j}
+ =A_k+\frac{L_j(A_k-A_j)}{L_k-L_j}>A_k>A_j.
+\end{equation}
+Thus the low--low intersection lies forward on both rays.  These three low
+incidences and the four incidences from \eqref{eq:fanintersection} give
+$M_{WW}$.
+\end{proof}
+
+\section{Generic rational perturbation and completion of the proof}
+\label{sec:perturbation}
+
+The preceding construction was chosen for transparent limiting geometry,
+not for general position.  In particular, the narrow crossbars concur as
+noted in \cref{rem:concurrence}.  We now remove every degeneracy at once.
+
+\begin{lemma}[Generic rational realization]\label{lem:generic}
+For every $p,q\ge1$, there is a generic arrangement of $p+q$ constrained
+A's, with rational apices, rational positive radii, and rational unit leg
+directions, such that every narrow--wide pair has at least eight proper
+intersections and every same-family pair has at least seven.
+\end{lemma}
+
+\begin{proof}
+Choose $\eps>0$ small enough that all strict component-domain inequalities
+proved in \cref{lem:NN,lem:NW,lem:WW} hold simultaneously.  They define an
+open neighborhood $\mathcal U$ of the resulting point in the parameter
+space of apices, radii, and leg directions.
+
+Work in a local rational chart for each unit direction,
+\[
+ t\longmapsto
+ \left(\frac{1-t^2}{1+t^2},\frac{2t}{1+t^2}\right).
+\]
+After denominators are cleared, each unwanted event---supporting-line
+parallelism, a foreign component through an apex or crossbar endpoint, or
+the coincidence of two distinctly labelled finite crossings---is contained
+in the zero set of a polynomial in the apex coordinates, radii, and chart
+parameters.  Only finitely many labels occur.  None of these polynomials is
+identically zero on $\mathcal U$: an arbitrarily small independent change of
+one participating apex, radius, or direction destroys the corresponding
+event.  The bad locus is therefore a finite union of proper algebraic zero
+sets and has empty interior.
+
+Rational points are dense in the chart.  Since the bad locus is closed in
+$\mathcal U$ and cannot contain a dense subset of $\mathcal U$, there is a
+rational point of $\mathcal U$ outside it.  It gives a generic arrangement
+with rational apices, positive rational radii, and rational unit directions.
+All required incidences persist because their inequalities are strict.
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:main}]
+The cases $n=0,1$ give $1$ and $3$ regions directly.  Let $n\ge2$ and take
+\[
+ p=\left\lfloor\frac n2\right\rfloor,
+ \qquad
+ q=\left\lceil\frac n2\right\rceil.
+\]
+Apply \cref{lem:generic}.  The $pq$ cross-family pairs contribute at least
+eight crossings each, while the remaining pairs contribute at least seven.
+Because the arrangement is generic, all these crossings are globally
+distinct, and therefore
+\begin{align*}
+ I
+ &\ge 8pq+7\left(\binom p2+\binom q2\right)\\
+ &=7\binom n2+pq
+ =7\binom n2+\left\lfloor\frac{n^2}{4}\right\rfloor.
+\end{align*}
+The reverse inequality is \cref{thm:upper}.  Hence equality holds, and
+\cref{prop:regions} gives \eqref{eq:mainformula}.
+\end{proof}
+
+\begin{corollary}\label{cor:arbitraryparts}
+For every $p,q\ge1$, there is a generic rational arrangement of $p+q$
+constrained A's in which every cross-family pair has exactly eight crossings
+and every same-family pair has exactly seven.  It has
+\[
+ 7\binom{p+q}{2}+pq+2(p+q)+1
+\]
+regions.
+\end{corollary}
+
+\begin{proof}
+The cross-family pairs have exactly eight crossings by
+\cref{prop:localfacts,lem:generic}.  If a same-family pair also had eight,
+then that pair together with any object from the other family would be three
+pairwise eight-crossing A's, contrary to \cref{prop:localfacts}.  The region
+count follows from \cref{prop:regions}.
+\end{proof}
+
+\begin{corollary}
+The sequence begins
+\[
+\begin{split}
+1,3,13,30,55,87,127,174,229,291,361,438,523,615,715,822,937,\ldots.
+\end{split}
+\]
+For equality arrangements, the graph of eight-crossing pairs is necessarily
+$K_{\lfloor n/2\rfloor,\lceil n/2\rceil}$ and every within-part pair has
+exactly seven crossings.
+\end{corollary}
+
+\section{Exact computational certificates}
+\label{sec:certificates}
+
+The proof above does not depend on computation.  During discovery, however,
+exact generic rational constructions were obtained separately for every
+$4\le n\le16$.  They provide useful independent checks of the equality
+pattern.  The supplementary archive contains the certificates listed in
+\cref{tab:certificates} and a single verifier using only Python's
+\texttt{fractions.Fraction} class.
+
+For every certificate the verifier checks:
+\begin{enumerate}[label=(\roman*)]
+\item equal positive squared norms of the two leg directions and a positive
+radius for every A;
+\item all nine component-pair predicates for every pair of A's, with strict
+ray and crossbar domains;
+\item the balanced seven/eight pair-crossing matrix;
+\item absence of cross-shape supporting-line parallelism;
+\item absence of every foreign apex or crossbar-endpoint incidence; and
+\item global distinctness of all proper rational crossings.
+\end{enumerate}
+
+\begin{table}[ht]
+\centering
+\caption{Exact rational certificates included in the supplement.}
+\label{tab:certificates}
+\begin{tabular}{@{}rrrrl@{}}
+\toprule
+$n$ & part sizes & crossings & regions & file\\
+\midrule
+4  & $2+2$ & 46  & 55  & \texttt{certificates/n04.json}\\
+5  & $2+3$ & 76  & 87  & \texttt{certificates/n05.json}\\
+6  & $3+3$ & 114 & 127 & \texttt{certificates/n06.json}\\
+7  & $3+4$ & 159 & 174 & \texttt{certificates/n07.json}\\
+8  & $4+4$ & 212 & 229 & \texttt{certificates/n08.json}\\
+9  & $4+5$ & 272 & 291 & \texttt{certificates/n09.json}\\
+10 & $5+5$ & 340 & 361 & \texttt{certificates/n10.json}\\
+11 & $5+6$ & 415 & 438 & \texttt{certificates/n11.json}\\
+12 & $6+6$ & 498 & 523 & \texttt{certificates/n12.json}\\
+13 & $6+7$ & 588 & 615 & \texttt{certificates/n13.json}\\
+14 & $7+7$ & 686 & 715 & \texttt{certificates/n14.json}\\
+15 & $7+8$ & 791 & 822 & \texttt{certificates/n15.json}\\
+16 & $8+8$ & 904 & 937 & \texttt{certificates/n16.json}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A second standard-library script implements a fully rational, nongeneric
+version of the two-family base construction.  It checks the exact masks
+\[
+ \texttt{110110111},\qquad
+ \texttt{111111011},\qquad
+ \texttt{111011011}
+\]
+for narrow--narrow, narrow--wide, and wide--wide pairs respectively.  The
+archived run covers every balanced size $2\le n\le64$.  This is a regression
+check rather than a logical input to the all-$n$ proof.
+
+\section{Concluding remarks}
+
+The upper and lower arguments isolate two different kinds of structure.
+The upper bound remembers only whether a pair has seven or eight crossings;
+its equality case is forced by Mantel's theorem.  The lower bound is more
+geometric: the two color classes require different scales and different
+local models.  The narrow family supplies four leg--leg crossings and three
+bar incidences at a common macroscopic location.  The wide nested fan uses
+an exponentially separated opening parameter $q_j=4^{-j}$ and a linearly
+ordered drift $L_j\eps$.  The scale separation makes the three pair types
+independent enough to verify by elementary limits.
+
+More generally, \cref{cor:arbitraryparts} realizes every complete
+bipartite graph $K_{p,q}$ as an eight-crossing graph, with seven crossings on
+every remaining pair.  Thus the three masks in \eqref{eq:targetmasks} are
+compatible at arbitrary scale.  The two blow-up centers separate the
+relevant incidence constraints into two elementary line fans; the generic
+perturbation then converts their strict local inequalities into a global
+arrangement.
+
+\bibliographystyle{amsplain}
+\bibliography{references}
+
+\end{document}

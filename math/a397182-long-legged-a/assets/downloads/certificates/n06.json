@@ -1,0 +1,54 @@
+{
+  "description": "Exact rational colored-K3,3 construction proving a(6)=127.",
+  "parameterization": "Each shape has apex p, positive radius r, and rational unit leg directions u,v. Its rays are p+t*u and p+t*v for t>0; its crossbar is p+r*u+t*(v-u) for 0<t<r.",
+  "partition": [[1, 2, 3], [4, 5, 6]],
+  "shapes": [
+    {
+      "apex": ["0", "0"],
+      "radius": "1",
+      "u": ["58563/58565", "-484/58565"],
+      "v": ["58563/58565", "484/58565"]
+    },
+    {
+      "apex": ["648/683861", "-4491/181174"],
+      "radius": "66659/66688",
+      "u": ["7320/7321", "121/7321"],
+      "v": ["411212/411437", "13605/411437"]
+    },
+    {
+      "apex": ["-49/172946", "22687/914854"],
+      "radius": "843174/842849",
+      "u": ["411212/411437", "-13605/411437"],
+      "v": ["7320/7321", "-121/7321"]
+    },
+    {
+      "apex": ["109401/105491", "342281/302983"],
+      "radius": "1050758/922843",
+      "u": ["-21831/660281", "-659920/660281"],
+      "v": ["84/85", "-13/85"]
+    },
+    {
+      "apex": ["1577175/724942", "546877/565885"],
+      "radius": "1369872/887603",
+      "u": ["-1377727/1777345", "-1122864/1777345"],
+      "v": ["680/689", "-111/689"]
+    },
+    {
+      "apex": ["3428984/890385", "561113/753551"],
+      "radius": "2152507/713844",
+      "u": ["-58575/60497", "-15128/60497"],
+      "v": ["613307/622285", "-105324/622285"]
+    }
+  ],
+  "claimed_pair_crossing_matrix": [
+    [0, 7, 7, 8, 8, 8],
+    [7, 0, 7, 8, 8, 8],
+    [7, 7, 0, 8, 8, 8],
+    [8, 8, 8, 0, 7, 7],
+    [8, 8, 8, 7, 0, 7],
+    [8, 8, 8, 7, 7, 0]
+  ],
+  "claimed_total_crossings": 114,
+  "claimed_regions": 127,
+  "conclusion": "This exact colored-K3,3 construction has 114 distinct proper crossings and 127 regions. Together with the principal-submatrix upper bound, it proves a(6)=127."
+}

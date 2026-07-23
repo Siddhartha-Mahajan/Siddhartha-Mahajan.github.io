@@ -1,0 +1,2935 @@
+{
+  "valid": true,
+  "arithmetic": "Python fractions.Fraction only",
+  "scope": "Exact generic rational certificates for 4 <= n <= 16",
+  "values": {
+    "4": 55,
+    "5": 87,
+    "6": 127,
+    "7": 174,
+    "8": 229,
+    "9": 291,
+    "10": 361,
+    "11": 438,
+    "12": 523,
+    "13": 615,
+    "14": 715,
+    "15": 822,
+    "16": 937
+  },
+  "results": [
+    {
+      "n": 4,
+      "certificate": "certificates/n04.json",
+      "valid": true,
+      "partition": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "shape_checks": [
+        {
+          "shape": 1,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 2,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 3,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 4,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        }
+      ],
+      "foreign_vertex_component_incidences": 0,
+      "parallel_cross_shape_component_pairs": 0,
+      "pair_crossing_matrix": [
+        [
+          0,
+          7,
+          8,
+          8
+        ],
+        [
+          7,
+          0,
+          8,
+          8
+        ],
+        [
+          8,
+          8,
+          0,
+          7
+        ],
+        [
+          8,
+          8,
+          7,
+          0
+        ]
+      ],
+      "proper_crossings": 46,
+      "globally_distinct_crossings": 46,
+      "regions": 55
+    },
+    {
+      "n": 5,
+      "certificate": "certificates/n05.json",
+      "valid": true,
+      "partition": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4,
+          5
+        ]
+      ],
+      "shape_checks": [
+        {
+          "shape": 1,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 2,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 3,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 4,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 5,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        }
+      ],
+      "foreign_vertex_component_incidences": 0,
+      "parallel_cross_shape_component_pairs": 0,
+      "pair_crossing_matrix": [
+        [
+          0,
+          7,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          0,
+          8,
+          8,
+          8
+        ],
+        [
+          8,
+          8,
+          0,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          7,
+          0,
+          7
+        ],
+        [
+          8,
+          8,
+          7,
+          7,
+          0
+        ]
+      ],
+      "proper_crossings": 76,
+      "globally_distinct_crossings": 76,
+      "regions": 87
+    },
+    {
+      "n": 6,
+      "certificate": "certificates/n06.json",
+      "valid": true,
+      "partition": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          4,
+          5,
+          6
+        ]
+      ],
+      "shape_checks": [
+        {
+          "shape": 1,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 2,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 3,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 4,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 5,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 6,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        }
+      ],
+      "foreign_vertex_component_incidences": 0,
+      "parallel_cross_shape_component_pairs": 0,
+      "pair_crossing_matrix": [
+        [
+          0,
+          7,
+          7,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          0,
+          7,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          0,
+          8,
+          8,
+          8
+        ],
+        [
+          8,
+          8,
+          8,
+          0,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          7,
+          0,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          7,
+          7,
+          0
+        ]
+      ],
+      "proper_crossings": 114,
+      "globally_distinct_crossings": 114,
+      "regions": 127
+    },
+    {
+      "n": 7,
+      "certificate": "certificates/n07.json",
+      "valid": true,
+      "partition": [
+        [
+          1,
+          2,
+          3,
+          7
+        ],
+        [
+          4,
+          5,
+          6
+        ]
+      ],
+      "shape_checks": [
+        {
+          "shape": 1,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 2,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 3,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 4,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 5,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 6,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 7,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        }
+      ],
+      "foreign_vertex_component_incidences": 0,
+      "parallel_cross_shape_component_pairs": 0,
+      "pair_crossing_matrix": [
+        [
+          0,
+          7,
+          7,
+          8,
+          8,
+          8,
+          7
+        ],
+        [
+          7,
+          0,
+          7,
+          8,
+          8,
+          8,
+          7
+        ],
+        [
+          7,
+          7,
+          0,
+          8,
+          8,
+          8,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          0,
+          7,
+          7,
+          8
+        ],
+        [
+          8,
+          8,
+          8,
+          7,
+          0,
+          7,
+          8
+        ],
+        [
+          8,
+          8,
+          8,
+          7,
+          7,
+          0,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          0
+        ]
+      ],
+      "proper_crossings": 159,
+      "globally_distinct_crossings": 159,
+      "regions": 174
+    },
+    {
+      "n": 8,
+      "certificate": "certificates/n08.json",
+      "valid": true,
+      "partition": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          5,
+          6,
+          7,
+          8
+        ]
+      ],
+      "shape_checks": [
+        {
+          "shape": 1,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 2,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 3,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 4,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 5,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 6,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 7,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 8,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        }
+      ],
+      "foreign_vertex_component_incidences": 0,
+      "parallel_cross_shape_component_pairs": 0,
+      "pair_crossing_matrix": [
+        [
+          0,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          0,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          0,
+          7,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          0,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          0,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          7,
+          0,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          0,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          0
+        ]
+      ],
+      "proper_crossings": 212,
+      "globally_distinct_crossings": 212,
+      "regions": 229
+    },
+    {
+      "n": 9,
+      "certificate": "certificates/n09.json",
+      "valid": true,
+      "partition": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      ],
+      "shape_checks": [
+        {
+          "shape": 1,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 2,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 3,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 4,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 5,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 6,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 7,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 8,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 9,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        }
+      ],
+      "foreign_vertex_component_incidences": 0,
+      "parallel_cross_shape_component_pairs": 0,
+      "pair_crossing_matrix": [
+        [
+          0,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          0,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          0,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          0,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          0,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          7,
+          0,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          0,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          0,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          0
+        ]
+      ],
+      "proper_crossings": 272,
+      "globally_distinct_crossings": 272,
+      "regions": 291
+    },
+    {
+      "n": 10,
+      "certificate": "certificates/n10.json",
+      "valid": true,
+      "partition": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      ],
+      "shape_checks": [
+        {
+          "shape": 1,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 2,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 3,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 4,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 5,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 6,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 7,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 8,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 9,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 10,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        }
+      ],
+      "foreign_vertex_component_incidences": 0,
+      "parallel_cross_shape_component_pairs": 0,
+      "pair_crossing_matrix": [
+        [
+          0,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          0,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          0,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          0,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          0,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          0,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          0,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          0,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          0,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          0
+        ]
+      ],
+      "proper_crossings": 340,
+      "globally_distinct_crossings": 340,
+      "regions": 361
+    },
+    {
+      "n": 11,
+      "certificate": "certificates/n11.json",
+      "valid": true,
+      "partition": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      ],
+      "shape_checks": [
+        {
+          "shape": 1,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 2,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 3,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 4,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 5,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 6,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 7,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 8,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 9,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 10,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 11,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        }
+      ],
+      "foreign_vertex_component_incidences": 0,
+      "parallel_cross_shape_component_pairs": 0,
+      "pair_crossing_matrix": [
+        [
+          0,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          0,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          0,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          0,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          0,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0
+        ]
+      ],
+      "proper_crossings": 415,
+      "globally_distinct_crossings": 415,
+      "regions": 438
+    },
+    {
+      "n": 12,
+      "certificate": "certificates/n12.json",
+      "valid": true,
+      "partition": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      ],
+      "shape_checks": [
+        {
+          "shape": 1,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 2,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 3,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 4,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 5,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 6,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 7,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 8,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 9,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 10,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 11,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 12,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        }
+      ],
+      "foreign_vertex_component_incidences": 0,
+      "parallel_cross_shape_component_pairs": 0,
+      "pair_crossing_matrix": [
+        [
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0
+        ]
+      ],
+      "proper_crossings": 498,
+      "globally_distinct_crossings": 498,
+      "regions": 523
+    },
+    {
+      "n": 13,
+      "certificate": "certificates/n13.json",
+      "valid": true,
+      "partition": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      ],
+      "shape_checks": [
+        {
+          "shape": 1,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 2,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 3,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 4,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 5,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 6,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 7,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 8,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 9,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 10,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 11,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 12,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 13,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        }
+      ],
+      "foreign_vertex_component_incidences": 0,
+      "parallel_cross_shape_component_pairs": 0,
+      "pair_crossing_matrix": [
+        [
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0
+        ]
+      ],
+      "proper_crossings": 588,
+      "globally_distinct_crossings": 588,
+      "regions": 615
+    },
+    {
+      "n": 14,
+      "certificate": "certificates/n14.json",
+      "valid": true,
+      "partition": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        [
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ]
+      ],
+      "shape_checks": [
+        {
+          "shape": 1,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 2,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 3,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 4,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 5,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 6,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 7,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 8,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 9,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 10,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 11,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 12,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 13,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 14,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        }
+      ],
+      "foreign_vertex_component_incidences": 0,
+      "parallel_cross_shape_component_pairs": 0,
+      "pair_crossing_matrix": [
+        [
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0
+        ]
+      ],
+      "proper_crossings": 686,
+      "globally_distinct_crossings": 686,
+      "regions": 715
+    },
+    {
+      "n": 15,
+      "certificate": "certificates/n15.json",
+      "valid": true,
+      "partition": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        [
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      ],
+      "shape_checks": [
+        {
+          "shape": 1,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 2,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 3,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 4,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 5,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 6,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 7,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 8,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 9,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 10,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 11,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 12,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 13,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 14,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 15,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        }
+      ],
+      "foreign_vertex_component_incidences": 0,
+      "parallel_cross_shape_component_pairs": 0,
+      "pair_crossing_matrix": [
+        [
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0
+        ]
+      ],
+      "proper_crossings": 791,
+      "globally_distinct_crossings": 791,
+      "regions": 822
+    },
+    {
+      "n": 16,
+      "certificate": "certificates/n16.json",
+      "valid": true,
+      "partition": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ]
+      ],
+      "shape_checks": [
+        {
+          "shape": 1,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 2,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 3,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 4,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 5,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 6,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 7,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 8,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 9,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 10,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 11,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 12,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 13,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 14,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 15,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        },
+        {
+          "shape": 16,
+          "equal_positive_direction_norms": true,
+          "positive_orientation": true,
+          "positive_radius": true
+        }
+      ],
+      "foreign_vertex_component_incidences": 0,
+      "parallel_cross_shape_component_pairs": 0,
+      "pair_crossing_matrix": [
+        [
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0,
+          7
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          0
+        ]
+      ],
+      "proper_crossings": 904,
+      "globally_distinct_crossings": 904,
+      "regions": 937
+    }
+  ],
+  "conclusion": "Every certificate has the balanced 7/8 crossing matrix, no cross-shape supporting-line parallelism, no foreign vertex incidence, and globally distinct proper rational crossings."
+}

@@ -1,0 +1,1645 @@
+{
+  "valid": true,
+  "arithmetic": "Python fractions.Fraction only",
+  "scope": "balanced part sizes for 2 <= n <= 64",
+  "target_masks": {
+    "NN": "110110111",
+    "NW": "111111011",
+    "WW": "111011011"
+  },
+  "results": [
+    {
+      "p": 1,
+      "q": 1,
+      "n": 2,
+      "epsilon": "1/2^18",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 0,
+        "NW": 1,
+        "WW": 0
+      },
+      "masks": {
+        "NN": [],
+        "NW": [
+          "111111011"
+        ],
+        "WW": []
+      },
+      "pairwise_crossing_sum": 8,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 1,
+      "q": 2,
+      "n": 3,
+      "epsilon": "1/2^20",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 0,
+        "NW": 2,
+        "WW": 1
+      },
+      "masks": {
+        "NN": [],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 23,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 2,
+      "q": 2,
+      "n": 4,
+      "epsilon": "1/2^20",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 1,
+        "NW": 4,
+        "WW": 1
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 46,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 2,
+      "q": 3,
+      "n": 5,
+      "epsilon": "1/2^22",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 1,
+        "NW": 6,
+        "WW": 3
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 76,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 3,
+      "q": 3,
+      "n": 6,
+      "epsilon": "1/2^22",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 3,
+        "NW": 9,
+        "WW": 3
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 114,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 3,
+      "q": 4,
+      "n": 7,
+      "epsilon": "1/2^24",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 3,
+        "NW": 12,
+        "WW": 6
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 159,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 4,
+      "q": 4,
+      "n": 8,
+      "epsilon": "1/2^24",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 6,
+        "NW": 16,
+        "WW": 6
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 212,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 4,
+      "q": 5,
+      "n": 9,
+      "epsilon": "1/2^26",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 6,
+        "NW": 20,
+        "WW": 10
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 272,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 5,
+      "q": 5,
+      "n": 10,
+      "epsilon": "1/2^26",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 10,
+        "NW": 25,
+        "WW": 10
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 340,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 5,
+      "q": 6,
+      "n": 11,
+      "epsilon": "1/2^28",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 10,
+        "NW": 30,
+        "WW": 15
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 415,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 6,
+      "q": 6,
+      "n": 12,
+      "epsilon": "1/2^28",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 15,
+        "NW": 36,
+        "WW": 15
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 498,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 6,
+      "q": 7,
+      "n": 13,
+      "epsilon": "1/2^30",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 15,
+        "NW": 42,
+        "WW": 21
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 588,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 7,
+      "q": 7,
+      "n": 14,
+      "epsilon": "1/2^30",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 21,
+        "NW": 49,
+        "WW": 21
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 686,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 7,
+      "q": 8,
+      "n": 15,
+      "epsilon": "1/2^32",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 21,
+        "NW": 56,
+        "WW": 28
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 791,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 8,
+      "q": 8,
+      "n": 16,
+      "epsilon": "1/2^32",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 28,
+        "NW": 64,
+        "WW": 28
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 904,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 8,
+      "q": 9,
+      "n": 17,
+      "epsilon": "1/2^34",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 28,
+        "NW": 72,
+        "WW": 36
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 1024,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 9,
+      "q": 9,
+      "n": 18,
+      "epsilon": "1/2^34",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 36,
+        "NW": 81,
+        "WW": 36
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 1152,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 9,
+      "q": 10,
+      "n": 19,
+      "epsilon": "1/2^36",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 36,
+        "NW": 90,
+        "WW": 45
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 1287,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 10,
+      "q": 10,
+      "n": 20,
+      "epsilon": "1/2^36",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 45,
+        "NW": 100,
+        "WW": 45
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 1430,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 10,
+      "q": 11,
+      "n": 21,
+      "epsilon": "1/2^38",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 45,
+        "NW": 110,
+        "WW": 55
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 1580,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 11,
+      "q": 11,
+      "n": 22,
+      "epsilon": "1/2^38",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 55,
+        "NW": 121,
+        "WW": 55
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 1738,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 11,
+      "q": 12,
+      "n": 23,
+      "epsilon": "1/2^40",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 55,
+        "NW": 132,
+        "WW": 66
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 1903,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 12,
+      "q": 12,
+      "n": 24,
+      "epsilon": "1/2^40",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 66,
+        "NW": 144,
+        "WW": 66
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 2076,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 12,
+      "q": 13,
+      "n": 25,
+      "epsilon": "1/2^42",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 66,
+        "NW": 156,
+        "WW": 78
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 2256,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 13,
+      "q": 13,
+      "n": 26,
+      "epsilon": "1/2^42",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 78,
+        "NW": 169,
+        "WW": 78
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 2444,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 13,
+      "q": 14,
+      "n": 27,
+      "epsilon": "1/2^44",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 78,
+        "NW": 182,
+        "WW": 91
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 2639,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 14,
+      "q": 14,
+      "n": 28,
+      "epsilon": "1/2^44",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 91,
+        "NW": 196,
+        "WW": 91
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 2842,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 14,
+      "q": 15,
+      "n": 29,
+      "epsilon": "1/2^46",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 91,
+        "NW": 210,
+        "WW": 105
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 3052,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 15,
+      "q": 15,
+      "n": 30,
+      "epsilon": "1/2^46",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 105,
+        "NW": 225,
+        "WW": 105
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 3270,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 15,
+      "q": 16,
+      "n": 31,
+      "epsilon": "1/2^48",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 105,
+        "NW": 240,
+        "WW": 120
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 3495,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 16,
+      "q": 16,
+      "n": 32,
+      "epsilon": "1/2^48",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 120,
+        "NW": 256,
+        "WW": 120
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 3728,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 16,
+      "q": 17,
+      "n": 33,
+      "epsilon": "1/2^50",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 120,
+        "NW": 272,
+        "WW": 136
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 3968,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 17,
+      "q": 17,
+      "n": 34,
+      "epsilon": "1/2^50",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 136,
+        "NW": 289,
+        "WW": 136
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 4216,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 17,
+      "q": 18,
+      "n": 35,
+      "epsilon": "1/2^52",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 136,
+        "NW": 306,
+        "WW": 153
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 4471,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 18,
+      "q": 18,
+      "n": 36,
+      "epsilon": "1/2^52",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 153,
+        "NW": 324,
+        "WW": 153
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 4734,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 18,
+      "q": 19,
+      "n": 37,
+      "epsilon": "1/2^54",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 153,
+        "NW": 342,
+        "WW": 171
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 5004,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 19,
+      "q": 19,
+      "n": 38,
+      "epsilon": "1/2^54",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 171,
+        "NW": 361,
+        "WW": 171
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 5282,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 19,
+      "q": 20,
+      "n": 39,
+      "epsilon": "1/2^56",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 171,
+        "NW": 380,
+        "WW": 190
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 5567,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 20,
+      "q": 20,
+      "n": 40,
+      "epsilon": "1/2^56",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 190,
+        "NW": 400,
+        "WW": 190
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 5860,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 20,
+      "q": 21,
+      "n": 41,
+      "epsilon": "1/2^58",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 190,
+        "NW": 420,
+        "WW": 210
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 6160,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 21,
+      "q": 21,
+      "n": 42,
+      "epsilon": "1/2^58",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 210,
+        "NW": 441,
+        "WW": 210
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 6468,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 21,
+      "q": 22,
+      "n": 43,
+      "epsilon": "1/2^60",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 210,
+        "NW": 462,
+        "WW": 231
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 6783,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 22,
+      "q": 22,
+      "n": 44,
+      "epsilon": "1/2^60",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 231,
+        "NW": 484,
+        "WW": 231
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 7106,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 22,
+      "q": 23,
+      "n": 45,
+      "epsilon": "1/2^62",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 231,
+        "NW": 506,
+        "WW": 253
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 7436,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 23,
+      "q": 23,
+      "n": 46,
+      "epsilon": "1/2^62",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 253,
+        "NW": 529,
+        "WW": 253
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 7774,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 23,
+      "q": 24,
+      "n": 47,
+      "epsilon": "1/2^64",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 253,
+        "NW": 552,
+        "WW": 276
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 8119,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 24,
+      "q": 24,
+      "n": 48,
+      "epsilon": "1/2^64",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 276,
+        "NW": 576,
+        "WW": 276
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 8472,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 24,
+      "q": 25,
+      "n": 49,
+      "epsilon": "1/2^66",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 276,
+        "NW": 600,
+        "WW": 300
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 8832,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 25,
+      "q": 25,
+      "n": 50,
+      "epsilon": "1/2^66",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 300,
+        "NW": 625,
+        "WW": 300
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 9200,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 25,
+      "q": 26,
+      "n": 51,
+      "epsilon": "1/2^68",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 300,
+        "NW": 650,
+        "WW": 325
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 9575,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 26,
+      "q": 26,
+      "n": 52,
+      "epsilon": "1/2^68",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 325,
+        "NW": 676,
+        "WW": 325
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 9958,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 26,
+      "q": 27,
+      "n": 53,
+      "epsilon": "1/2^70",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 325,
+        "NW": 702,
+        "WW": 351
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 10348,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 27,
+      "q": 27,
+      "n": 54,
+      "epsilon": "1/2^70",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 351,
+        "NW": 729,
+        "WW": 351
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 10746,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 27,
+      "q": 28,
+      "n": 55,
+      "epsilon": "1/2^72",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 351,
+        "NW": 756,
+        "WW": 378
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 11151,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 28,
+      "q": 28,
+      "n": 56,
+      "epsilon": "1/2^72",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 378,
+        "NW": 784,
+        "WW": 378
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 11564,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 28,
+      "q": 29,
+      "n": 57,
+      "epsilon": "1/2^74",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 378,
+        "NW": 812,
+        "WW": 406
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 11984,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 29,
+      "q": 29,
+      "n": 58,
+      "epsilon": "1/2^74",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 406,
+        "NW": 841,
+        "WW": 406
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 12412,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 29,
+      "q": 30,
+      "n": 59,
+      "epsilon": "1/2^76",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 406,
+        "NW": 870,
+        "WW": 435
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 12847,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 30,
+      "q": 30,
+      "n": 60,
+      "epsilon": "1/2^76",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 435,
+        "NW": 900,
+        "WW": 435
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 13290,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 30,
+      "q": 31,
+      "n": 61,
+      "epsilon": "1/2^78",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 435,
+        "NW": 930,
+        "WW": 465
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 13740,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 31,
+      "q": 31,
+      "n": 62,
+      "epsilon": "1/2^78",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 465,
+        "NW": 961,
+        "WW": 465
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 14198,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 31,
+      "q": 32,
+      "n": 63,
+      "epsilon": "1/2^80",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 465,
+        "NW": 992,
+        "WW": 496
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 14663,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    },
+    {
+      "p": 32,
+      "q": 32,
+      "n": 64,
+      "epsilon": "1/2^80",
+      "valid": true,
+      "pair_type_counts": {
+        "NN": 496,
+        "NW": 1024,
+        "WW": 496
+      },
+      "masks": {
+        "NN": [
+          "110110111"
+        ],
+        "NW": [
+          "111111011"
+        ],
+        "WW": [
+          "111011011"
+        ]
+      },
+      "pairwise_crossing_sum": 15136,
+      "generic": false,
+      "genericity_note": "The strict masks are open; the paper applies a generic rational perturbation."
+    }
+  ],
+  "logical_status": "regression check; the all-n theorem is proved analytically in the manuscript"
+}
