@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The complete proof of the exact formula for OEIS A397182, with rational certificates through n=16 and reproducibility scripts.">
+  <meta name="theme-color" content="#ffffff">
+  <title>The Exact Region Formula for Long-Legged A Arrangements</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+  <div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>
+  <img class="lossfunk-mark" src="assets/images/lossfunk-no-bg.png" alt="Lossfunk">
+
+  <header class="site-header">
+    <a class="eyebrow" href="https://oeis.org/A397182">OEIS A397182 · exact solution</a>
+    <h1>The exact region formula for constrained long-legged A arrangements</h1>
+    <p class="byline">
+      <span>Siddhartha Mahajan</span><small>Research Fellow, Lossfunk</small>
+      <span>Paras Chopra</span><small>Lossfunk</small>
+    </p>
+    <p class="lead">
+      A constrained long-legged A is made from two rays with a common apex and
+      a crossbar joining points at equal distance from that apex. We determine
+      the maximum number of regions cut from the plane by <em>n</em> such
+      objects, for every <em>n</em>.
+    </p>
+
+    <div class="theorem hero-theorem">
+      <p class="theorem-label">Main theorem</p>
+      <div class="display-math" id="formula-to-copy">
+        a(n) = 7 C(n,2) + ⌊n²/4⌋ + 2n + 1
+        = ⌊(15n² − 6n + 4)/4⌋, &nbsp; n ≥ 0.
+      </div>
+      <button class="copy-button" id="copy-formula" type="button" data-copy-text="a(n) = 7*binom(n,2) + floor(n^2/4) + 2n + 1 = floor((15n^2 - 6n + 4)/4)">
+        Copy formula
+      </button>
+    </div>
+
+    <div class="quick-facts" aria-label="Proof at a glance">
+      <div><strong>8</strong><span>maximum crossings for one pair</span></div>
+      <div><strong>7 + 1</strong><span>baseline plus an eight-pair bonus</span></div>
+      <div><strong>K<sub>⌊n/2⌋,⌈n/2⌉</sub></strong><span>the extremal eight-crossing graph</span></div>
+      <div><strong>all n</strong><span>analytic construction and proof</span></div>
+    </div>
+
+    <nav class="article-nav" aria-label="Article sections">
+      <a href="#problem">problem</a>
+      <a href="#upper-bound">upper bound</a>
+      <a href="#construction">construction</a>
+      <a href="#pair-checks">pair checks</a>
+      <a href="#perturbation">perturbation</a>
+      <a href="#n4-witness">n=4 figure</a>
+      <a href="#certificates">certificates</a>
+      <a href="#provenance">how it was found</a>
+      <a href="#downloads">downloads</a>
+      <a href="#references">references</a>
+      <a class="nav-download" href="assets/downloads/manuscript/a397182-exact-formula.pdf">paper PDF</a>
+    </nav>
+
+    <figure class="hero-figure">
+      <div class="figure-frame">
+        <img src="assets/figures/two-family-blowups.svg" alt="Schematic of the two blow-up charts used in the all-n construction">
+      </div>
+      <figcaption>
+        The all-<em>n</em> construction is split into a narrow family and a
+        wide nested fan. Its incidences become elementary line intersections
+        in two limiting coordinate charts.
+      </figcaption>
+    </figure>
+  </header>
+
+  <main>
+    <section id="problem" data-section>
+      <p class="section-kicker">01 · model</p>
+      <h2>The problem and the region identity</h2>
+
+      <h3>A constrained A</h3>
+      <p>
+        For an angle φ, write <span class="math">e(φ)=(cos φ,sin φ)</span>.
+        Given an apex <span class="math">P∈ℝ²</span>, a radius
+        <span class="math">r&gt;0</span>, and distinct unit vectors
+        <span class="math">u,v</span>, define
+      </p>
+      <div class="display-math">
+        A(P,r;u,v) =
+        {P+tu : t≥0} ∪ {P+tv : t≥0} ∪ [P+ru, P+rv].
+      </div>
+      <p>
+        The first two pieces are the legs; the last is the crossbar. Equal
+        leg lengths are a metric constraint, so arbitrary affine
+        deformations do not preserve the problem.
+      </p>
+
+      <div class="definition">
+        <p class="box-label">Generic arrangement</p>
+        <p>
+          A cross-shape intersection is <em>proper</em> when it lies strictly
+          beyond every participating ray apex and strictly inside every
+          participating crossbar. An arrangement is generic when supporting
+          lines from different A's are nonparallel, all actual intersections
+          are proper, no vertex lies on a foreign component, and no three
+          shapes meet at one point.
+        </p>
+      </div>
+
+      <h3>Regions are crossings plus a fixed contribution</h3>
+      <div class="proposition">
+        <p class="box-label">Proposition</p>
+        <div class="display-math compact-math">F = I + 2n + 1.</div>
+        <p>
+          Here <em>I</em> is the number of finite proper crossings and
+          <em>F</em> is the number of complementary regions.
+        </p>
+      </div>
+      <p>
+        To prove it, compactify the plane by one point at infinity. A single
+        A becomes a connected graph with four vertices (apex, two bar
+        endpoints, infinity) and five edges, hence first Betti number two.
+        The union of <em>n</em> disjoint A's, with their infinity points
+        identified, has first Betti number <span class="math">2n</span>.
+        Every proper transverse crossing identifies two interior arc points
+        and increases the first Betti number by one. The compactified union
+        therefore has Betti number <span class="math">2n+I</span>, and
+        Euler's formula on the sphere gives
+        <span class="math">F=(2n+I)+1</span>.
+      </p>
+    </section>
+
+    <section id="upper-bound" data-section>
+      <p class="section-kicker">02 · extremal graph</p>
+      <h2>The universal upper bound</h2>
+      <p>
+        Cutler, Karlsson, and Sloane proved two local facts: two constrained
+        long-legged A's have at most eight proper finite intersections, and
+        no three A's can be pairwise eight-crossing.
+      </p>
+      <p>
+        Form a graph <span class="math">G₈</span> with one vertex per A and
+        an edge exactly when the pair has eight crossings. The three-object
+        obstruction says that <span class="math">G₈</span> is triangle-free.
+        If it has <em>e</em> edges, then every edge contributes at most eight
+        crossings and every nonedge at most seven:
+      </p>
+      <div class="derivation">
+        <div>I ≤ 8e + 7(C(n,2) − e)</div>
+        <div>= 7C(n,2) + e.</div>
+      </div>
+      <p>
+        Mantel's theorem gives <span class="math">e≤⌊n²/4⌋</span>. Combining
+        this with the region identity yields
+      </p>
+      <div class="display-math">
+        a(n) ≤ 7C(n,2) + ⌊n²/4⌋ + 2n + 1.
+      </div>
+      <p>
+        Equality is rigid: the eight-crossing graph must be the balanced
+        complete bipartite graph
+        <span class="math">K<sub>⌊n/2⌋,⌈n/2⌉</sub></span>, and every pair
+        within a part must have seven crossings. The lower construction now
+        has a precise target.
+      </p>
+    </section>
+
+    <section id="construction" data-section>
+      <p class="section-kicker">03 · lower construction</p>
+      <h2>A narrow family and a wide nested fan</h2>
+      <p>
+        Fix part sizes <span class="math">p,q≥1</span>, put
+        <span class="math">m=max(p,q)</span>, and choose a sufficiently small
+        <span class="math">ε&gt;0</span>. The construction uses
+        <span class="math">O=(0,0)</span>,
+        <span class="math">C=(1,0)</span>, and
+        <span class="math">h=3/2</span>.
+      </p>
+
+      <div class="two-column">
+        <article class="construction-card">
+          <p class="card-number">N<sub>i</sub></p>
+          <h3>The narrow family</h3>
+          <p>For <span class="math">1≤i≤p</span>, set</p>
+          <div class="math-list">
+            <span>a<sub>i</sub>=3i, &nbsp; α<sub>i</sub>=a<sub>i</sub>ε,</span>
+            <span>r<sub>i</sub>=cos α<sub>i</sub>,</span>
+            <span>P<sub>i</sub>=C−r<sub>i</sub>e(α<sub>i</sub>).</span>
+          </div>
+          <p>
+            Its leg directions are
+            <span class="math">d<sub>i</sub><sup>±</sup>=e(α<sub>i</sub>±ε)</span>.
+            Center the bar as
+          </p>
+          <div class="math-list">
+            <span>n<sub>i</sub>=e(α<sub>i</sub>+π/2),</span>
+            <span>M<sub>i</sub>=C−r<sub>i</sub>(1−cos ε)e(α<sub>i</sub>),</span>
+            <span>s<sub>i</sub>=r<sub>i</sub>sin ε.</span>
+          </div>
+          <p>
+            Then
+            <span class="math">B<sub>i</sub>={M<sub>i</sub>+tn<sub>i</sub>:−s<sub>i</sub>≤t≤s<sub>i</sub>}</span>
+            and its supporting line is
+            <span class="math">e(α<sub>i</sub>)·X=cos α<sub>i</sub> cos ε</span>.
+          </p>
+        </article>
+
+        <article class="construction-card">
+          <p class="card-number">W<sub>j</sub></p>
+          <h3>The wide family</h3>
+          <p>For <span class="math">1≤j≤q</span>, set</p>
+          <div class="math-list">
+            <span>q<sub>j</sub>=4<sup>−j</sup>, &nbsp; θ<sub>j</sub>=2 arctan q<sub>j</sub>,</span>
+            <span>D<sub>j</sub>=4<sup>j</sup>, &nbsp; L<sub>j</sub>=4m+j,</span>
+            <span>λ<sub>j</sub>=L<sub>j</sub>ε.</span>
+          </div>
+          <p>
+            The low and high directions are
+            <span class="math">ℓ<sub>j</sub>=e(λ<sub>j</sub>)</span> and
+            <span class="math">u<sub>j</sub>=e(π−θ<sub>j</sub>+λ<sub>j</sub>)</span>.
+            Put the high bar endpoint at
+            <span class="math">H<sub>j</sub>=C+ε(−D<sub>j</sub>,h)</span>, then define
+          </p>
+          <div class="math-list">
+            <span>R<sub>j</sub>=(1+hε)/sin(θ<sub>j</sub>−λ<sub>j</sub>),</span>
+            <span>Q<sub>j</sub>=H<sub>j</sub>−R<sub>j</sub>u<sub>j</sub>,</span>
+            <span>K<sub>j</sub>=Q<sub>j</sub>+R<sub>j</sub>ℓ<sub>j</sub>.</span>
+          </div>
+          <p>
+            Thus <span class="math">(Q<sub>j</sub>)<sub>y</sub>=−1</span>
+            and the bar joins <span class="math">K<sub>j</sub></span> to
+            <span class="math">H<sub>j</sub></span>.
+          </p>
+        </article>
+      </div>
+
+      <p>
+        At <span class="math">ε=0</span>, the relevant wide-family
+        abscissae are
+      </p>
+      <div class="display-math">
+        A<sub>j</sub> = 1 + cot θ<sub>j</sub>
+        = 1 + (D<sub>j</sub>−q<sub>j</sub>)/2,
+        &nbsp;&nbsp;
+        B<sub>j</sub> = 1 + cot(θ<sub>j</sub>/2) = 1+D<sub>j</sub>,
+      </div>
+      <p>
+        with
+        <span class="math">Q<sub>j</sub>→(A<sub>j</sub>,−1)</span>,
+        <span class="math">K<sub>j</sub>→(B<sub>j</sub>,−1)</span>, and
+        <span class="math">H<sub>j</sub>→C</span>.
+      </p>
+
+      <figure class="wide-figure">
+        <div class="figure-frame">
+          <img src="assets/figures/two-family-blowups.svg" alt="The blow-up at C and the blow-up at y equals minus one">
+        </div>
+        <figcaption>
+          Left: the chart near <em>C</em>, where narrow legs/bar and the wide
+          high-leg/bar fan become lines. Right: the chart near
+          <span class="math">y=−1</span>, where the wide low legs are ordered.
+          The picture is schematic; the proof uses only strict slope and
+          order inequalities.
+        </figcaption>
+      </figure>
+
+      <h3>The three required incidence masks</h3>
+      <p>
+        Order each shape's components as first leg, second leg, crossbar.
+        A 1 means that the indicated proper component intersection is
+        required; a 0 makes no assertion.
+      </p>
+      <div class="mask-grid">
+        <div><strong>N–N · 7</strong><code>110<br>110<br>111</code></div>
+        <div><strong>N–W · 8</strong><code>111<br>111<br>011</code></div>
+        <div><strong>W–W · 7</strong><code>111<br>011<br>011</code></div>
+      </div>
+    </section>
+
+    <section id="pair-checks" data-section>
+      <p class="section-kicker">04 · incidence verification</p>
+      <h2>Why the three pair types work</h2>
+
+      <div class="lemma">
+        <p class="box-label">Blow-up stability</p>
+        <p>
+          If, after an invertible affine rescaling, two supporting lines and
+          their directed component domains converge to nonparallel lines
+          meeting in the relative interior of both limiting domains, then
+          their original components intersect properly for all sufficiently
+          small positive ε. This follows because the two line-intersection
+          parameters are continuous rational functions and the limiting
+          domain inequalities are strict.
+        </p>
+      </div>
+
+      <details open>
+        <summary>Narrow–narrow pairs: seven crossings</summary>
+        <div class="proof-body">
+          <p>
+            Take <span class="math">i&lt;k</span>, write
+            <span class="math">a=a<sub>i</sub></span> and
+            <span class="math">b=a<sub>k</sub></span>, so
+            <span class="math">b−a≥3</span>. Under the blow-up
+            <span class="math">(x,y)↦(x,y/ε)</span> near <em>O</em>, the
+            σ-leg of <span class="math">N<sub>i</sub></span> tends to
+          </p>
+          <div class="display-math compact-math">
+            Y = −a + (a+σ)x, &nbsp; x&gt;0, &nbsp; σ∈{−1,+1}.
+          </div>
+          <p>
+            The σ-leg of <span class="math">N<sub>i</sub></span> and τ-leg
+            of <span class="math">N<sub>k</sub></span> meet at limiting
+            abscissa
+            <span class="math">x=(b−a)/(b−a+τ−σ)&gt;0</span>, because the
+            denominator is at least <span class="math">(b−a)−2≥1</span>.
+            Hence all four leg–leg intersections are proper.
+          </p>
+          <p>
+            For the bar of <span class="math">N<sub>i</sub></span> against
+            the τ-leg of <span class="math">N<sub>k</sub></span>, put
+            <span class="math">A=aε</span>, <span class="math">B=bε</span>.
+            Writing the point as <span class="math">M<sub>i</sub>+t n<sub>i</sub></span>,
+            direct line intersection gives
+          </p>
+          <div class="equation-stack">
+            <div>ρ<sub>τ</sub> =
+              [cos A(cos ε−1)+cos B cos(B−A)] / cos(B−A+τε)
+              = 1+O(ε²),</div>
+            <div>t<sub>τ</sub> =
+              −cos B sin(B−A)+ρ<sub>τ</sub> sin(B−A+τε).</div>
+          </div>
+          <p>The endpoint-sensitive Taylor expansion is</p>
+          <div class="equation-stack">
+            <div>t<sub>−</sub>+s<sub>i</sub> =
+              ((b−a)(2a+1)/2)ε³+O(ε⁵),</div>
+            <div>s<sub>i</sub>−t<sub>−</sub> = 2ε+O(ε³),</div>
+            <div>s<sub>i</sub>−t<sub>+</sub> =
+              ((b−a)(2a−1)/2)ε³+O(ε⁵),</div>
+            <div>t<sub>+</sub>+s<sub>i</sub> = 2ε+O(ε³).</div>
+          </div>
+          <p>
+            Since <span class="math">a=3i≥3</span>, all four margins are
+            positive for small ε, so the earlier bar meets both later legs
+            strictly inside.
+          </p>
+          <p>
+            Finally every narrow bar line passes through
+            <span class="math">X<sub>ε</sub>=(cos ε,0)</span>. Its bar
+            coordinate is
+            <span class="math">sin(aε)(1−cos ε)=O(ε³)</span>, while the
+            half-length is <span class="math">s<sub>i</sub>=ε+O(ε³)</span>.
+            Therefore two narrow bars meet in both interiors. Total:
+            <strong>4+2+1=7</strong>.
+          </p>
+        </div>
+      </details>
+
+      <details open>
+        <summary>Narrow–wide pairs: eight crossings</summary>
+        <div class="proof-body">
+          <p>
+            Fix <span class="math">N<sub>i</sub>,W<sub>j</sub></span>, and
+            abbreviate
+            <span class="math">a=a<sub>i</sub>, L=L<sub>j</sub>, D=D<sub>j</sub></span>,
+            <span class="math">μ=tan θ<sub>j</sub>=2q<sub>j</sub>/(1−q<sub>j</sub>²)</span>,
+            and <span class="math">ν=tan(θ<sub>j</sub>/2)=q<sub>j</sub></span>.
+          </p>
+          <p>
+            The determinant between the wide low direction and the σ-leg of
+            the narrow A is
+            <span class="math">sin((L−a−σ)ε)</span>, and
+            <span class="math">L−a−σ≥(4m+1)−(3m+1)=m&gt;0</span>.
+            The two ray parameters satisfy
+          </p>
+          <div class="display-math compact-math">
+            εr<sub>σ</sub> → 1/(L−a−σ),
+            &nbsp; εs<sub>σ</sub> → 1/(L−a−σ),
+          </div>
+          <p>so both narrow legs meet the wide low leg properly.</p>
+          <p>
+            For the other six incidences, use the chart
+            <span class="math">(X,Y)=((x−1)/ε,y/ε)</span> at <em>C</em>.
+            The narrow legs tend to <span class="math">Y=±1</span> and the
+            narrow bar tends to <span class="math">X=0, −1&lt;Y&lt;1</span>.
+            The wide high leg and bar tend to
+          </p>
+          <div class="equation-stack">
+            <div>H<sub>j</sub>: Y−h = −μ(X+D),</div>
+            <div>C<sub>j</sub>: Y−h = −ν(X+D), &nbsp; X&gt;−D.</div>
+          </div>
+          <p>
+            The line <span class="math">Y=σ</span> meets the wide bar with
+            <span class="math">X+D=(h−σ)/ν&gt;0</span>, since
+            <span class="math">h=3/2&gt;1</span>. Thus both narrow legs meet
+            the wide bar in its interior. The wide high-ray apex escapes to
+            infinity opposite the ray, so both finite intersections with
+            the narrow legs lie inside the ray.
+          </p>
+          <p>
+            At <span class="math">X=0</span>, the high leg and bar have
+            heights
+            <span class="math">h−Dμ=3/2−2/(1−q<sub>j</sub>²)</span> and
+            <span class="math">h−Dν=1/2</span>. Since
+            <span class="math">0&lt;q<sub>j</sub>≤1/4</span>, the first lies
+            in <span class="math">[−19/30,−1/2)</span>; both heights are
+            strictly between −1 and 1. The narrow bar therefore meets the
+            wide high leg and wide bar properly. Total:
+            <strong>2+6=8</strong>.
+          </p>
+        </div>
+      </details>
+
+      <details open>
+        <summary>Wide–wide pairs: seven crossings</summary>
+        <div class="proof-body">
+          <p>
+            Let <span class="math">j&lt;k</span> and write
+            <span class="math">μ<sub>r</sub>=2q<sub>r</sub>/(1−q<sub>r</sub>²)</span>,
+            <span class="math">ν<sub>r</sub>=q<sub>r</sub></span>. Because
+            <span class="math">q<sub>k</sub>≤q<sub>j</sub>/4</span> and
+            <span class="math">q<sub>j</sub>≤1/4</span>,
+          </p>
+          <div class="display-math compact-math">
+            μ<sub>j</sub> &gt; ν<sub>j</sub> &gt; μ<sub>k</sub> &gt; ν<sub>k</sub> &gt; 0.
+          </div>
+          <p>
+            In the chart at <em>C</em>, every high leg or crossbar of
+            <span class="math">W<sub>r</sub></span> limits to a line through
+            <span class="math">(−D<sub>r</sub>,h)</span> of slope
+            <span class="math">−s</span>, with
+            <span class="math">s=μ<sub>r</sub></span> or
+            <span class="math">ν<sub>r</sub></span>. For a j-line of slope
+            <span class="math">−s</span> and k-line of slope
+            <span class="math">−t</span>, <span class="math">s&gt;t</span>.
+            With <span class="math">Δ=D<sub>k</sub>−D<sub>j</sub>&gt;0</span>,
+            their displacements past their high endpoints are
+          </p>
+          <div class="display-math compact-math">
+            U<sub>j</sub> = tΔ/(s−t) &gt; 0,
+            &nbsp; U<sub>k</sub> = sΔ/(s−t) &gt; 0.
+          </div>
+          <p>
+            These strict positive displacements give all four high/bar
+            incidences: high–high, high–bar, bar–high, and bar–bar.
+          </p>
+          <p>
+            It remains to make the low leg of
+            <span class="math">W<sub>j</sub></span> meet all three components
+            of <span class="math">W<sub>k</sub></span>. In the chart
+            <span class="math">(x,Y)=(x,(y+1)/ε)</span>, the low leg of
+            <span class="math">W<sub>r</sub></span> tends to
+            <span class="math">Y=L<sub>r</sub>(x−A<sub>r</sub>), x&gt;A<sub>r</sub></span>.
+            The k-th high leg tends locally to the half-line
+            <span class="math">x=A<sub>k</sub>,Y&gt;0</span>; its bar tends
+            locally at the low endpoint to
+            <span class="math">x=B<sub>k</sub>,Y&gt;κ<sub>k</sub></span>,
+            where
+          </p>
+          <div class="display-math compact-math">
+            κ<sub>k</sub> =
+            L<sub>k</sub>/sin θ<sub>k</sub> =
+            L<sub>k</sub>(D<sub>k</sub>+q<sub>k</sub>)/2.
+          </div>
+          <p>
+            Since <span class="math">A<sub>j</sub>&lt;A<sub>k</sub>&lt;B<sub>k</sub></span>,
+            the low j-leg hits the high k-leg forward. For the bar hit,
+            <span class="math">D<sub>j</sub>≤D<sub>k</sub>/4</span> and
+            <span class="math">L<sub>k</sub>/L<sub>j</sub>&lt;5/4</span> give
+          </p>
+          <div class="equation-stack">
+            <div>B<sub>k</sub>−A<sub>j</sub> ≥ 7D<sub>k</sub>/8,</div>
+            <div>κ<sub>k</sub>/L<sub>j</sub>
+              &lt; (5/4)(257/256)(D<sub>k</sub>/2)
+              &lt; 7D<sub>k</sub>/8.</div>
+          </div>
+          <p>
+            Hence the low j-leg hits inside the k-bar. Finally the two low
+            limiting lines meet at
+          </p>
+          <div class="display-math compact-math">
+            x<sub>*</sub> =
+            A<sub>k</sub> +
+            L<sub>j</sub>(A<sub>k</sub>−A<sub>j</sub>)/
+            (L<sub>k</sub>−L<sub>j</sub>)
+            &gt; A<sub>k</sub> &gt; A<sub>j</sub>,
+          </div>
+          <p>
+            so the low–low crossing is forward on both rays. These three low
+            incidences plus the four high/bar incidences give
+            <strong>7</strong>.
+          </p>
+        </div>
+      </details>
+    </section>
+
+    <section id="perturbation" data-section>
+      <p class="section-kicker">05 · general position</p>
+      <h2>Generic rational perturbation</h2>
+      <p>
+        The transparent base construction has intentional degeneracies; for
+        example all narrow crossbar supporting lines concur at
+        <span class="math">(cos ε,0)</span>. This is removed without losing
+        any required crossing.
+      </p>
+      <p>
+        Choose ε small enough that all strict component-domain inequalities
+        above hold simultaneously. They define an open neighborhood
+        <span class="math">U</span> in the parameter space of apices, radii,
+        and leg directions. Use the rational chart for each unit direction
+      </p>
+      <div class="display-math compact-math">
+        t ↦ ((1−t²)/(1+t²), 2t/(1+t²)).
+      </div>
+      <p>
+        After clearing denominators, every unwanted degeneracy—support-line
+        parallelism, a foreign component through an apex or bar endpoint, or
+        coincidence of two distinctly labelled finite crossings—is contained
+        in the zero set of a polynomial in the rational chart parameters.
+        Only finitely many labels occur. None of these polynomials vanishes
+        identically on <span class="math">U</span>, because a sufficiently
+        small independent change of one participating apex, radius, or
+        direction breaks the event. The bad locus is therefore a finite union
+        of proper algebraic zero sets and has empty interior.
+      </p>
+      <p>
+        Rational points are dense in the chart, so
+        <span class="math">U</span> contains a rational point outside every
+        bad set. This gives a generic rational arrangement with all strict
+        required incidences preserved.
+      </p>
+
+      <div class="theorem conclusion-theorem">
+        <p class="theorem-label">Completion</p>
+        <p>
+          Take <span class="math">p=⌊n/2⌋</span> and
+          <span class="math">q=⌈n/2⌉</span>. There are
+          <span class="math">pq=⌊n²/4⌋</span> cross-family pairs with eight
+          crossings and all remaining pairs have seven. Thus
+        </p>
+        <div class="derivation">
+          <div>I ≥ 8pq + 7(C(p,2)+C(q,2))</div>
+          <div>= 7C(n,2) + ⌊n²/4⌋.</div>
+        </div>
+        <p>
+          The upper bound gives equality, and
+          <span class="math">F=I+2n+1</span> proves the theorem.
+        </p>
+      </div>
+
+      <h3>Every bipartition is realizable</h3>
+      <p>
+        The same argument works for arbitrary
+        <span class="math">p,q≥1</span>: there is a generic rational
+        arrangement with eight crossings on every cross-family pair and
+        exactly seven on every same-family pair. The exact region count is
+      </p>
+      <div class="display-math">
+        7C(p+q,2) + pq + 2(p+q) + 1.
+      </div>
+      <p class="small">
+        Colored extremal graphs also play a central role in the related
+        published paper
+        <a href="https://arxiv.org/abs/2606.06064"><cite>A Two-Graph Refinement of Paulsen's Lollipop Bounds</cite></a>.
+      </p>
+    </section>
+
+    <section id="n4-witness" data-section>
+      <p class="section-kicker">06 · the 55-region witness</p>
+      <h2>The exact n=4 construction</h2>
+      <p>
+        Four A's need 46 globally distinct proper crossings:
+        four cross-part pairs contribute eight each and two within-part pairs
+        contribute seven each. The region identity then gives
+        <span class="math">46+2·4+1=55</span>.
+      </p>
+
+      <div class="witness-banner">
+        <span>Primary witness</span>
+        <strong>complicated rational coordinates · 46 crossings · 55 regions</strong>
+        <a href="assets/downloads/certificates/n04.json" download>Download n04.json</a>
+      </div>
+
+      <figure class="overflow-figure">
+        <div class="figure-frame figure-scroll">
+          <img src="assets/figures/n4-complex-full.svg" alt="Full 55-region arrangement produced from the complicated rational n=4 certificate">
+        </div>
+        <figcaption>
+          The full exact rational witness from <code>n04.json</code>. Horizontal
+          scale is enlarged to separate its extremely compressed geometry.
+          The colors distinguish the four A's and the face coloring makes the
+          55 complementary regions visible.
+        </figcaption>
+      </figure>
+
+      <figure class="overflow-figure">
+        <div class="figure-frame figure-scroll tall-detail">
+          <img src="assets/figures/n4-complex-detail-numbered.svg" alt="Numbered detail of the complicated rational n=4 witness showing its dense crossing region">
+        </div>
+        <figcaption>
+          Numbered detail of the same certificate. This view contains 45 of
+          the 46 crossings; the region labels let the dense local structure be
+          inspected rather than inferred from a compressed overview.
+        </figcaption>
+      </figure>
+
+      <h3>A low-height rational companion</h3>
+      <p>
+        A later rational simplification found a second witness with small,
+        human-readable fractions. It proves the same
+        <span class="math">7/8</span> crossing pattern, but it is not the
+        coordinate set used in the two primary figures above.
+      </p>
+      <div class="button-row">
+        <a class="button" href="assets/downloads/certificates/n04-low-height-alternate.json" download>Download simplified n=4 certificate</a>
+        <a class="button secondary" href="assets/figures/n4-low-height-three-panel.pdf" download>Download three-panel figure PDF</a>
+      </div>
+      <figure class="wide-figure">
+        <div class="figure-frame">
+          <img src="assets/figures/n4-low-height-three-panel.png" alt="Three affine views of the simplified low-height rational n=4 witness">
+        </div>
+        <figcaption>
+          The low-height certificate in three affine views: the full
+          arrangement, the main 43-crossing cluster, and a 30-crossing core.
+          The anisotropic display transform only improves visibility; all
+          intersection predicates are verified in the original Euclidean
+          coordinates.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section id="certificates" data-section>
+      <p class="section-kicker">07 · exact finite checks</p>
+      <h2>Rational certificates from n=4 through n=16</h2>
+      <p>
+        These thirteen files are independent reproducibility checks, not
+        premises of the all-<em>n</em> proof. Every coordinate and direction
+        parameter is rational. The verifier uses only Python's standard
+        library and <code>fractions.Fraction</code>; it does not make
+        floating-point or visual decisions.
+      </p>
+      <div class="certificate-note">
+        <strong>What “exact” means here.</strong>
+        The finite certificates can be checked mechanically without human
+        geometric judgment: every sign, equality, and distinctness test is
+        performed in rational arithmetic. The analytic all-<em>n</em> theorem
+        is a mathematical proof and remains appropriate for ordinary expert
+        review.
+      </div>
+
+      <div class="filter-row" aria-label="Filter certificate table">
+        <span>Show:</span>
+        <button type="button" class="filter-button active" data-filter="all">all n</button>
+        <button type="button" class="filter-button" data-filter="even">even n</button>
+        <button type="button" class="filter-button" data-filter="odd">odd n</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="certificate-table">
+          <thead>
+            <tr><th>n</th><th>parts</th><th class="num">crossings</th><th class="num">a(n)</th><th>exact certificate</th></tr>
+          </thead>
+          <tbody>
+            <tr data-parity="even"><td>4</td><td>2+2</td><td class="num">46</td><td class="num">55</td><td><a href="assets/downloads/certificates/n04.json" download>n04.json</a></td></tr>
+            <tr data-parity="odd"><td>5</td><td>2+3</td><td class="num">76</td><td class="num">87</td><td><a href="assets/downloads/certificates/n05.json" download>n05.json</a></td></tr>
+            <tr data-parity="even"><td>6</td><td>3+3</td><td class="num">114</td><td class="num">127</td><td><a href="assets/downloads/certificates/n06.json" download>n06.json</a></td></tr>
+            <tr data-parity="odd"><td>7</td><td>3+4</td><td class="num">159</td><td class="num">174</td><td><a href="assets/downloads/certificates/n07.json" download>n07.json</a></td></tr>
+            <tr data-parity="even"><td>8</td><td>4+4</td><td class="num">212</td><td class="num">229</td><td><a href="assets/downloads/certificates/n08.json" download>n08.json</a></td></tr>
+            <tr data-parity="odd"><td>9</td><td>4+5</td><td class="num">272</td><td class="num">291</td><td><a href="assets/downloads/certificates/n09.json" download>n09.json</a></td></tr>
+            <tr data-parity="even"><td>10</td><td>5+5</td><td class="num">340</td><td class="num">361</td><td><a href="assets/downloads/certificates/n10.json" download>n10.json</a></td></tr>
+            <tr data-parity="odd"><td>11</td><td>5+6</td><td class="num">415</td><td class="num">438</td><td><a href="assets/downloads/certificates/n11.json" download>n11.json</a></td></tr>
+            <tr data-parity="even"><td>12</td><td>6+6</td><td class="num">498</td><td class="num">523</td><td><a href="assets/downloads/certificates/n12.json" download>n12.json</a></td></tr>
+            <tr data-parity="odd"><td>13</td><td>6+7</td><td class="num">588</td><td class="num">615</td><td><a href="assets/downloads/certificates/n13.json" download>n13.json</a></td></tr>
+            <tr data-parity="even"><td>14</td><td>7+7</td><td class="num">686</td><td class="num">715</td><td><a href="assets/downloads/certificates/n14.json" download>n14.json</a></td></tr>
+            <tr data-parity="odd"><td>15</td><td>7+8</td><td class="num">791</td><td class="num">822</td><td><a href="assets/downloads/certificates/n15.json" download>n15.json</a></td></tr>
+            <tr data-parity="even"><td>16</td><td>8+8</td><td class="num">904</td><td class="num">937</td><td><a href="assets/downloads/certificates/n16.json" download>n16.json</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="sequence">
+        <span>a(0),…,a(16)</span>
+        1, 3, 13, 30, 55, 87, 127, 174, 229, 291, 361, 438, 523, 615, 715, 822, 937.
+      </p>
+
+      <h3>What the exact verifier checks</h3>
+      <ol class="check-list">
+        <li>equal positive leg lengths, positive orientation, and positive radius for every A;</li>
+        <li>all nine component-pair predicates for every pair, with strict ray and crossbar domains;</li>
+        <li>the balanced seven/eight pair-crossing matrix;</li>
+        <li>absence of cross-shape support-line parallelism;</li>
+        <li>absence of every foreign apex or crossbar-endpoint incidence; and</li>
+        <li>global distinctness of all proper rational crossings.</li>
+      </ol>
+    </section>
+
+    <section id="provenance" data-section>
+      <p class="section-kicker">08 · research provenance</p>
+      <h2>How the proof was reached</h2>
+      <p>
+        The path was a sequence of exact computational discoveries followed
+        by an analytic compression. This record is included to make the
+        model-assisted provenance explicit.
+      </p>
+      <ol class="timeline">
+        <li>
+          <div class="timeline-date">Stage 1</div>
+          <div>
+            <h3>The n=4 breakthrough</h3>
+            <p>
+              The 55-region discovery and its first proof were developed in
+              the ChatGPT web UI with <strong>GPT-5.6 sol pro</strong>. This
+              produced the complicated rational witness shown above and the
+              exact target pattern: four 8-crossing pairs and two 7-crossing
+              pairs.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="timeline-date">Stage 2</div>
+          <div>
+            <h3>Exact certificates through n=16</h3>
+            <p>
+              Local Codex running <strong>GPT-5.6 sol xhigh</strong>, using
+              the n=4 manuscript as its starting point, generated and checked
+              rational equality certificates for every n from 5 through 16.
+              Those experiments made the balanced complete bipartite
+              8-crossing graph impossible to miss.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="timeline-date">Stage 3</div>
+          <div>
+            <h3>The all-n construction</h3>
+            <p>
+              A zip containing the certificates, proof directions, and
+              discovery artifacts was supplied to the ChatGPT web UI running
+              <strong>GPT-5.6 sol pro</strong>. It found the narrow/wide
+              parametric construction, converted the finite pattern into the
+              all-n analytic proof on this page, and closed the sequence.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="timeline-date">Stage 4</div>
+          <div>
+            <h3>Independent local audit</h3>
+            <p>
+              Local Codex audited the proof, including an exact symbolic
+              expansion of the endpoint-sensitive narrow–narrow calculation,
+              an independent rational verifier for the finite certificates,
+              and regression checks of the parametric base through balanced
+              size 64. The models also assisted in preparing the manuscript
+              and this HTML presentation.
+            </p>
+          </div>
+        </li>
+      </ol>
+      <div class="audit-summary">
+        <strong>Separation of roles.</strong>
+        The certificates establish finite arrangements by exact arithmetic.
+        The theorem for every n is established by the upper-bound argument,
+        the explicit two-family construction, and the generic rational
+        perturbation. Neither claim asks the reader to trust a plotted image
+        or a floating-point optimizer.
+      </div>
+    </section>
+
+    <section id="downloads" data-section>
+      <p class="section-kicker">09 · reproducibility</p>
+      <h2>Paper, source, scripts, and archived outputs</h2>
+
+      <div class="download-grid">
+        <article class="download-card featured">
+          <span>Paper</span>
+          <h3>Publication manuscript</h3>
+          <p>The complete research-paper version of the proof and certificate appendix.</p>
+          <a href="assets/downloads/manuscript/a397182-exact-formula.pdf" download>Download PDF · 119 KB</a>
+        </article>
+        <article class="download-card">
+          <span>Source</span>
+          <h3>LaTeX and bibliography</h3>
+          <p>Submission-ready source files.</p>
+          <a href="assets/downloads/manuscript/a397182-exact-formula.tex" download>main.tex</a>
+          <a href="assets/downloads/manuscript/references.bib" download>references.bib</a>
+          <a href="assets/downloads/manuscript/main.bbl" download>main.bbl</a>
+        </article>
+        <article class="download-card">
+          <span>Exact verification</span>
+          <h3>Finite certificate verifier</h3>
+          <p>Checks all rational certificates n=4,…,16 using only the Python standard library.</p>
+          <a href="assets/downloads/scripts/verify_certificates.py" download>verify_certificates.py</a>
+          <a href="assets/downloads/verification/exact_certificates_n4_n16.json" download>archived output</a>
+        </article>
+        <article class="download-card">
+          <span>Regression</span>
+          <h3>Parametric base verifier</h3>
+          <p>Checks the three exact incidence masks for balanced sizes through n=64.</p>
+          <a href="assets/downloads/scripts/verify_parametric_base.py" download>verify_parametric_base.py</a>
+          <a href="assets/downloads/verification/parametric_base_n2_n64.json" download>archived output</a>
+        </article>
+        <article class="download-card">
+          <span>Integrity</span>
+          <h3>Package documentation</h3>
+          <p>Original minimal-package notes and SHA-256 ledger.</p>
+          <a href="assets/downloads/README.md" download>README.md</a>
+          <a href="assets/downloads/SHA256SUMS" download>SHA256SUMS</a>
+        </article>
+      </div>
+
+      <h3>Run the checks</h3>
+      <p>
+        Preserve the <code>scripts/</code>, <code>certificates/</code>, and
+        <code>verification/</code> sibling folders shown on this page, then
+        run:
+      </p>
+      <pre><code>python3 scripts/verify_certificates.py \
+  --output verification/exact_certificates_n4_n16.json
+
+python3 scripts/verify_parametric_base.py \
+  --max-n 64 \
+  --output verification/parametric_base_n2_n64.json</code></pre>
+      <p class="small">
+        Python 3.10 or later is recommended. No third-party package is used.
+      </p>
+    </section>
+
+    <section id="references" data-section>
+      <p class="section-kicker">10 · sources</p>
+      <h2>References</h2>
+      <ol class="references">
+        <li>
+          David O. H. Cutler, Jonas Karlsson, and Neil J. A. Sloane,
+          <a href="https://arxiv.org/abs/2511.15864"><cite>Cutting a Pancake with an Exotic Knife</cite></a>,
+          arXiv:2511.15864. The two-object maximum and the obstruction to
+          three pairwise eight-crossing A's are the local upper-bound inputs.
+        </li>
+        <li>
+          OEIS Foundation Inc.,
+          <a href="https://oeis.org/A397182">A397182</a>,
+          “maximum number of regions formed by n constrained long-legged
+          A's.”
+        </li>
+        <li>
+          Willem Mantel, “Problem 28,” <cite>Wiskundige Opgaven</cite> 10
+          (1907), 60–61.
+        </li>
+        <li>
+          Siddhartha Mahajan and Paras Chopra,
+          <a href="https://arxiv.org/abs/2606.06064"><cite>A Two-Graph Refinement of Paulsen's Lollipop Bounds</cite></a>,
+          arXiv:2606.06064 (2026).
+        </li>
+        <li>
+          Siddhartha Mahajan and Paras Chopra,
+          <a href="assets/downloads/manuscript/a397182-exact-formula.pdf"><cite>The Exact Region Formula for Arrangements of Constrained Long-Legged A's</cite></a>
+          (23 July 2026).
+        </li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Siddhartha Mahajan · Paras Chopra · Lossfunk · July 2026
+    </p>
+    <p>
+      Exact certificates and verification scripts are supplied for
+      reproducibility. Page source is intentionally plain HTML, CSS, and
+      JavaScript.
+    </p>
+  </footer>
+</body>
+</html>

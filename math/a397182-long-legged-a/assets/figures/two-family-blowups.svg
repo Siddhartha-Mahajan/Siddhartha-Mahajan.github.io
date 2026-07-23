@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 510" role="img" aria-labelledby="title desc">
+  <title id="title">The two blow-up charts for the narrow and wide families</title>
+  <desc id="desc">At left, two horizontal narrow legs and a vertical narrow bar cross a nested fan. At right, two rising low legs meet vertical high-leg and bar limits.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#68737b"/>
+    </marker>
+    <style>
+      .axis{stroke:#68737b;stroke-width:1.5;marker-end:url(#arrow)}
+      .guide{stroke:#b7c0c5;stroke-width:1.2;stroke-dasharray:7 7}
+      .narrow{stroke:#8b2e3f;stroke-width:4;fill:none}
+      .narrow-leg{stroke:#8b2e3f;stroke-width:2.4;stroke-dasharray:10 7;fill:none}
+      .wide-a{stroke:#1d5572;stroke-width:3;fill:none}
+      .wide-b{stroke:#477f96;stroke-width:3;fill:none}
+      .point{fill:#14191d}
+      .label{font:17px Georgia,serif;fill:#374047}
+      .small{font:14px system-ui,sans-serif;fill:#68737b}
+      .panel{font:600 15px system-ui,sans-serif;letter-spacing:1px;fill:#8b2e3f}
+    </style>
+  </defs>
+  <rect width="1200" height="510" fill="#fff"/>
+
+  <g transform="translate(65 45)">
+    <text class="panel" x="0" y="0">A · BLOW-UP AT C</text>
+    <line class="axis" x1="20" y1="275" x2="500" y2="275"/>
+    <line class="axis" x1="285" y1="385" x2="285" y2="45"/>
+    <text class="label" x="505" y="282">X</text>
+    <text class="label" x="293" y="48">Y</text>
+
+    <line class="narrow-leg" x1="30" y1="170" x2="490" y2="170"/>
+    <line class="narrow-leg" x1="30" y1="335" x2="490" y2="335"/>
+    <line class="narrow" x1="285" y1="170" x2="285" y2="335"/>
+    <text class="label" x="495" y="176">Y=+1</text>
+    <text class="label" x="495" y="341">Y=−1</text>
+    <text class="small" x="294" y="255">narrow bar</text>
+
+    <circle class="point" cx="168" cy="120" r="4"/>
+    <circle class="point" cx="92" cy="120" r="4"/>
+    <text class="small" x="139" y="102">(−Dⱼ,h)</text>
+
+    <line class="wide-a" x1="62" y1="48" x2="445" y2="374"/>
+    <line class="wide-a" x1="80" y1="86" x2="488" y2="300"/>
+    <line class="wide-b" x1="45" y1="71" x2="397" y2="240"/>
+    <line class="wide-b" x1="40" y1="102" x2="465" y2="205"/>
+    <text class="small" x="390" y="386">wide high legs</text>
+    <text class="small" x="410" y="222">wide bars</text>
+
+    <text class="small" x="58" y="427">Narrow components become Y=±1 and X=0.</text>
+    <text class="small" x="58" y="449">Wide high legs and bars become a nested slope fan.</text>
+  </g>
+
+  <line x1="603" y1="45" x2="603" y2="468" stroke="#dce1e4" stroke-width="1"/>
+
+  <g transform="translate(655 45)">
+    <text class="panel" x="0" y="0">B · BLOW-UP AT y=−1</text>
+    <line class="axis" x1="28" y1="340" x2="480" y2="340"/>
+    <line class="axis" x1="55" y1="395" x2="55" y2="48"/>
+    <text class="label" x="485" y="347">x</text>
+    <text class="label" x="63" y="51">Y</text>
+
+    <line class="wide-a" x1="112" y1="340" x2="442" y2="92"/>
+    <line class="wide-b" x1="223" y1="340" x2="445" y2="140"/>
+    <line class="narrow" x1="223" y1="340" x2="223" y2="142"/>
+    <line class="narrow" x1="374" y1="340" x2="374" y2="94"/>
+
+    <circle class="point" cx="112" cy="340" r="4"/>
+    <circle class="point" cx="223" cy="340" r="4"/>
+    <circle class="point" cx="374" cy="340" r="4"/>
+    <text class="label" x="98" y="368">Aⱼ</text>
+    <text class="label" x="208" y="368">Aₖ</text>
+    <text class="label" x="359" y="368">Bₖ</text>
+
+    <text class="small" x="382" y="105">k-bar limit</text>
+    <text class="small" x="231" y="158">k-high limit</text>
+    <text class="small" x="355" y="82">j-low leg</text>
+    <text class="small" x="378" y="158">k-low leg</text>
+    <text class="small" x="56" y="427">The earlier low leg meets the later high leg,</text>
+    <text class="small" x="56" y="449">bar, and low leg with strict forward parameters.</text>
+  </g>
+</svg>
