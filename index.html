@@ -304,6 +304,273 @@
         .project-card h3 { font-size: 1rem; margin-bottom: 8px; }
         .project-card p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; flex-grow: 1; }
 
+        /* --- OEIS CONTRIBUTIONS --- */
+        .oeis-ledger {
+            position: relative;
+            overflow: hidden;
+            padding: 22px;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 14px;
+            background:
+                radial-gradient(circle at 100% 0%, rgba(6, 182, 212, 0.10), transparent 30%),
+                var(--bg-card);
+        }
+
+        .oeis-ledger::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), rgba(6, 182, 212, 0));
+        }
+
+        .oeis-ledger-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 18px;
+        }
+
+        .oeis-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 7px;
+            color: var(--accent);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .oeis-count {
+            padding: 2px 7px;
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            border-radius: 999px;
+            background: rgba(6, 182, 212, 0.08);
+        }
+
+        .oeis-ledger-header h3 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .oeis-ledger-header p {
+            max-width: 610px;
+            color: var(--text-muted);
+            font-size: 0.84rem;
+        }
+
+        .oeis-proof-heading {
+            margin-bottom: 10px;
+        }
+
+        .oeis-proof-heading h4,
+        .oeis-records-header h4 {
+            margin-bottom: 3px;
+            font-size: 0.88rem;
+        }
+
+        .oeis-proof-heading p,
+        .oeis-records-header p {
+            color: var(--text-muted);
+            font-size: 0.72rem;
+        }
+
+        .oeis-proof-grid { margin-bottom: 20px; }
+
+        .oeis-proof-grid .project-card {
+            background: rgba(7, 7, 7, 0.55);
+        }
+
+        .oeis-records-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 12px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+        }
+
+        .oeis-records-header .oeis-eyebrow { margin-bottom: 4px; }
+
+        .oeis-search-link {
+            flex-shrink: 0;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+
+        .oeis-search-link:hover { color: var(--accent); }
+
+        .oeis-feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .oeis-feature-card {
+            min-width: 0;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            background: rgba(7, 7, 7, 0.55);
+            transition: border-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .oeis-feature-card:hover {
+            border-color: rgba(6, 182, 212, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .oeis-figure {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 128px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                #0d1112;
+            background-size: 18px 18px;
+        }
+
+        .oeis-figure svg { width: 100%; height: 100%; }
+        .oeis-figure .figure-line { fill: none; stroke: var(--accent); stroke-width: 2; }
+        .oeis-figure .figure-soft { fill: none; stroke: rgba(229, 229, 229, 0.28); stroke-width: 1.3; }
+        .oeis-figure .figure-accent { fill: #67e8f9; }
+        .oeis-figure .figure-muted { fill: rgba(229, 229, 229, 0.4); }
+
+        .oeis-card-body { padding: 15px; }
+
+        .oeis-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.66rem;
+        }
+
+        .oeis-id { color: var(--accent); font-weight: 700; }
+
+        .oeis-work-type {
+            padding: 2px 6px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .oeis-feature-card h4 {
+            margin-bottom: 7px;
+            font-size: 0.98rem;
+            line-height: 1.3;
+        }
+
+        .oeis-feature-card p {
+            min-height: 58px;
+            margin-bottom: 12px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.55;
+        }
+
+        .oeis-result {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 13px;
+        }
+
+        .result-chip {
+            padding: 4px 7px;
+            border: 1px solid rgba(6, 182, 212, 0.16);
+            border-radius: 5px;
+            background: rgba(6, 182, 212, 0.06);
+            color: #b9f4fb;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+        }
+
+        .oeis-links { display: flex; flex-wrap: wrap; gap: 8px 13px; }
+
+        .oeis-resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+
+        .oeis-resource-link:hover { color: var(--accent); }
+
+        .oeis-notes {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+        }
+
+        .oeis-notes-title {
+            display: flex;
+            align-items: baseline;
+            gap: 9px;
+            margin-bottom: 9px;
+        }
+
+        .oeis-notes-title h4 { font-size: 0.86rem; }
+        .oeis-notes-title span { color: var(--text-muted); font-size: 0.7rem; }
+
+        .oeis-note-row {
+            display: grid;
+            grid-template-columns: 86px minmax(0, 1fr) auto;
+            gap: 14px;
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.045);
+        }
+
+        .oeis-note-row:first-of-type { border-top: 0; }
+
+        .oeis-mini-figure {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 86px;
+            height: 62px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #0d1112;
+        }
+
+        .oeis-mini-figure svg { width: 100%; height: 100%; }
+
+        .oeis-note-copy { min-width: 0; }
+
+        .oeis-note-heading {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 7px;
+            margin-bottom: 3px;
+        }
+
+        .oeis-note-heading h5 { font-size: 0.8rem; }
+        .oeis-note-heading span { color: var(--accent); font-family: var(--font-mono); font-size: 0.65rem; }
+        .oeis-note-copy p { color: var(--text-muted); font-size: 0.74rem; line-height: 1.45; }
+        .oeis-note-links { display: flex; gap: 10px; }
+
         /* --- EDUCATION --- */
         .edu-item {
             display: flex;
@@ -338,6 +605,15 @@
             .role-header { flex-direction: row; justify-content: space-between; }
             /* Hide right logo on very small screens if needed, or keep it small */
             .logo-box { width: 40px; height: 40px; }
+
+            .oeis-ledger { padding: 17px; }
+            .oeis-ledger-header { flex-direction: column; gap: 8px; }
+            .oeis-records-header { align-items: flex-start; flex-direction: column; gap: 7px; }
+            .oeis-feature-grid { grid-template-columns: 1fr; }
+            .oeis-feature-card p { min-height: 0; }
+            .oeis-note-row { grid-template-columns: 70px minmax(0, 1fr); gap: 10px; }
+            .oeis-mini-figure { width: 70px; height: 58px; }
+            .oeis-note-links { grid-column: 2; }
         }
 
         .fade-in { opacity: 0; transform: translateY(15px); transition: 0.5s ease-out; }
@@ -584,44 +860,228 @@
     <section id="math-stuff" class="section container">
         <h2 class="section-title fade-in">Math Stuff</h2>
 
-        <div class="projects-grid">
-            <a href="math/a397182-long-legged-a/" class="project-card fade-in" aria-label="Open the exact long-legged A proof">
-                <div class="project-top">
-                    <i class="fas fa-draw-polygon folder-icon"></i>
-                    <div class="project-links">
-                        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+        <div class="oeis-ledger fade-in">
+            <div class="oeis-ledger-header">
+                <div>
+                    <div class="oeis-eyebrow">
+                        <span>Sequence work</span>
+                        <span class="oeis-count">06 sequences</span>
                     </div>
+                    <h3>Proofs, exact values, and useful corrections</h3>
+                    <p>Long-form proof pages and a compact ledger of the OEIS records that credit my work, organized by the scale of the contribution.</p>
                 </div>
-                <h3>The Exact Formula for Long-Legged A Arrangements</h3>
-                <p>The complete all-<em>n</em> proof for OEIS A397182, with both 55-region figures, exact rational certificates through <code>n=16</code>, and standard-library verification scripts.</p>
-                <div class="tech-stack">
-                    <span class="tag">OEIS A397182</span>
-                    <span class="tag">Exact Formula</span>
-                    <span class="tag">Rational Certificates</span>
-                </div>
-            </a>
+            </div>
 
-            <a href="math/a003829-unit-circles/" class="project-card fade-in" aria-label="Open the unit-circle visualisation">
-                <div class="project-top">
-                    <i class="fas fa-circle-nodes folder-icon"></i>
-                    <div class="project-links">
-                        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+            <div class="oeis-proof-heading">
+                <h4>Full proof pages</h4>
+                <p>Visual explanations, manuscripts, exact certificates, and reproducible verification.</p>
+            </div>
+
+            <div class="projects-grid oeis-proof-grid">
+                <a href="math/a397182-long-legged-a/" class="project-card" aria-label="Open the exact long-legged A proof">
+                    <div class="project-top">
+                        <i class="fas fa-draw-polygon folder-icon"></i>
+                        <div class="project-links">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                        </div>
                     </div>
+                    <h3>The Exact Formula for Long-Legged A Arrangements</h3>
+                    <p>The complete all-<em>n</em> proof for OEIS A397182, with both 55-region figures, exact rational certificates through <code>n=16</code>, and standard-library verification scripts.</p>
+                    <div class="tech-stack">
+                        <span class="tag">OEIS A397182</span>
+                        <span class="tag">Exact Formula</span>
+                        <span class="tag">Rational Certificates</span>
+                    </div>
+                </a>
+
+                <a href="math/a003829-unit-circles/" class="project-card" aria-label="Open the unit-circle visualisation">
+                    <div class="project-top">
+                        <i class="fas fa-circle-nodes folder-icon"></i>
+                        <div class="project-links">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <h3>Nine Points in the Unit-Circle Problem</h3>
+                    <p>A visual account of the finite-certificate proof that OEIS A003829 has <code>a(9)=20</code>, including the construction, certificate outline, and manuscript PDF.</p>
+                    <div class="tech-stack">
+                        <span class="tag">Erdos 104</span>
+                        <span class="tag">OEIS A003829</span>
+                        <span class="tag">Finite Certificate</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="oeis-records-header">
+                <div>
+                    <div class="oeis-eyebrow">
+                        <span>On the OEIS record</span>
+                        <span class="oeis-count">04 credits</span>
+                    </div>
+                    <p>Current sequence entries that name or attribute work to Siddhartha Mahajan.</p>
                 </div>
-                <h3>Nine Points in the Unit-Circle Problem</h3>
-                <p>A visual account of the finite-certificate proof that OEIS A003829 has <code>a(9)=20</code>, including the construction, certificate outline, and manuscript PDF.</p>
-                <div class="tech-stack">
-                    <span class="tag">Erdos 104</span>
-                    <span class="tag">OEIS A003829</span>
-                    <span class="tag">Finite Certificate</span>
+                <a class="oeis-search-link" href="https://oeis.org/search?q=%22Siddhartha+Mahajan%22" target="_blank" rel="noopener noreferrer">
+                    Live OEIS search <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </a>
+            </div>
+
+            <div class="oeis-feature-grid">
+                <article class="oeis-feature-card">
+                    <figure class="oeis-figure" aria-label="Three overlapping lollipop shapes, each made from a circle and a radial stem">
+                        <svg viewBox="0 0 360 140" role="img" aria-hidden="true">
+                            <g opacity="0.95">
+                                <circle cx="128" cy="75" r="43" class="figure-line"/>
+                                <path d="M85 75H18" class="figure-line"/>
+                                <circle cx="207" cy="75" r="43" class="figure-soft"/>
+                                <path d="M250 75H338" class="figure-soft"/>
+                                <circle cx="168" cy="66" r="43" class="figure-line" opacity="0.7"/>
+                                <path d="M168 23V2" class="figure-line" opacity="0.7"/>
+                            </g>
+                            <g class="figure-accent">
+                                <circle cx="148" cy="36" r="2.8"/>
+                                <circle cx="186" cy="27" r="2.8"/>
+                                <circle cx="168" cy="107" r="2.8"/>
+                                <circle cx="170" cy="35" r="2.8"/>
+                            </g>
+                            <text x="18" y="126" fill="rgba(229,229,229,.42)" font-family="JetBrains Mono, monospace" font-size="9">circle + radial stem</text>
+                            <text x="290" y="126" fill="#67e8f9" font-family="JetBrains Mono, monospace" font-size="10">a<tspan baseline-shift="sub" font-size="7">L</tspan>(n)</text>
+                        </svg>
+                    </figure>
+                    <div class="oeis-card-body">
+                        <div class="oeis-card-meta">
+                            <span class="oeis-id">A389624</span>
+                            <span class="oeis-work-type">exact values · joint work</span>
+                        </div>
+                        <h4>Regions cut by lollipops</h4>
+                        <p>With Paras Chopra, closed Paulsen's remaining gaps through <code>n=17</code> and at <code>n=19</code>, using a two-graph refinement of the crossing obstruction.</p>
+                        <div class="oeis-result" aria-label="Selected results">
+                            <span class="result-chip">a(8), a(9), a(11)–a(17)</span>
+                            <span class="result-chip">a(19) = 1076</span>
+                        </div>
+                        <div class="oeis-links">
+                            <a class="oeis-resource-link" href="https://oeis.org/A389624" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> OEIS</a>
+                            <a class="oeis-resource-link" href="https://arxiv.org/abs/2606.06064" target="_blank" rel="noopener noreferrer"><i class="far fa-file-lines" aria-hidden="true"></i> Manuscript</a>
+                            <a class="oeis-resource-link" href="https://github.com/Siddhartha-Mahajan/lollipop-problem-formalization" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> GitHub + Lean</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="oeis-feature-card">
+                    <figure class="oeis-figure" aria-label="Rows of binary vectors forming a disjunct matrix">
+                        <svg viewBox="0 0 360 140" role="img" aria-hidden="true">
+                            <g font-family="JetBrains Mono, monospace" font-size="15" letter-spacing="4">
+                                <text x="22" y="32" fill="rgba(229,229,229,.33)">0101000001</text>
+                                <text x="22" y="55" fill="#67e8f9">1000100001</text>
+                                <text x="22" y="78" fill="rgba(229,229,229,.33)">0010110000</text>
+                                <text x="22" y="101" fill="rgba(103,232,249,.58)">0000101100</text>
+                            </g>
+                            <path d="M218 20h10v88h-10M333 20h-10v88h10" class="figure-soft"/>
+                            <text x="278" y="57" text-anchor="middle" fill="rgba(229,229,229,.45)" font-family="JetBrains Mono, monospace" font-size="9">2-DISJUNCT</text>
+                            <text x="278" y="76" text-anchor="middle" fill="#67e8f9" font-family="JetBrains Mono, monospace" font-size="16">42 · 68</text>
+                            <text x="22" y="125" fill="rgba(229,229,229,.42)" font-family="JetBrains Mono, monospace" font-size="9">no vector covered by the OR of two others</text>
+                        </svg>
+                    </figure>
+                    <div class="oeis-card-body">
+                        <div class="oeis-card-meta">
+                            <span class="oeis-id">A286874</span>
+                            <span class="oeis-work-type">exact values · theorem</span>
+                        </div>
+                        <h4>Binary 2-cover-free families</h4>
+                        <p>Proved two exact values, tightened the open <code>n=16</code> interval, and added a private-chain upper bound that works in every dimension.</p>
+                        <div class="oeis-result" aria-label="Selected results">
+                            <span class="result-chip">a(15) = 42</span>
+                            <span class="result-chip">48 ≤ a(16) ≤ 54</span>
+                            <span class="result-chip">a(17) = 68</span>
+                        </div>
+                        <div class="oeis-links">
+                            <a class="oeis-resource-link" href="https://oeis.org/A286874" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> OEIS</a>
+                            <a class="oeis-resource-link" href="https://oeis.org/A286874/a286874_1.pdf" target="_blank" rel="noopener noreferrer"><i class="far fa-file-lines" aria-hidden="true"></i> Manuscript</a>
+                            <a class="oeis-resource-link" href="https://github.com/Siddhartha-Mahajan/a286874-cover-free-families" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> GitHub + certificates</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="oeis-notes">
+                <div class="oeis-notes-title">
+                    <h4>Corrections &amp; independent checks</h4>
+                    <span>smaller, but worth keeping in the record</span>
                 </div>
-            </a>
+
+                <article class="oeis-note-row">
+                    <figure class="oeis-mini-figure" aria-label="A small stable configuration in Conway's Game of Life">
+                        <svg viewBox="0 0 86 62" role="img" aria-hidden="true">
+                            <g stroke="rgba(229,229,229,.12)" stroke-width="1">
+                                <path d="M19 7V55M35 7V55M51 7V55M67 7V55M19 7H67M19 23H67M19 39H67M19 55H67" fill="none"/>
+                            </g>
+                            <g fill="#67e8f9">
+                                <rect x="20" y="8" width="14" height="14" rx="2"/><rect x="36" y="8" width="14" height="14" rx="2"/>
+                                <rect x="20" y="24" width="14" height="14" rx="2"/><rect x="52" y="24" width="14" height="14" rx="2"/>
+                                <rect x="36" y="40" width="14" height="14" rx="2"/><rect x="52" y="40" width="14" height="14" rx="2"/>
+                            </g>
+                        </svg>
+                    </figure>
+                    <div class="oeis-note-copy">
+                        <div class="oeis-note-heading">
+                            <span>A055397 · correction</span>
+                            <h5>Maximum-density still lifes</h5>
+                        </div>
+                        <p>Corrected two carried terms from <code>301, 352</code> to <code>a(24)=302</code> and <code>a(26)=353</code>, against Chu–Stuckey's published tables.</p>
+                    </div>
+                    <div class="oeis-note-links">
+                        <a class="oeis-resource-link" href="https://oeis.org/A055397" target="_blank" rel="noopener noreferrer">OEIS <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                        <a class="oeis-resource-link" href="https://doi.org/10.1016/j.artint.2012.02.001" target="_blank" rel="noopener noreferrer">Source paper <i class="far fa-file-lines" aria-hidden="true"></i></a>
+                    </div>
+                </article>
+
+                <article class="oeis-note-row">
+                    <figure class="oeis-mini-figure" aria-label="Two Hamiltonian cycles on eleven vertices">
+                        <svg viewBox="0 0 86 62" role="img" aria-hidden="true">
+                            <polyline points="43,7 58,11 69,23 71,39 64,52 47,58 31,58 17,50 13,36 16,21 28,11 43,7" fill="none" stroke="rgba(229,229,229,.30)" stroke-width="1.2"/>
+                            <polyline points="43,7 69,23 64,52 31,58 13,36 28,11 58,11 71,39 47,58 17,50 16,21 43,7" fill="none" stroke="#67e8f9" stroke-width="1.2"/>
+                            <g fill="#0d1112" stroke="#67e8f9" stroke-width="1">
+                                <circle cx="43" cy="7" r="2"/><circle cx="58" cy="11" r="2"/><circle cx="69" cy="23" r="2"/>
+                                <circle cx="71" cy="39" r="2"/><circle cx="64" cy="52" r="2"/><circle cx="47" cy="58" r="2"/>
+                                <circle cx="31" cy="58" r="2"/><circle cx="17" cy="50" r="2"/><circle cx="13" cy="36" r="2"/>
+                                <circle cx="16" cy="21" r="2"/><circle cx="28" cy="11" r="2"/>
+                            </g>
+                            <text x="43" y="36" text-anchor="middle" fill="rgba(229,229,229,.55)" font-family="JetBrains Mono, monospace" font-size="8">K₁₁</text>
+                        </svg>
+                    </figure>
+                    <div class="oeis-note-copy">
+                        <div class="oeis-note-heading">
+                            <span>A175554 · verification</span>
+                            <h5>Hamiltonian decompositions of K<sub>11</sub></h5>
+                        </div>
+                        <p>Added an independent double-counting check of Mutoh's value <code>a(5)=905,697,107,804,160</code>, using the count for the complement of a fixed cycle.</p>
+                    </div>
+                    <div class="oeis-note-links">
+                        <a class="oeis-resource-link" href="https://oeis.org/A175554" target="_blank" rel="noopener noreferrer">OEIS <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                        <a class="oeis-resource-link" href="https://doi.org/10.1002/jcd.70017" target="_blank" rel="noopener noreferrer">Mutoh paper <i class="far fa-file-lines" aria-hidden="true"></i></a>
+                    </div>
+                </article>
+            </div>
         </div>
     </section>
 
     <!-- Publications Section -->
     <section id="publications" class="section container">
         <h2 class="section-title fade-in">Publications</h2>
+
+        <div class="pub-card fade-in">
+            <h3 class="pub-title">A Two-Graph Refinement of Paulsen's Lollipop Bounds</h3>
+            <p class="pub-meta">
+                <strong>Siddhartha Mahajan</strong> and Paras Chopra<br>
+                <span class="pub-journal">arXiv:2606.06064 [math.CO] (2026)</span>
+            </p>
+            <p class="role-desc" style="margin-bottom: 15px;">
+                Recasts the lollipop crossing problem through two interacting extremal graphs, closing Paulsen's remaining gaps through <code>n=17</code> and determining <code>a<sub>L</sub>(19)=1076</code>.
+            </p>
+            <div style="display: flex; gap: 10px;">
+                <a href="https://arxiv.org/abs/2606.06064" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="font-size: 0.8rem; padding: 4px 10px;">
+                    <i class="fas fa-external-link-alt"></i> View manuscript
+                </a>
+            </div>
+        </div>
         
         <div class="pub-card fade-in">
             <h3 class="pub-title">Predicting Efficacy of Antiseizure Medication Treatment with Machine Learning Algorithms</h3>
