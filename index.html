@@ -388,6 +388,27 @@
             background: rgba(7, 7, 7, 0.55);
         }
 
+        .oeis-project-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 118px;
+            margin: -2px 0 14px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                #0d1112;
+            background-size: 18px 18px;
+        }
+
+        .oeis-project-visual svg {
+            width: 100%;
+            height: 100%;
+        }
+
         .oeis-records-header {
             display: flex;
             align-items: flex-end;
@@ -865,10 +886,10 @@
                 <div>
                     <div class="oeis-eyebrow">
                         <span>Sequence work</span>
-                        <span class="oeis-count">06 sequences</span>
+                        <span class="oeis-count">09 sequences</span>
                     </div>
                     <h3>Proofs, exact values, and useful corrections</h3>
-                    <p>Long-form proof pages and a compact ledger of the OEIS records that credit my work, organized by the scale of the contribution.</p>
+                    <p>Proof pages and a compact ledger of published contributions, credited work, and drafts under review.</p>
                 </div>
             </div>
 
@@ -885,10 +906,26 @@
                             <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                         </div>
                     </div>
+                    <figure class="oeis-project-visual" aria-label="Three intersecting long-legged A constructions">
+                        <svg viewBox="0 0 360 118" role="img" aria-hidden="true">
+                            <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 108L80 13L140 108M48 64H112" stroke="#67e8f9" stroke-width="2"/>
+                                <path d="M102 108L174 22L246 108M135 68H215" stroke="rgba(229,229,229,.34)" stroke-width="1.5"/>
+                                <path d="M211 108L270 10L329 108M239 61H301" stroke="#67e8f9" stroke-width="1.7" opacity=".62"/>
+                            </g>
+                            <g fill="#67e8f9">
+                                <circle cx="80" cy="13" r="2.5"/><circle cx="174" cy="22" r="2.5"/><circle cx="270" cy="10" r="2.5"/>
+                                <circle cx="122" cy="80" r="2"/><circle cx="224" cy="87" r="2"/><circle cx="251" cy="42" r="2"/>
+                            </g>
+                            <text x="284" y="24" fill="rgba(229,229,229,.5)" font-family="JetBrains Mono, monospace" font-size="9">a(4) = 55</text>
+                            <text x="20" y="21" fill="rgba(229,229,229,.45)" font-family="JetBrains Mono, monospace" font-size="8">rays + crossbars</text>
+                        </svg>
+                    </figure>
                     <h3>The Exact Formula for Long-Legged A Arrangements</h3>
-                    <p>The complete all-<em>n</em> proof for OEIS A397182, with both 55-region figures, exact rational certificates through <code>n=16</code>, and standard-library verification scripts.</p>
+                    <p>The complete all-<em>n</em> proof for A397182, with both 55-region figures, exact rational certificates through <code>n=16</code>, and standard-library verification scripts.</p>
                     <div class="tech-stack">
                         <span class="tag">OEIS A397182</span>
+                        <span class="tag">Draft under review</span>
                         <span class="tag">Exact Formula</span>
                         <span class="tag">Rational Certificates</span>
                     </div>
@@ -901,12 +938,75 @@
                             <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                         </div>
                     </div>
+                    <figure class="oeis-project-visual" aria-label="Nine points determining twenty unit circles">
+                        <svg viewBox="0 0 360 118" role="img" aria-hidden="true">
+                            <g transform="matrix(.55 0 0 .55 -5 -65)" fill="none" stroke="rgba(103,232,249,.42)" stroke-width="2.2">
+                                <circle cx="352.448" cy="252.439" r="68.259"/><circle cx="260.861" cy="153.782" r="68.259"/>
+                                <circle cx="383.235" cy="195.854" r="68.259"/><circle cx="282.451" cy="255.396" r="68.259"/>
+                                <circle cx="377.626" cy="168.283" r="68.259"/><circle cx="374.284" cy="229.178" r="68.259"/>
+                                <circle cx="255.594" cy="229.044" r="68.259"/><circle cx="327.270" cy="222.486" r="68.259"/>
+                                <circle cx="391.767" cy="127.150" r="68.259"/><circle cx="404.406" cy="262.089" r="68.259"/>
+                                <circle cx="330.612" cy="161.590" r="68.259"/><circle cx="321.661" cy="194.915" r="68.259"/>
+                                <circle cx="383.158" cy="263.308" r="68.259"/><circle cx="343.606" cy="220.956" r="68.259"/>
+                                <circle cx="269.735" cy="187.911" r="68.259"/><circle cx="290.983" cy="186.692" r="68.259"/>
+                                <circle cx="338.339" cy="296.218" r="68.259"/><circle cx="282.374" cy="322.850" r="68.259"/>
+                                <circle cx="316.749" cy="194.604" r="68.259"/><circle cx="281.599" cy="203.254" r="68.259"/>
+                            </g>
+                            <g transform="matrix(.55 0 0 .55 -5 -65)" fill="#67e8f9" stroke="#0d1112" stroke-width="3">
+                                <circle cx="314.977" cy="195.384" r="6"/><circle cx="389.918" cy="195.384" r="6"/>
+                                <circle cx="284.223" cy="254.616" r="6"/><circle cx="329.118" cy="154.252" r="6"/>
+                                <circle cx="345.099" cy="228.294" r="6"/><circle cx="314.901" cy="262.838" r="6"/>
+                                <circle cx="341.757" cy="289.190" r="6"/><circle cx="323.509" cy="126.680" r="6"/>
+                                <circle cx="323.852" cy="229.514" r="6"/>
+                            </g>
+                            <text x="20" y="22" fill="rgba(229,229,229,.52)" font-family="JetBrains Mono, monospace" font-size="9">9 points</text>
+                            <text x="278" y="101" fill="#67e8f9" font-family="JetBrains Mono, monospace" font-size="10">20 circles</text>
+                        </svg>
+                    </figure>
                     <h3>Nine Points in the Unit-Circle Problem</h3>
-                    <p>A visual account of the finite-certificate proof that OEIS A003829 has <code>a(9)=20</code>, including the construction, certificate outline, and manuscript PDF.</p>
+                    <p>A visual account of the independent finite-certificate proof that <code>a(9)=20</code>; the approved OEIS edit recovered Harborth's 1985 source for <code>a(8)=16</code>.</p>
                     <div class="tech-stack">
                         <span class="tag">Erdos 104</span>
                         <span class="tag">OEIS A003829</span>
+                        <span class="tag">Independent Result</span>
                         <span class="tag">Finite Certificate</span>
+                    </div>
+                </a>
+
+                <a href="https://github.com/Siddhartha-Mahajan/connected-still-life" target="_blank" rel="noopener noreferrer" class="project-card" aria-label="Open the connected still life repository">
+                    <div class="project-top">
+                        <i class="fas fa-table-cells folder-icon"></i>
+                        <div class="project-links">
+                            <i class="fab fa-github" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <figure class="oeis-project-visual" aria-label="An optimal connected still life in an eight by eight square">
+                        <svg viewBox="0 0 360 118" role="img" aria-hidden="true">
+                            <text x="24" y="45" fill="rgba(229,229,229,.5)" font-family="JetBrains Mono, monospace" font-size="10">n = 8</text>
+                            <text x="263" y="49" fill="#67e8f9" font-family="JetBrains Mono, monospace" font-size="11">32 live</text>
+                            <text x="263" y="67" fill="rgba(229,229,229,.42)" font-family="JetBrains Mono, monospace" font-size="8">king-connected</text>
+                            <g fill="none" stroke="rgba(229,229,229,.13)" stroke-width="1">
+                                <rect x="127.5" y="6.5" width="104" height="104"/>
+                                <path d="M140.5 7V111M153.5 7V111M166.5 7V111M179.5 7V111M192.5 7V111M205.5 7V111M218.5 7V111M128 19.5H232M128 32.5H232M128 45.5H232M128 58.5H232M128 71.5H232M128 84.5H232M128 97.5H232"/>
+                            </g>
+                            <g fill="#67e8f9">
+                                <path d="M142 8h11v11h-11zM155 8h11v11h-11zM207 8h11v11h-11zM220 8h11v11h-11z
+                                         M129 21h11v11h-11zM168 21h11v11h-11zM194 21h11v11h-11zM220 21h11v11h-11z
+                                         M129 34h11v11h-11zM142 34h11v11h-11zM168 34h11v11h-11zM194 34h11v11h-11z
+                                         M142 47h11v11h-11zM168 47h11v11h-11zM207 47h11v11h-11z
+                                         M142 60h11v11h-11zM168 60h11v11h-11zM181 60h11v11h-11zM194 60h11v11h-11zM220 60h11v11h-11z
+                                         M129 73h11v11h-11zM142 73h11v11h-11zM220 73h11v11h-11z
+                                         M129 86h11v11h-11zM168 86h11v11h-11zM181 86h11v11h-11zM207 86h11v11h-11z
+                                         M142 99h11v11h-11zM155 99h11v11h-11zM181 99h11v11h-11zM207 99h11v11h-11zM220 99h11v11h-11z"/>
+                            </g>
+                        </svg>
+                    </figure>
+                    <h3>Maximum Connected Still Lifes</h3>
+                    <p>Exact values through <code>n=25</code>, with connected witnesses and matching upper proofs, proposed as OEIS A398723.</p>
+                    <div class="tech-stack">
+                        <span class="tag">OEIS A398723</span>
+                        <span class="tag">Draft under review</span>
+                        <span class="tag">Reproducible Proofs</span>
                     </div>
                 </a>
             </div>
@@ -914,13 +1014,13 @@
             <div class="oeis-records-header">
                 <div>
                     <div class="oeis-eyebrow">
-                        <span>On the OEIS record</span>
-                        <span class="oeis-count">04 credits</span>
+                        <span>Published on OEIS</span>
+                        <span class="oeis-count">06 records</span>
                     </div>
-                    <p>Current sequence entries that name or attribute work to Siddhartha Mahajan.</p>
+                    <p>Approved contributions and research credited in OEIS records or their revision histories.</p>
                 </div>
-                <a class="oeis-search-link" href="https://oeis.org/search?q=%22Siddhartha+Mahajan%22" target="_blank" rel="noopener noreferrer">
-                    Live OEIS search <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                <a class="oeis-search-link" href="https://oeis.org/history?user=Siddhartha%20Mahajan" target="_blank" rel="noopener noreferrer">
+                    Contribution history <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
                 </a>
             </div>
 
@@ -1003,9 +1103,56 @@
 
             <div class="oeis-notes">
                 <div class="oeis-notes-title">
-                    <h4>Corrections &amp; independent checks</h4>
-                    <span>smaller, but worth keeping in the record</span>
+                    <h4>Further contributions</h4>
+                    <span>identifications, exact values, corrections, and checks</span>
                 </div>
+
+                <article class="oeis-note-row">
+                    <figure class="oeis-mini-figure" aria-label="A rooted plane tree">
+                        <svg viewBox="0 0 86 62" role="img" aria-hidden="true">
+                            <g fill="none" stroke="rgba(229,229,229,.32)" stroke-width="1.4">
+                                <path d="M43 10V25M43 25L24 39M43 25L62 39M24 39L15 53M24 39L33 53M62 39L53 53M62 39L71 53"/>
+                            </g>
+                            <g fill="#67e8f9">
+                                <circle cx="43" cy="10" r="3"/><circle cx="43" cy="25" r="3"/>
+                                <circle cx="24" cy="39" r="3"/><circle cx="62" cy="39" r="3"/>
+                                <circle cx="15" cy="53" r="3"/><circle cx="33" cy="53" r="3"/>
+                                <circle cx="53" cy="53" r="3"/><circle cx="71" cy="53" r="3"/>
+                            </g>
+                        </svg>
+                    </figure>
+                    <div class="oeis-note-copy">
+                        <div class="oeis-note-heading">
+                            <span>A000758 · identification</span>
+                            <h5>Heights of rooted plane trees</h5>
+                        </div>
+                        <p>Identified the statistic, proved three exact identities, and supplied the approved b-file through <code>n=1000</code>.</p>
+                    </div>
+                    <div class="oeis-note-links">
+                        <a class="oeis-resource-link" href="https://oeis.org/A000758" target="_blank" rel="noopener noreferrer">OEIS <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    </div>
+                </article>
+
+                <article class="oeis-note-row">
+                    <figure class="oeis-mini-figure" aria-label="A number represented by squares and cubes">
+                        <svg viewBox="0 0 86 62" role="img" aria-hidden="true">
+                            <rect x="12" y="17" width="27" height="27" rx="2" fill="none" stroke="rgba(229,229,229,.32)" stroke-width="1.4"/>
+                            <path d="M51 21l11-6 11 6v14l-11 7-11-7zM51 21l11 7 11-7M62 28v14" fill="none" stroke="#67e8f9" stroke-width="1.4"/>
+                            <text x="25.5" y="35" text-anchor="middle" fill="#67e8f9" font-family="JetBrains Mono, monospace" font-size="10">x²</text>
+                            <text x="62" y="34" text-anchor="middle" fill="rgba(229,229,229,.65)" font-family="JetBrains Mono, monospace" font-size="9">y³</text>
+                        </svg>
+                    </figure>
+                    <div class="oeis-note-copy">
+                        <div class="oeis-note-heading">
+                            <span>A273354 · exact value</span>
+                            <h5>Common square-and-cube sums</h5>
+                        </div>
+                        <p>Proved the exact value of <code>a(3)</code> by exhaustive minimality checking and added a constructive upper bound for <code>a(4)</code>.</p>
+                    </div>
+                    <div class="oeis-note-links">
+                        <a class="oeis-resource-link" href="https://oeis.org/A273354" target="_blank" rel="noopener noreferrer">OEIS <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    </div>
+                </article>
 
                 <article class="oeis-note-row">
                     <figure class="oeis-mini-figure" aria-label="A small stable configuration in Conway's Game of Life">
