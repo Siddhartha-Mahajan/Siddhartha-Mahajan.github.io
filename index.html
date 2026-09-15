@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siddhartha Mahajan | AI Researcher</title>
-    <meta name="description" content="Siddhartha Mahajan, AI researcher working on AI for math, verifiable problems, healthcare, and biology.">
-    
+    <title>Siddhartha Mahajan | Software Engineer &amp; AI Researcher</title>
+    <meta name="description" content="Siddhartha Mahajan, software engineer at RedGraphs and AI researcher based in Delhi. Working on applied NLP, AI for mathematics, formal verification, and healthcare.">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -32,7 +32,7 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        
+
         body {
             background-color: var(--bg-body);
             color: var(--text-main);
@@ -50,9 +50,9 @@
             margin: 0 auto;
             padding: 0 20px;
         }
-        
+
         .section { padding: var(--section-spacing) 0; }
-        
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -102,7 +102,7 @@
             display: flex;
             align-items: center;
         }
-        
+
         .nav-container {
             display: flex;
             justify-content: space-between;
@@ -114,10 +114,10 @@
         }
 
         .logo-text { font-weight: 700; font-size: 1.1rem; letter-spacing: -0.5px; }
-        
+
         .nav-menu { display: flex; gap: 25px; align-items: center; }
-        .nav-link { 
-            font-size: 0.85rem; 
+        .nav-link {
+            font-size: 0.85rem;
             color: var(--text-muted);
             font-weight: 500;
         }
@@ -132,7 +132,7 @@
             padding-top: var(--nav-height);
             position: relative;
         }
-        
+
         .hero-content {
             display: grid;
             grid-template-columns: 1.6fr 1fr;
@@ -286,6 +286,10 @@
             gap: 15px;
         }
 
+        #projects .projects-grid {
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+        }
+
         .project-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -300,7 +304,7 @@
 
         .project-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .folder-icon { font-size: 1.2rem; color: var(--accent); }
-        
+
         .project-card h3 { font-size: 1rem; margin-bottom: 8px; }
         .project-card p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; flex-grow: 1; }
 
@@ -616,7 +620,7 @@
             }
             .nav-menu.active { transform: translateY(0); }
             .mobile-toggle { display: block; }
-            
+
             .hero-content { grid-template-columns: 1fr; text-align: center; gap: 20px; }
             .hero-text h1 { font-size: 2.4rem; }
             .hero-actions { justify-content: center; }
@@ -649,12 +653,12 @@
             <a href="#" class="logo-text">Siddhartha<span style="color:var(--accent)">.</span></a>
             <button class="mobile-toggle" id="mobileToggle"><i class="fas fa-bars"></i></button>
             <ul class="nav-menu" id="navMenu">
+                <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#experience" class="nav-link">Experience</a></li>
                 <li><a href="#math-stuff" class="nav-link">Math Stuff</a></li>
                 <li><a href="#publications" class="nav-link">Publications</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#education" class="nav-link">Education</a></li>
-                <li><a href="Siddhartha_Mahajan_August.pdf" target="_blank" class="btn btn-outline" style="padding: 5px 10px;">Resume</a></li>
+                <li><a href="Siddhartha_Mahajan.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="padding: 5px 10px;" aria-label="Open current resume (PDF)">Resume</a></li>
             </ul>
         </div>
     </nav>
@@ -665,13 +669,14 @@
             <div class="hero-text">
                 <p style="color: var(--accent); font-family: var(--font-mono); margin-bottom: 10px; font-size: 0.9rem;">Hi, I am</p>
                 <h1>Siddhartha Mahajan</h1>
-                <h2 style="font-size: 1.3rem; color: var(--text-muted); margin-bottom: 15px; font-weight: 400;">Exploring AI for math, science, and verifiable problems.</h2>
+                <h2 style="font-size: 1.3rem; color: var(--text-muted); margin-bottom: 15px; font-weight: 400;">Verifiability across domains.</h2>
                 <p>
-                    AI researcher and Lossfunk Research Fellow in Bangalore, interested in AI for mathematics,
-                    verifiable scientific problems, and the foundations of intelligence. Previously worked on
-                    healthcare and biology projects spanning ECG analysis, Vision Transformers, and molecular simulations.
+                    Software Engineer at RedGraphs and AI researcher based in Delhi. I build NLP and backend
+                    systems and work on AI-assisted mathematics, with a focus on traceable evidence, reproducible
+                    results, and formal verification. Previously a Research Fellow at Lossfunk, with research
+                    experience in ECG classification, parameter-efficient fine-tuning, and molecular simulations.
                 </p>
-                
+
                 <div class="social-links">
                     <a href="https://github.com/Siddhartha-Mahajan" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
                     <a href="https://www.linkedin.com/in/siddharthamahajan03" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
@@ -680,13 +685,104 @@
                 </div>
 
                 <div class="hero-actions" style="display: flex; gap: 12px;">
-                    <a href="#experience" class="btn btn-primary">My Work</a>
+                    <a href="#projects" class="btn btn-primary">My Work</a>
                     <a href="mailto:siddharthamahajan03@gmail.com" class="btn btn-outline">Contact Me</a>
                 </div>
             </div>
-            
+
             <div class="avatar-wrapper">
                 <img src="main.jpg" alt="Siddhartha Mahajan" class="avatar-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section container">
+        <h2 class="section-title fade-in">Featured Projects</h2>
+
+        <div class="projects-grid">
+            <!-- CAISc verifier -->
+            <div class="project-card fade-in">
+                <div class="project-top">
+                    <i class="fas fa-check-double folder-icon" aria-hidden="true"></i>
+                    <div class="project-links">
+                        <a href="https://github.com/Siddhartha-Mahajan/verifier" target="_blank" rel="noopener noreferrer" aria-label="CAISc Verifier API on GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <h3>CAISc 2026 Verifier API</h3>
+                <p>Automated verification and scoring for five problems in mathematics, computer science, and computational biology. Built constraint validation, scoring, and percentile rankings for the conference's Verifiable Problems Track.</p>
+                <div class="tech-stack">
+                    <span class="tag">FastAPI</span>
+                    <span class="tag">PostgreSQL</span>
+                    <span class="tag">Docker</span>
+                </div>
+                <div class="oeis-links" style="margin-top: 16px;">
+                    <a href="https://github.com/Siddhartha-Mahajan/verifier" target="_blank" rel="noopener noreferrer" class="oeis-resource-link">View code <i class="fab fa-github" aria-hidden="true"></i></a>
+                    <a href="https://caisc2026.github.io/" target="_blank" rel="noopener noreferrer" class="oeis-resource-link">Conference <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                </div>
+            </div>
+
+            <!-- Reinforcement learning -->
+            <div class="project-card fade-in">
+                <div class="project-top">
+                    <i class="fas fa-brain folder-icon" aria-hidden="true"></i>
+                    <div class="project-links">
+                        <a href="https://github.com/Siddhartha-Mahajan/rl_grpo_medmcqa" target="_blank" rel="noopener noreferrer" aria-label="Reinforcement learning pipeline on GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <h3>Reinforcement Learning Pipeline</h3>
+                <p>Supervised fine-tuning and GRPO with LoRA on Qwen using MedMCQA. Implemented rewards for answer correctness and structured outputs, and evaluated baseline, SFT, and GRPO checkpoints.</p>
+                <div class="tech-stack">
+                    <span class="tag">Qwen</span>
+                    <span class="tag">LoRA</span>
+                    <span class="tag">GRPO</span>
+                    <span class="tag">MedMCQA</span>
+                </div>
+                <div class="oeis-links" style="margin-top: 16px;">
+                    <a href="https://github.com/Siddhartha-Mahajan/rl_grpo_medmcqa" target="_blank" rel="noopener noreferrer" class="oeis-resource-link">View code <i class="fab fa-github" aria-hidden="true"></i></a>
+                </div>
+            </div>
+
+            <!-- Exact geometry and formal verification -->
+            <div class="project-card fade-in">
+                <div class="project-top">
+                    <i class="fas fa-draw-polygon folder-icon" aria-hidden="true"></i>
+                    <div class="project-links">
+                        <a href="math/a397182-long-legged-a/" aria-label="Read the long-legged A proof"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <h3>Long-Legged A: An Exact Formula</h3>
+                <p>How many regions can overlapping A-shaped figures create? Established the exact formula for constrained long-legged A arrangements, with a visual proof, rational certificates through n=16, and reproducible verification.</p>
+                <div class="tech-stack">
+                    <span class="tag">Extremal Geometry</span>
+                    <span class="tag">Exact Certificates</span>
+                    <span class="tag">Lean 4</span>
+                </div>
+                <div class="oeis-links" style="margin-top: 16px;">
+                    <a href="math/a397182-long-legged-a/" class="oeis-resource-link">Explore the proof <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                    <a href="https://github.com/Siddhartha-Mahajan/a397182-full-formalization" target="_blank" rel="noopener noreferrer" class="oeis-resource-link">Lean code <i class="fab fa-github" aria-hidden="true"></i></a>
+                </div>
+            </div>
+
+            <!-- Combinatorics research -->
+            <div class="project-card fade-in">
+                <div class="project-top">
+                    <i class="fas fa-project-diagram folder-icon" aria-hidden="true"></i>
+                    <div class="project-links">
+                        <a href="https://arxiv.org/abs/2606.06064" target="_blank" rel="noopener noreferrer" aria-label="Read the lollipop crossing-bounds manuscript"><i class="far fa-file-lines" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <h3>Lollipop Crossing Bounds</h3>
+                <p>Co-authored a two-graph approach to Neil Sloane's lollipop problem with Paras Chopra. Closed Paulsen's remaining gaps through n=17 and determined the exact value a<sub>L</sub>(19)=1076.</p>
+                <div class="tech-stack">
+                    <span class="tag">Combinatorics</span>
+                    <span class="tag">Extremal Graphs</span>
+                    <span class="tag">Preprint</span>
+                </div>
+                <div class="oeis-links" style="margin-top: 16px;">
+                    <a href="https://arxiv.org/abs/2606.06064" target="_blank" rel="noopener noreferrer" class="oeis-resource-link">Read the paper <i class="far fa-file-lines" aria-hidden="true"></i></a>
+                    <a href="#math-stuff" class="oeis-resource-link">More math work <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
             </div>
         </div>
     </section>
@@ -694,10 +790,41 @@
     <!-- Experience Section -->
     <section id="experience" class="section container">
         <h2 class="section-title fade-in">Work Experience</h2>
-        
+
         <div class="timeline">
-            <!-- Experience 1 -->
+            <!-- Current role -->
             <div class="timeline-item current fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <div class="role-header">
+                        <div class="role-left">
+                            <div class="logo-box" style="background: rgba(6, 182, 212, 0.1); color: var(--accent);">
+                                <i class="fas fa-diagram-project" aria-hidden="true"></i>
+                            </div>
+                            <div class="role-info">
+                                <div class="role-title">Software Engineer</div>
+                                <span class="company-name">RedGraphs</span>
+                                <span class="date">Mar 2026 - Present</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="role-desc">
+                        Build NLP and backend pipelines that extract company relationships from regulatory filings,
+                        financial disclosures, and public information. Develop entity resolution and evaluation
+                        workflows for precision, recall, and evidence traceability, and work on backend performance,
+                        observability, and production reliability with AWS and PostgreSQL.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tag">NLP</span>
+                        <span class="tag">Entity Resolution</span>
+                        <span class="tag">AWS</span>
+                        <span class="tag">PostgreSQL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience 1 -->
+            <div class="timeline-item fade-in">
                 <div class="timeline-dot"></div>
                 <div class="timeline-card">
                     <div class="role-header">
@@ -709,7 +836,7 @@
                             <div class="role-info">
                                 <div class="role-title">Research Fellow</div>
                                 <a class="company-name" href="https://lossfunk.com/" target="_blank" rel="noopener noreferrer">Lossfunk</a>
-                                <span class="date">Mar 2026 - Present</span>
+                                <span class="date">Mar 2026 - Aug 2026</span>
                             </div>
                         </div>
                         <div class="logo-box">
@@ -717,13 +844,16 @@
                         </div>
                     </div>
                     <p class="role-desc">
-                        Working on foundational questions in artificial intelligence, with interests in AI for mathematics,
-                        verifiable problem solving, and AI systems that can contribute to scientific discovery.
+                        Worked on AI-assisted mathematics across combinatorics, integer sequences, and formal
+                        verification. Co-authored research refining bounds for Neil Sloane's lollipop problem,
+                        developed exact results and computational certificates for OEIS sequences, and formalized
+                        results in Lean 4 and Mathlib with an emphasis on reproducibility and verifiability.
                     </p>
                     <div class="tech-stack">
                         <span class="tag">AI for Math</span>
-                        <span class="tag">Verifiable Problems</span>
-                        <span class="tag">AI for Science</span>
+                        <span class="tag">Lean 4</span>
+                        <span class="tag">Mathlib</span>
+                        <span class="tag">OEIS</span>
                     </div>
                 </div>
             </div>
@@ -748,14 +878,43 @@
                         </div>
                     </div>
                     <p class="role-desc">
-                        Part of the organizing team for the Conference for AI Scientists, an online venue co-organized
-                        by Lossfunk and BITS Pilani for AI systems as primary contributors, including a verifiable
-                        problems track.
+                        Helped organize the Conference for AI Scientists, focused on AI-assisted scientific discovery.
+                        Contributed to the Verifiable Problems Track and the infrastructure for evaluating submissions
+                        in mathematics, computer science, and computational biology.
                     </p>
                     <div class="tech-stack">
                         <span class="tag">AI Scientists</span>
                         <span class="tag">Verifiable Track</span>
                         <span class="tag">OpenReview</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Applied AI consultancy -->
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <div class="role-header">
+                        <div class="role-left">
+                            <div class="logo-box" style="background: rgba(6, 182, 212, 0.1); color: var(--accent);">
+                                <i class="fas fa-comments" aria-hidden="true"></i>
+                            </div>
+                            <div class="role-info">
+                                <div class="role-title">AI Consultant</div>
+                                <span class="company-name">Amogha AI Technologies</span>
+                                <span class="date">Nov 2025 - Jun 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="role-desc">
+                        Worked on NLP pipelines and conversational AI for a voice-first mental health support
+                        application, using RAG, ChromaDB, and Docker with a focus on experimentation and evaluation.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tag">RAG</span>
+                        <span class="tag">SentenceTransformers</span>
+                        <span class="tag">ChromaDB</span>
+                        <span class="tag">Docker</span>
                     </div>
                 </div>
             </div>
@@ -1229,7 +1388,7 @@
                 </a>
             </div>
         </div>
-        
+
         <div class="pub-card fade-in">
             <h3 class="pub-title">Predicting Efficacy of Antiseizure Medication Treatment with Machine Learning Algorithms</h3>
             <p class="pub-meta">
@@ -1247,65 +1406,10 @@
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section container">
-        <h2 class="section-title fade-in">Featured Projects</h2>
-        
-        <div class="projects-grid">
-            <!-- Project 1 -->
-            <div class="project-card fade-in">
-                <div class="project-top">
-                    <i class="far fa-folder folder-icon"></i>
-                    <div class="project-links">
-                        <a href="https://github.com/Siddhartha-Mahajan/Semantic-Search-Engine" target="_blank"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-                <h3>Semantic Search Engine</h3>
-                <p>Search engine utilizing SentenceTransformers and Streamlit. Integrates SerpApi's Google Search API to enhance results.</p>
-                <div class="tech-stack">
-                    <span class="tag">NLP</span>
-                    <span class="tag">Streamlit</span>
-                </div>
-            </div>
-
-            <!-- Project 2 -->
-            <div class="project-card fade-in">
-                <div class="project-top">
-                    <i class="far fa-folder folder-icon"></i>
-                    <div class="project-links">
-                        <a href="https://devpost.com/software/chronicles-of-alexandria" target="_blank"><i class="fas fa-link"></i></a>
-                    </div>
-                </div>
-                <h3>Chronicles of Alexandria</h3>
-                <p>Documentary library with semantic search using Pinecone. Flask backend enables efficient vector search capabilities.</p>
-                <div class="tech-stack">
-                    <span class="tag">Pinecone</span>
-                    <span class="tag">Flask</span>
-                </div>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="project-card fade-in">
-                <div class="project-top">
-                    <i class="far fa-folder folder-icon"></i>
-                    <div class="project-links">
-                        <a href="https://github.com/Siddhartha-Mahajan/Data-Analyser" target="_blank"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-                <h3>AI Data Analyzer</h3>
-                <p>Intelligent analyzer that uses LLMs to automatically select and generate optimal visualizations from raw CSV datasets.</p>
-                <div class="tech-stack">
-                    <span class="tag">Pandas</span>
-                    <span class="tag">LLMs</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Education Section -->
     <section id="education" class="section container">
         <h2 class="section-title fade-in">Education</h2>
-        
+
         <div class="edu-item fade-in">
             <div class="logo-box" style="width: 55px; height: 55px;">
                 <img src="cic_logo.jpeg" alt="CIC Logo">
@@ -1322,7 +1426,7 @@
                 <img src="DU.png" alt="DU Logo">
             </div>
         </div>
-<!-- 
+<!--
         <div style="margin-top: 20px; padding: 15px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-card);" class="fade-in">
             <h3 style="font-size: 0.95rem; margin-bottom: 5px; color: var(--text-main);">Volunteering</h3>
             <p style="font-size: 0.85rem; color: var(--text-muted);">
@@ -1343,7 +1447,7 @@
                 <i class="fas fa-paper-plane"></i> Say Hello
             </a>
             <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 30px;">
-                &copy; 2025 Siddhartha Mahajan.
+                &copy; 2026 Siddhartha Mahajan.
             </p>
         </div>
     </footer>
