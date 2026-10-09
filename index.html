@@ -1132,11 +1132,11 @@
                     </div>
                 </a>
 
-                <a href="https://github.com/Siddhartha-Mahajan/connected-still-life" target="_blank" rel="noopener noreferrer" class="project-card" aria-label="Open the connected still life repository">
+                <div class="project-card">
                     <div class="project-top">
                         <i class="fas fa-table-cells folder-icon"></i>
                         <div class="project-links">
-                            <i class="fab fa-github" aria-hidden="true"></i>
+                            <a href="https://github.com/Siddhartha-Mahajan/connected-still-life" target="_blank" rel="noopener noreferrer" aria-label="Open the connected still life repository"><i class="fab fa-github" aria-hidden="true"></i></a>
                         </div>
                     </div>
                     <figure class="oeis-project-visual" aria-label="An optimal connected still life in an eight by eight square">
@@ -1161,13 +1161,17 @@
                         </svg>
                     </figure>
                     <h3>Maximum Connected Still Lifes</h3>
-                    <p>Exact values through <code>n=25</code>, with connected witnesses and matching upper proofs, proposed as OEIS A398723.</p>
+                    <p>Exact values through <code>n=25</code> and at twelve further sizes up to <code>n=65</code>, with connected witnesses and matching upper proofs. OEIS A398723.</p>
                     <div class="tech-stack">
                         <span class="tag">OEIS A398723</span>
-                        <span class="tag">Draft under review</span>
                         <span class="tag">Reproducible Proofs</span>
                     </div>
-                </a>
+                    <div class="oeis-links" style="margin-top: 16px;">
+                        <a href="papers/extremal-connected-still-lifes/" class="oeis-resource-link">Read the paper <i class="far fa-file-lines" aria-hidden="true"></i></a>
+                        <a href="math/connected-still-life-problem/" class="oeis-resource-link">The problem (CAISc 2026) <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        <a href="https://github.com/Siddhartha-Mahajan/connected-still-life" target="_blank" rel="noopener noreferrer" class="oeis-resource-link">GitHub <i class="fab fa-github" aria-hidden="true"></i></a>
+                    </div>
+                </div>
             </div>
 
             <div class="oeis-records-header">
@@ -1374,6 +1378,22 @@
         <h2 class="section-title fade-in">Publications</h2>
 
         <div class="pub-card fade-in">
+            <h3 class="pub-title">Predicting Efficacy of Antiseizure Medication Treatment with Machine Learning Algorithms</h3>
+            <p class="pub-meta">
+                Mahima Kaushik, Bibhu Biswal, <strong>Siddhartha Mahajan</strong> et al. <br>
+                <span class="pub-journal">Epilepsy Research, Volume 205 (2024)</span>
+            </p>
+            <p class="role-desc" style="margin-bottom: 15px;">
+                Conducted predictive modeling for anti-epileptic drug outcomes using patient data. Utilized six Machine Learning algorithms, achieving over 70% accuracy in predicting drug responses in the North Indian population.
+            </p>
+            <div style="display: flex; gap: 10px;">
+                <a href="https://doi.org/10.1016/j.eplepsyres.2024.107404" target="_blank" class="btn btn-outline" style="font-size: 0.8rem; padding: 4px 10px;">
+                    <i class="fas fa-external-link-alt"></i> View DOI
+                </a>
+            </div>
+        </div>
+
+        <div class="pub-card fade-in">
             <h3 class="pub-title">A Two-Graph Refinement of Paulsen's Lollipop Bounds</h3>
             <p class="pub-meta">
                 <strong>Siddhartha Mahajan</strong> and Paras Chopra<br>
@@ -1390,17 +1410,17 @@
         </div>
 
         <div class="pub-card fade-in">
-            <h3 class="pub-title">Predicting Efficacy of Antiseizure Medication Treatment with Machine Learning Algorithms</h3>
+            <h3 class="pub-title">Extremal Connected Still Lifes in Square Boards</h3>
             <p class="pub-meta">
-                Mahima Kaushik, Bibhu Biswal, <strong>Siddhartha Mahajan</strong> et al. <br>
-                <span class="pub-journal">Epilepsy Research, Volume 205 (2024)</span>
+                <strong>Siddhartha Mahajan</strong><br>
+                <span class="pub-journal">Preprint, Lossfunk Research Laboratory (2026)</span>
             </p>
             <p class="role-desc" style="margin-bottom: 15px;">
-                Conducted predictive modeling for anti-epileptic drug outcomes using patient data. Utilized six Machine Learning algorithms, achieving over 70% accuracy in predicting drug responses in the North Indian population.
+                Determines the maximum connected still life in an <code>n&times;n</code> box for <code>n&le;25</code> and twelve further sizes, proves a residue-eight upper bound by boundary automata, and gives band families with <code>C(n)&ge;n(n+1)/2&minus;4</code> for every <code>n</code>.
             </p>
             <div style="display: flex; gap: 10px;">
-                <a href="https://doi.org/10.1016/j.eplepsyres.2024.107404" target="_blank" class="btn btn-outline" style="font-size: 0.8rem; padding: 4px 10px;">
-                    <i class="fas fa-external-link-alt"></i> View DOI
+                <a href="papers/extremal-connected-still-lifes/" class="btn btn-outline" style="font-size: 0.8rem; padding: 4px 10px;">
+                    <i class="fas fa-external-link-alt"></i> View manuscript
                 </a>
             </div>
         </div>

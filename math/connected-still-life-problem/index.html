@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connected Still Life</title>
+<meta name="description" content="Connected Still Life: problem statement of the CAISc 2026 Verifiable Problems Track, by Siddhartha Mahajan.">
+<meta name="citation_title" content="Connected Still Life">
+<meta name="citation_author" content="Mahajan, Siddhartha">
+<meta name="citation_publication_date" content="2026/04/15">
+<meta name="citation_conference_title" content="CAISc 2026 Verifiable Problems Track">
+<meta name="citation_pdf_url" content="https://siddhartha-mahajan.github.io/math/connected-still-life-problem/connected-still-life.pdf">
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; max-width: 760px; margin: 48px auto; padding: 0 20px; color: #1f2933; line-height: 1.6; background: #fff; }
+  h1 { font-size: 2.1rem; margin-bottom: 4px; }
+  .byline { font-size: 1.15rem; margin: 0; }
+  .meta { color: #52606d; font-size: .95rem; margin-top: 4px; }
+  h2 { font-size: 1.25rem; margin-top: 28px; }
+  a { color: #164e63; }
+  .links a { margin-right: 18px; }
+</style>
+</head>
+<body>
+<h1 class="citation_title">Connected Still Life</h1>
+<p class="byline citation_author">Siddhartha Mahajan</p>
+<p class="meta">Problem statement, CAISc 2026 Verifiable Problems Track, April 15, 2026. Reviewed by Dr. Ankan Pal (BITS Pilani).</p>
+<p class="links">
+  <a href="connected-still-life.pdf">PDF</a>
+  <a href="https://caisc2026.github.io/verifiable-problems/?problem=connected-still-life">Original problem page</a>
+  <a href="../../papers/extremal-connected-still-lifes/">Paper with the exact values</a>
+</p>
+
+<h2>Abstract</h2>
+<p>A still life of Conway's Game of Life is a pattern that does not change: every live cell has two or three live neighbours and no dead cell has exactly three. The maximum density of an unconstrained still life approaches 1/2 asymptotically, and the unconstrained finite-box optimum is known exactly. Requiring the live cells to form a single connected group, under horizontal, vertical, and diagonal adjacency, changes the finite-box optimization problem, because isolated stable pieces can no longer be tiled freely. This problem asks for connected still lifes in an n &times; n box with as many live cells as possible, for the box sizes n = 8, 9, 10, 11, 13, 15, 16, 17, 19, 20, 21, 31, 32. For small n good solutions are known; for n &ge; 16 the best-known connected patterns came from ad hoc searches and could be suboptimal. The connected optimum can be close to the unconstrained finite-box optimum for some sizes, so the gap is instance-dependent. Every submission is checked automatically.</p>
+
+<h2>Verification</h2>
+<p>A submission gives n, the claimed number of live cells, and the n &times; n binary grid. It is accepted when the grid has the right shape, every live cell has exactly 2 or 3 live neighbours, no dead cell in the box or its one-cell exterior ring has exactly 3 live neighbours, all live cells are 8-connected, and the live-cell count matches the claim.</p>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Extremal Connected Still Lifes in Square Boards</title>
+<meta name="description" content="Exact values and bounds for the maximum population of a connected Conway still life in an n by n square.">
+<meta name="citation_title" content="Extremal Connected Still Lifes in Square Boards">
+<meta name="citation_author" content="Mahajan, Siddhartha">
+<meta name="citation_publication_date" content="2026/10">
+<meta name="citation_technical_report_institution" content="Lossfunk Research Laboratory">
+<meta name="citation_pdf_url" content="https://siddhartha-mahajan.github.io/papers/extremal-connected-still-lifes/extremal-connected-still-lifes.pdf">
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; max-width: 760px; margin: 48px auto; padding: 0 20px; color: #1f2933; line-height: 1.6; background: #fff; }
+  h1 { font-size: 2.1rem; margin-bottom: 4px; }
+  .byline { font-size: 1.15rem; margin: 0; }
+  .meta { color: #52606d; font-size: .95rem; margin-top: 4px; }
+  h2 { font-size: 1.25rem; margin-top: 28px; }
+  a { color: #164e63; }
+  .links a { margin-right: 18px; }
+</style>
+</head>
+<body>
+<h1 class="citation_title">Extremal Connected Still Lifes in Square Boards</h1>
+<p class="byline citation_author">Siddhartha Mahajan</p>
+<p class="meta">Lossfunk Research Laboratory, October 2026.</p>
+<p class="links">
+  <a href="extremal-connected-still-lifes.pdf">PDF</a>
+  <a href="https://github.com/Siddhartha-Mahajan/connected-still-life">Data and verifiers</a>
+  <a href="https://oeis.org/A398723">OEIS A398723</a>
+  <a href="../../math/connected-still-life-problem/">The problem</a>
+</p>
+
+<h2>Abstract</h2>
+<p>Let C(n) denote the largest population of a stable Conway Life pattern in an n &times; n square whose live cells form one component under Moore adjacency; the exterior of the square is dead. We determine C(1), &hellip;, C(25) = 0, 4, 6, 8, 11, 18, 28, 32, 43, 53, 63, 76, 88, 102, 119, 134, 151, 170, 188, 210, 230, 251, 276, 299, 325 and the further values C(29) = 435, C(31) = 497, C(32) = 528, C(33) = 562, C(37) = 704, C(39) = 782, C(41) = 863, C(45) = 1037, C(49) = 1228, C(53) = 1434, C(57) = 1657, and C(65) = 2150. The first unresolved case satisfies 350 &le; C(26) &le; 352, and every unresolved size n &le; 50 has a gap of at most five cells.</p>
+<p>A live 2 &times; 2 block is an isolated Moore component, so every connected still life with more than four cells is block-free. Combining this local obstruction with the Chu&ndash;Stuckey wastage identity yields finite-state boundary relaxations, and exact min-plus composition of edge automata and corner relations gives, for every n &ge; 14, C(n) &le; min{M(n), &lfloor;(4n&sup2; + 5n &minus; d<sub>n mod 8</sub>)/8&rfloor;} with (d<sub>0</sub>, &hellip;, d<sub>7</sub>) = (26, 23, 18, 23, 20, 23, 26, 11), where M(n) is the unrestricted maximum. Explicit period-eight band families give C(n) &ge; n(n+1)/2 &minus; 4 for every n &ge; 1, with equality of the constant at n = 5 and n = 8, and hence lim C(n)/n&sup2; = 1/2.</p>
+</body>
+</html>
